@@ -35,7 +35,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ecc6a6 0%, #764ba2 100%);
             min-height: 100vh;
             color: var(--gray-900);
             line-height: 1.6;
@@ -50,14 +50,14 @@
         header {
             text-align: center;
             padding: 40px 20px;
-            color: white;
+            color: rgb(255, 255, 255); text-shadow:  8px 8px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
             font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgb(0, 0, 0);
         }
 
         header p {
@@ -287,7 +287,7 @@
 
         /* Results Section */
         .results-card {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            background: linear-gradient(135deg, #d2dfff 0%, #211b75 100%);
             color: white;
         }
 
@@ -527,7 +527,7 @@
 
         /* Amortization Section */
         .amort-card {
-            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            background: linear-gradient(135deg, #6ded3a31 0%, #04cf04ad 100%);
             color: white;
         }
 
@@ -698,7 +698,7 @@
                 <div class="form-group">
                     <label for="costeVivienda">Precio de la vivienda (€)</label>
                     <div class="input-with-suffix">
-                        <input type="number" id="costeVivienda" placeholder="250000" min="0" step="1000">
+                        <input type="number" id="costeVivienda" placeholder="0" min="0" step="1000">
                         <span class="input-suffix">€</span>
                     </div>
                 </div>
@@ -733,14 +733,14 @@
                     <div class="form-group">
                         <label for="ahorros1">Ahorros Persona 1 (€)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="ahorros1" placeholder="30000" min="0" step="1000">
+                            <input type="number" id="ahorros1" placeholder="0" min="0" step="1000">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="form-group toggle-content" id="persona2Container">
                         <label for="ahorros2">Ahorros Persona 2 (€)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="ahorros2" placeholder="20000" min="0" step="1000">
+                            <input type="number" id="ahorros2" placeholder="0" min="0" step="1000">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
@@ -883,7 +883,7 @@
                     </label>
                     <div class="amort-input-row">
                         <div class="input-with-suffix">
-                            <input type="number" id="amortizacion" placeholder="10000" min="0" step="1000" style="background: rgba(255,255,255,0.9);">
+                            <input type="number" id="amortizacion" placeholder="0" min="0" step="1000" style="background: rgba(255,255,255,0.9);">
                             <span class="input-suffix" style="color: var(--gray-700);">€</span>
                         </div>
                         <button class="btn" onclick="calcularAmortizacion()">Simular</button>
@@ -947,56 +947,56 @@
                     <div class="expense-item">
                         <label><span class="emoji">💡</span> Luz (mensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoLuz" placeholder="60" min="0" step="5" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoLuz" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">🔥</span> Gas (mensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoGas" placeholder="40" min="0" step="5" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoGas" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">💧</span> Agua (bimensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoAgua" placeholder="50" min="0" step="5" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoAgua" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">🏛️</span> IBI (anual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoIBI" placeholder="600" min="0" step="50" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoIBI" placeholder="0" min="0" step="50" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">🚌</span> AMB (anual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoAMB" placeholder="120" min="0" step="10" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoAMB" placeholder="0" min="0" step="10" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">🛒</span> Alimentación (mensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoComida" placeholder="400" min="0" step="25" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoComida" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">📱</span> Teléfono e Internet (mensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoTelefono" placeholder="50" min="0" step="5" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoTelefono" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
                     <div class="expense-item">
                         <label><span class="emoji">📦</span> Otros / Imprevistos (mensual)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="gastoOtros" placeholder="100" min="0" step="25" oninput="calcularGastosFijos()">
+                            <input type="number" id="gastoOtros" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
@@ -1181,9 +1181,9 @@
             // Mostrar resultados
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
             document.getElementById('resCosteVivienda').textContent = formatearMoneda(costeVivienda);
-            document.getElementById('resEntrada').textContent = formatearMoneda(entrada);
+            document.getElementById('resEntrada').textContent = formatearMoneda(Math.max(0, entrada));
             document.getElementById('resCapital').textContent = formatearMoneda(capital);
-            document.getElementById('resIntereses').textContent = formatearMoneda(Math.max(0, interesesTotales));
+            document.getElementById('resIntereses').textContent = formatearMoneda(interesesTotales);
             document.getElementById('resTotalPagado').textContent = formatearMoneda(totalPagado);
             document.getElementById('resCosteTotalVivienda').textContent = formatearMoneda(costeTotalVivienda);
             document.getElementById('resFinHipoteca').textContent = finHipoteca;
