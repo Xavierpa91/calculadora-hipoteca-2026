@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Hipoteca 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 992px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-icon.blue { background: var(--primary-light); }
+        .card-icon.green { background: #d1fae5; }
+        .card-icon.orange { background: #fef3c7; }
+        .card-icon.purple { background: #ede9fe; }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--gray-50);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-with-suffix {
+            position: relative;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .input-with-suffix input {
+            padding-right: 50px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .toggle-section {
+            background: var(--gray-50);
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-section:hover {
+            border-color: var(--primary-light);
+        }
+
+        .toggle-section.active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .toggle-content {
+            display: none;
+            padding: 16px 0;
+        }
+
+        .toggle-content.show {
+            display: block;
+        }
+
+        .chevron {
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-section.active .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Results Section */
+        .results-card {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            color: white;
+        }
+
+        .results-card .card-header {
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+
+        .results-card .card-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .results-card .card-title {
+            color: white;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .result-highlight {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .result-highlight .amount {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .result-highlight .label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        /* Fixed Expenses Section */
+        .expense-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 500px) {
+            .expense-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .expense-item {
+            background: var(--gray-50);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .expense-item label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .expense-item .emoji {
+            font-size: 1.2rem;
+        }
+
+        .expense-summary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .expense-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .expense-summary-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding-top: 12px;
+        }
+
+        .expense-summary-row.total {
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            font-size: 1.25rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.875rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 8px;
+            text-align: right;
+        }
+
+        .comparison-table th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .comparison-table th:first-child,
+        .comparison-table td:first-child {
+            text-align: left;
+        }
+
+        .comparison-table tbody tr {
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .comparison-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .comparison-table tbody tr.selected {
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Info tooltip */
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: var(--gray-200);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            cursor: help;
+            margin-left: 4px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            header {
+                padding: 24px 16px;
+            }
+
+            .card {
+                padding: 20px 16px;
+            }
+
+            .result-highlight .amount {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏠 Calculadora Hipoteca 2026</h1>
+        <p>Calcula tu hipoteca y gastos mensuales de forma sencilla</p>
+    </header>
+
+    <div class="container">
+        <div class="main-grid">
+            <!-- Datos de la vivienda -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon blue">🏡</div>
+                    <div>
+                        <div class="card-title">Datos de la Vivienda</div>
+                        <div class="card-subtitle">Información básica de la compra</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="costeVivienda">Precio de la vivienda (€)</label>
+                    <div class="input-with-suffix">
+                        <input type="number" id="costeVivienda" placeholder="250000" min="0" step="1000">
+                        <span class="input-suffix">€</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="plazoHipoteca">Plazo (años)</label>
+                        <select id="plazoHipoteca">
+                            <option value="5">5 años</option>
+                            <option value="10">10 años</option>
+                            <option value="15">15 años</option>
+                            <option value="20">20 años</option>
+                            <option value="25" selected>25 años</option>
+                            <option value="30">30 años</option>
+                            <option value="35">35 años</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inicioHipoteca">Año firma</label>
+                        <input type="number" id="inicioHipoteca" value="2026" min="2024" max="2050">
+                    </div>
+                </div>
+
+                <div class="section-divider">Ahorros</div>
+
+                <div class="toggle-section" onclick="togglePersona2()">
+                    <span>👥 ¿Compra conjunta? (2 personas)</span>
+                    <span class="chevron">▼</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ahorros1">Ahorros Persona 1 (€)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="ahorros1" placeholder="30000" min="0" step="1000">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="form-group toggle-content" id="persona2Container">
+                        <label for="ahorros2">Ahorros Persona 2 (€)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="ahorros2" placeholder="20000" min="0" step="1000">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
+                    <label style="margin-bottom: 0; color: var(--primary);">
+                        💰 Total ahorros: <strong id="totalAhorros">0 €</strong>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Configuración de la Hipoteca -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon purple">⚙️</div>
+                    <div>
+                        <div class="card-title">Configuración</div>
+                        <div class="card-subtitle">Ajusta los parámetros del cálculo</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tin">TIN Anual (%)
+                        <span class="info-icon" title="Tipo de Interés Nominal anual">?</span>
+                    </label>
+                    <div class="input-with-suffix">
+                        <input type="number" id="tin" value="2.5" min="0" max="20" step="0.1">
+                        <span class="input-suffix">%</span>
+                    </div>
+                </div>
+
+                <div class="section-divider">Impuestos y Gastos</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taxRate">ITP (Impuesto Transmisiones)
+                            <span class="info-icon" title="Varía según comunidad autónoma">?</span>
+                        </label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="taxRate" value="7.5" min="0" max="15" step="0.5">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gastosEscritura">Escritura (€)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastosEscritura" value="1960" min="0" step="100">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gastosRegistro">Registro Propiedad (€)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastosRegistro" value="560" min="0" step="50">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gastosTasacion">Tasación (€)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastosTasacion" value="400" min="0" step="50">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="background: var(--gray-100); padding: 12px; border-radius: 8px;">
+                    <label style="margin-bottom: 0; color: var(--gray-700);">
+                        📋 Total gastos gestión: <strong id="totalGastos">2.920 €</strong>
+                    </label>
+                </div>
+
+                <button class="btn btn-primary" onclick="calcular()" style="margin-top: 16px;">
+                    🧮 Calcular Hipoteca
+                </button>
+            </div>
+
+            <!-- Resultados -->
+            <div class="card results-card" id="resultadosCard">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div>
+                        <div class="card-title">Resultados</div>
+                        <div class="card-subtitle">Resumen de tu hipoteca</div>
+                    </div>
+                </div>
+
+                <div class="result-highlight">
+                    <div class="amount" id="cuotaMensual">0 €</div>
+                    <div class="label">Cuota mensual</div>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">🏠 Precio vivienda</span>
+                    <span class="result-value" id="resCosteVivienda">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">💵 Entrada aportada</span>
+                    <span class="result-value" id="resEntrada">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">🏦 Capital hipotecado</span>
+                    <span class="result-value" id="resCapital">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">📈 Intereses totales</span>
+                    <span class="result-value" id="resIntereses">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">💳 Total a pagar</span>
+                    <span class="result-value" id="resTotalPagado">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">🏷️ Coste total vivienda</span>
+                    <span class="result-value" id="resCosteTotalVivienda">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">📅 Fin de hipoteca</span>
+                    <span class="result-value" id="resFinHipoteca">-</span>
+                </div>
+            </div>
+
+            <!-- Gastos Fijos -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon orange">💡</div>
+                    <div>
+                        <div class="card-title">Gastos Fijos Mensuales</div>
+                        <div class="card-subtitle">Calcula tus gastos de hogar</div>
+                    </div>
+                </div>
+
+                <div class="expense-grid">
+                    <div class="expense-item">
+                        <label><span class="emoji">💡</span> Luz (mensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoLuz" placeholder="60" min="0" step="5" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">🔥</span> Gas (mensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoGas" placeholder="40" min="0" step="5" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">💧</span> Agua (bimensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoAgua" placeholder="50" min="0" step="5" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">🏛️</span> IBI (anual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoIBI" placeholder="600" min="0" step="50" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">🚌</span> AMB (anual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoAMB" placeholder="120" min="0" step="10" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">🛒</span> Alimentación (mensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoComida" placeholder="400" min="0" step="25" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">📱</span> Teléfono e Internet (mensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoTelefono" placeholder="50" min="0" step="5" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                    <div class="expense-item">
+                        <label><span class="emoji">📦</span> Otros / Imprevistos (mensual)</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="gastoOtros" placeholder="100" min="0" step="25" oninput="calcularGastosFijos()">
+                            <span class="input-suffix">€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expense-summary">
+                    <div class="expense-summary-row">
+                        <span>💡 Luz</span>
+                        <span id="sumLuz">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>🔥 Gas</span>
+                        <span id="sumGas">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>💧 Agua</span>
+                        <span id="sumAgua">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>🏛️ IBI</span>
+                        <span id="sumIBI">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>🚌 AMB</span>
+                        <span id="sumAMB">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>🛒 Alimentación</span>
+                        <span id="sumComida">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>📱 Teléfono e Internet</span>
+                        <span id="sumTelefono">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row">
+                        <span>📦 Otros</span>
+                        <span id="sumOtros">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row total">
+                        <span>📊 Total Gastos Fijos</span>
+                        <span id="totalGastosFijos">0 €/mes</span>
+                    </div>
+                    <div class="expense-summary-row total" style="background: rgba(255,255,255,0.1); margin: 12px -20px -20px; padding: 16px 20px; border-radius: 0 0 8px 8px;">
+                        <span>🏠 Cuota + Gastos Fijos</span>
+                        <span id="totalCuotaGastos">0 €/mes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla comparativa -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-icon green">📈</div>
+                <div>
+                    <div class="card-title">Comparativa por Plazo</div>
+                    <div class="card-subtitle">Compara diferentes plazos de hipoteca</div>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table" id="tablaComparativa">
+                    <thead>
+                        <tr>
+                            <th>Plazo</th>
+                            <th>Cuota/mes</th>
+                            <th>Total pagado</th>
+                            <th>Intereses</th>
+                            <th>Coste total</th>
+                            <th>Fin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaBody">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Calculadora Hipoteca 2026 — Creado con ❤️</p>
+        <p style="margin-top: 8px; opacity: 0.7;">Esta calculadora es orientativa. Consulta con tu banco para datos oficiales.</p>
+    </footer>
+
+    <script>
+        // Estado de la aplicación
+        let persona2Activo = false;
+        let ultimoCalculo = null;
+
+        // Toggle persona 2
+        function togglePersona2() {
+            const toggle = document.querySelector('.toggle-section');
+            const container = document.getElementById('persona2Container');
+            persona2Activo = !persona2Activo;
+            
+            toggle.classList.toggle('active', persona2Activo);
+            container.classList.toggle('show', persona2Activo);
+            
+            actualizarTotalAhorros();
+        }
+
+        // Actualizar total de ahorros
+        function actualizarTotalAhorros() {
+            const ahorros1 = parseFloat(document.getElementById('ahorros1').value) || 0;
+            const ahorros2 = persona2Activo ? (parseFloat(document.getElementById('ahorros2').value) || 0) : 0;
+            const total = ahorros1 + ahorros2;
+            document.getElementById('totalAhorros').textContent = formatearMoneda(total);
+        }
+
+        // Actualizar total de gastos de gestión
+        function actualizarTotalGastos() {
+            const escritura = parseFloat(document.getElementById('gastosEscritura').value) || 0;
+            const registro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
+            const tasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
+            const total = escritura + registro + tasacion;
+            document.getElementById('totalGastos').textContent = formatearMoneda(total);
+        }
+
+        // Formatear moneda
+        function formatearMoneda(valor) {
+            return valor.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';
+        }
+
+        // Calcular cuota mensual
+        function calcularCuota(capital, tin, plazoAnios) {
+            const r = tin / 100 / 12;
+            const n = plazoAnios * 12;
+            
+            if (r === 0) {
+                return {
+                    cuota: capital / n,
+                    totalPagado: capital,
+                    interesesTotales: 0
+                };
+            }
+            
+            const cuota = (capital * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const totalPagado = cuota * n;
+            const interesesTotales = totalPagado - capital;
+            
+            return { cuota, totalPagado, interesesTotales };
+        }
+
+        // Función principal de cálculo
+        function calcular() {
+            // Obtener valores
+            const costeVivienda = parseFloat(document.getElementById('costeVivienda').value) || 0;
+            const ahorros1 = parseFloat(document.getElementById('ahorros1').value) || 0;
+            const ahorros2 = persona2Activo ? (parseFloat(document.getElementById('ahorros2').value) || 0) : 0;
+            const totalAhorros = ahorros1 + ahorros2;
+            const tin = parseFloat(document.getElementById('tin').value) || 0;
+            const plazoHipoteca = parseInt(document.getElementById('plazoHipoteca').value) || 25;
+            const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
+            
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 7.5;
+            const gastosEscritura = parseFloat(document.getElementById('gastosEscritura').value) || 0;
+            const gastosRegistro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
+            const gastosTasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
+            
+            // Cálculos
+            const impuestoCompra = costeVivienda * (taxRate / 100);
+            const gastosGestion = gastosEscritura + gastosRegistro + gastosTasacion;
+            const capital = costeVivienda - totalAhorros + impuestoCompra + gastosGestion;
+            const entrada = totalAhorros - impuestoCompra - gastosGestion;
+            
+            const { cuota, totalPagado, interesesTotales } = calcularCuota(capital, tin, plazoHipoteca);
+            const finHipoteca = inicioHipoteca + plazoHipoteca;
+            const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
+            
+            // Guardar último cálculo
+            ultimoCalculo = { cuota, capital, tin, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca };
+            
+            // Mostrar resultados
+            document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
+            document.getElementById('resCosteVivienda').textContent = formatearMoneda(costeVivienda);
+            document.getElementById('resEntrada').textContent = formatearMoneda(Math.max(0, entrada));
+            document.getElementById('resCapital').textContent = formatearMoneda(capital);
+            document.getElementById('resIntereses').textContent = formatearMoneda(interesesTotales);
+            document.getElementById('resTotalPagado').textContent = formatearMoneda(totalPagado);
+            document.getElementById('resCosteTotalVivienda').textContent = formatearMoneda(costeTotalVivienda);
+            document.getElementById('resFinHipoteca').textContent = finHipoteca;
+            
+            // Actualizar tabla comparativa
+            actualizarTablaComparativa(capital, tin, inicioHipoteca, gastosGestion, impuestoCompra, costeVivienda, plazoHipoteca);
+            
+            // Actualizar gastos fijos (para incluir la cuota)
+            calcularGastosFijos();
+        }
+
+        // Actualizar tabla comparativa
+        function actualizarTablaComparativa(capital, tin, inicioHipoteca, gastosGestion, impuestoCompra, costeVivienda, plazoSeleccionado) {
+            const tbody = document.getElementById('tablaBody');
+            tbody.innerHTML = '';
+            
+            const plazos = [5, 10, 15, 20, 25, 30, 35];
+            
+            plazos.forEach(plazo => {
+                const { cuota, totalPagado, interesesTotales } = calcularCuota(capital, tin, plazo);
+                const finHipoteca = inicioHipoteca + plazo;
+                const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
+                
+                const tr = document.createElement('tr');
+                if (plazo === plazoSeleccionado) {
+                    tr.classList.add('selected');
+                }
+                
+                tr.innerHTML = `
+                    <td>${plazo} años</td>
+                    <td>${formatearMoneda(cuota)}</td>
+                    <td>${formatearMoneda(totalPagado)}</td>
+                    <td>${formatearMoneda(interesesTotales)}</td>
+                    <td>${formatearMoneda(costeTotalVivienda)}</td>
+                    <td>${finHipoteca}</td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Calcular gastos fijos mensuales
+        function calcularGastosFijos() {
+            const luz = parseFloat(document.getElementById('gastoLuz').value) || 0;
+            const gas = parseFloat(document.getElementById('gastoGas').value) || 0;
+            const agua = parseFloat(document.getElementById('gastoAgua').value) || 0;
+            const ibi = parseFloat(document.getElementById('gastoIBI').value) || 0;
+            const amb = parseFloat(document.getElementById('gastoAMB').value) || 0;
+            const comida = parseFloat(document.getElementById('gastoComida').value) || 0;
+            const telefono = parseFloat(document.getElementById('gastoTelefono').value) || 0;
+            const otros = parseFloat(document.getElementById('gastoOtros').value) || 0;
+            
+            // Convertir a mensual
+            const aguaMensual = agua / 2;
+            const ibiMensual = ibi / 12;
+            const ambMensual = amb / 12;
+            
+            // Actualizar resumen
+            document.getElementById('sumLuz').textContent = formatearMoneda(luz) + '/mes';
+            document.getElementById('sumGas').textContent = formatearMoneda(gas) + '/mes';
+            document.getElementById('sumAgua').textContent = formatearMoneda(aguaMensual) + '/mes';
+            document.getElementById('sumIBI').textContent = formatearMoneda(ibiMensual) + '/mes';
+            document.getElementById('sumAMB').textContent = formatearMoneda(ambMensual) + '/mes';
+            document.getElementById('sumComida').textContent = formatearMoneda(comida) + '/mes';
+            document.getElementById('sumTelefono').textContent = formatearMoneda(telefono) + '/mes';
+            document.getElementById('sumOtros').textContent = formatearMoneda(otros) + '/mes';
+            
+            const totalGastosFijos = luz + gas + aguaMensual + ibiMensual + ambMensual + comida + telefono + otros;
+            document.getElementById('totalGastosFijos').textContent = formatearMoneda(totalGastosFijos) + '/mes';
+            
+            // Cuota + gastos fijos
+            const cuota = ultimoCalculo ? ultimoCalculo.cuota : 0;
+            document.getElementById('totalCuotaGastos').textContent = formatearMoneda(cuota + totalGastosFijos) + '/mes';
+        }
+
+        // Event listeners
+        document.getElementById('ahorros1').addEventListener('input', actualizarTotalAhorros);
+        document.getElementById('ahorros2').addEventListener('input', actualizarTotalAhorros);
+        document.getElementById('gastosEscritura').addEventListener('input', actualizarTotalGastos);
+        document.getElementById('gastosRegistro').addEventListener('input', actualizarTotalGastos);
+        document.getElementById('gastosTasacion').addEventListener('input', actualizarTotalGastos);
+
+        // Inicializar
+        actualizarTotalGastos();
+    </script>
+</body>
+</html>
