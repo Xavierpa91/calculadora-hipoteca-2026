@@ -524,6 +524,139 @@
         .hidden {
             display: none !important;
         }
+
+        /* Amortization Section */
+        .amort-card {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+        }
+
+        .amort-card .card-header {
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+
+        .amort-card .card-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .amort-card .card-title,
+        .amort-card .card-subtitle {
+            color: white;
+        }
+
+        .amort-card label {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .amort-option {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .amort-option-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .amort-option-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .amort-option-btn.active {
+            background: white;
+            color: #5b21b6;
+            border-color: white;
+            font-weight: 600;
+        }
+
+        .amort-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .amort-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .amort-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .amort-box.highlight {
+            background: rgba(16, 185, 129, 0.3);
+            border: 2px solid rgba(16, 185, 129, 0.5);
+        }
+
+        .amort-box-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .amort-box-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .amort-box-sub {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .amort-savings {
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            text-align: center;
+            border: 2px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .amort-savings-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .amort-savings-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .amort-input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .amort-input-row .btn {
+            width: auto;
+            padding: 12px 20px;
+            background: white;
+            color: #5b21b6;
+        }
+
+        .amort-input-row .btn:hover {
+            background: rgba(255,255,255,0.9);
+        }
     </style>
 </head>
 <body>
@@ -716,6 +849,72 @@
                 </div>
             </div>
 
+            <!-- Simulador de Amortización -->
+            <div class="card amort-card">
+                <div class="card-header">
+                    <div class="card-icon">💸</div>
+                    <div>
+                        <div class="card-title">Simulador de Amortización</div>
+                        <div class="card-subtitle">Calcula el ahorro al amortizar capital</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amortizacion">Cantidad a amortizar (€)
+                        <span class="info-icon" title="Importe que pagarás de forma anticipada" style="background: rgba(255,255,255,0.2); color: white;">?</span>
+                    </label>
+                    <div class="amort-input-row">
+                        <div class="input-with-suffix">
+                            <input type="number" id="amortizacion" placeholder="10000" min="0" step="1000" style="background: rgba(255,255,255,0.9);">
+                            <span class="input-suffix" style="color: var(--gray-700);">€</span>
+                        </div>
+                        <button class="btn" onclick="calcularAmortizacion()">Simular</button>
+                    </div>
+                </div>
+
+                <div class="amort-option">
+                    <button class="amort-option-btn active" id="btnReducirCuota" onclick="setTipoAmortizacion('cuota')">
+                        📉 Reducir cuota
+                        <br><small>Mismo plazo</small>
+                    </button>
+                    <button class="amort-option-btn" id="btnReducirPlazo" onclick="setTipoAmortizacion('plazo')">
+                        ⏱️ Reducir plazo
+                        <br><small>Misma cuota</small>
+                    </button>
+                </div>
+
+                <div id="amortResultados" style="display: none;">
+                    <div class="amort-comparison">
+                        <div class="amort-box">
+                            <div class="amort-box-label">Cuota Original</div>
+                            <div class="amort-box-value" id="amortCuotaOriginal">-</div>
+                            <div class="amort-box-sub" id="amortPlazoOriginal">-</div>
+                        </div>
+                        <div class="amort-box highlight">
+                            <div class="amort-box-label">Nueva Cuota</div>
+                            <div class="amort-box-value" id="amortCuotaNueva">-</div>
+                            <div class="amort-box-sub" id="amortPlazoNuevo">-</div>
+                        </div>
+                    </div>
+
+                    <div class="amort-comparison" style="margin-top: 12px;">
+                        <div class="amort-box">
+                            <div class="amort-box-label">Intereses Originales</div>
+                            <div class="amort-box-value" id="amortInteresesOriginal">-</div>
+                        </div>
+                        <div class="amort-box highlight">
+                            <div class="amort-box-label">Nuevos Intereses</div>
+                            <div class="amort-box-value" id="amortInteresesNuevo">-</div>
+                        </div>
+                    </div>
+
+                    <div class="amort-savings">
+                        <div class="amort-savings-label">💰 Te ahorras en intereses</div>
+                        <div class="amort-savings-value" id="amortAhorro">-</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Gastos Fijos -->
             <div class="card">
                 <div class="card-header">
@@ -869,6 +1068,7 @@
         // Estado de la aplicación
         let persona2Activo = false;
         let ultimoCalculo = null;
+        let tipoAmortizacion = 'cuota'; // 'cuota' o 'plazo'
 
         // Toggle persona 2
         function togglePersona2() {
@@ -1040,6 +1240,99 @@
         document.getElementById('gastosEscritura').addEventListener('input', actualizarTotalGastos);
         document.getElementById('gastosRegistro').addEventListener('input', actualizarTotalGastos);
         document.getElementById('gastosTasacion').addEventListener('input', actualizarTotalGastos);
+
+        // Establecer tipo de amortización
+        function setTipoAmortizacion(tipo) {
+            tipoAmortizacion = tipo;
+            document.getElementById('btnReducirCuota').classList.toggle('active', tipo === 'cuota');
+            document.getElementById('btnReducirPlazo').classList.toggle('active', tipo === 'plazo');
+            
+            // Recalcular si ya hay datos
+            if (document.getElementById('amortResultados').style.display !== 'none') {
+                calcularAmortizacion();
+            }
+        }
+
+        // Calcular amortización
+        function calcularAmortizacion() {
+            if (!ultimoCalculo) {
+                alert('Primero calcula tu hipoteca');
+                return;
+            }
+
+            const amortizacion = parseFloat(document.getElementById('amortizacion').value) || 0;
+            if (amortizacion <= 0) {
+                alert('Introduce una cantidad a amortizar');
+                return;
+            }
+
+            const { capital, tin, cuota } = ultimoCalculo;
+            const plazoOriginal = parseInt(document.getElementById('plazoHipoteca').value) || 25;
+            const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
+
+            // Validar que no amortice más de lo que debe
+            if (amortizacion >= capital) {
+                alert('La cantidad a amortizar no puede ser mayor que el capital pendiente');
+                return;
+            }
+
+            // Capital restante después de amortizar
+            const nuevoCapital = capital - amortizacion;
+
+            // Cálculos originales
+            const resultadoOriginal = calcularCuota(capital, tin, plazoOriginal);
+
+            let nuevaCuota, nuevoPlazo, resultadoNuevo;
+
+            if (tipoAmortizacion === 'cuota') {
+                // Reducir cuota manteniendo el plazo
+                nuevoPlazo = plazoOriginal;
+                resultadoNuevo = calcularCuota(nuevoCapital, tin, nuevoPlazo);
+                nuevaCuota = resultadoNuevo.cuota;
+            } else {
+                // Reducir plazo manteniendo la cuota
+                nuevaCuota = cuota;
+                // Calcular nuevo plazo con la misma cuota
+                nuevoPlazo = calcularNuevoPlazo(nuevoCapital, tin, cuota);
+                resultadoNuevo = {
+                    cuota: nuevaCuota,
+                    totalPagado: nuevaCuota * nuevoPlazo * 12,
+                    interesesTotales: (nuevaCuota * nuevoPlazo * 12) - nuevoCapital
+                };
+            }
+
+            // Mostrar resultados
+            document.getElementById('amortResultados').style.display = 'block';
+            
+            document.getElementById('amortCuotaOriginal').textContent = formatearMoneda(resultadoOriginal.cuota);
+            document.getElementById('amortPlazoOriginal').textContent = `${plazoOriginal} años (hasta ${inicioHipoteca + plazoOriginal})`;
+            
+            document.getElementById('amortCuotaNueva').textContent = formatearMoneda(nuevaCuota);
+            
+            const plazoMostrar = tipoAmortizacion === 'cuota' 
+                ? `${nuevoPlazo} años (hasta ${inicioHipoteca + nuevoPlazo})`
+                : `${nuevoPlazo.toFixed(1)} años (hasta ${Math.ceil(inicioHipoteca + nuevoPlazo)})`;
+            document.getElementById('amortPlazoNuevo').textContent = plazoMostrar;
+            
+            document.getElementById('amortInteresesOriginal').textContent = formatearMoneda(resultadoOriginal.interesesTotales);
+            document.getElementById('amortInteresesNuevo').textContent = formatearMoneda(resultadoNuevo.interesesTotales);
+            
+            const ahorro = resultadoOriginal.interesesTotales - resultadoNuevo.interesesTotales;
+            document.getElementById('amortAhorro').textContent = formatearMoneda(ahorro);
+        }
+
+        // Calcular nuevo plazo manteniendo la cuota
+        function calcularNuevoPlazo(capital, tin, cuotaMensual) {
+            const r = tin / 100 / 12;
+            
+            if (r === 0) {
+                return capital / cuotaMensual / 12;
+            }
+            
+            // Fórmula: n = -ln(1 - (capital * r / cuota)) / ln(1 + r)
+            const n = -Math.log(1 - (capital * r / cuotaMensual)) / Math.log(1 + r);
+            return n / 12; // Convertir meses a años
+        }
 
         // Inicializar
         actualizarTotalGastos();
