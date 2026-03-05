@@ -525,6 +525,67 @@
             display: none !important;
         }
 
+        /* Mortgage Type Selector */
+        .type-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            background: var(--gray-50);
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .type-btn:hover {
+            border-color: var(--primary-light);
+            background: var(--primary-light);
+        }
+
+        .type-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .type-btn .type-icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .rate-section {
+            display: none;
+        }
+
+        .rate-section.active {
+            display: block;
+        }
+
+        .variable-info {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+
+        .variable-info strong {
+            color: #78350f;
+        }
+
         /* Amortization Section */
         .amort-card {
             background: linear-gradient(135deg, #6ded3a31 0%, #04cf04ad 100%);
@@ -763,13 +824,69 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="tin">TIN Anual (%)
-                        <span class="info-icon" title="Tipo de Interés Nominal anual">?</span>
-                    </label>
-                    <div class="input-with-suffix">
-                        <input type="number" id="tin" value="2.5" min="0" max="20" step="0.1">
-                        <span class="input-suffix">%</span>
+                <label style="margin-bottom: 8px; display: block;">Tipo de hipoteca</label>
+                <div class="type-selector">
+                    <button type="button" class="type-btn active" id="btnTipoFijo" onclick="setTipoHipoteca('fijo')">
+                        <span class="type-icon">🔒</span>
+                        Tipo Fijo
+                    </button>
+                    <button type="button" class="type-btn" id="btnTipoVariable" onclick="setTipoHipoteca('variable')">
+                        <span class="type-icon">📊</span>
+                        Tipo Variable
+                    </button>
+                </div>
+
+                <!-- Tipo Fijo -->
+                <div class="rate-section active" id="seccionFijo">
+                    <div class="form-group">
+                        <label for="tin">TIN Anual (%)
+                            <span class="info-icon" title="Tipo de Interés Nominal anual">?</span>
+                        </label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="tin" value="2.5" min="0" max="20" step="0.1">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipo Variable -->
+                <div class="rate-section" id="seccionVariable">
+                    <div class="variable-info">
+                        ⚠️ <strong>Nota:</strong> En hipotecas variables, la cuota puede cambiar según la evolución del Euríbor. Este cálculo usa el tipo inicial.
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="euribor">Euríbor (%)
+                                <span class="info-icon" title="Índice de referencia europeo">?</span>
+                            </label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="euribor" value="2.5" min="-1" max="10" step="0.01" oninput="actualizarTipoVariable()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="diferencial">Diferencial (%)
+                                <span class="info-icon" title="Margen que añade el banco al Euríbor">?</span>
+                            </label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="diferencial" value="0.75" min="0" max="5" step="0.05" oninput="actualizarTipoVariable()">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                        <label style="margin-bottom: 0; color: var(--primary);">
+                            📈 Tipo inicial (Euríbor + Diferencial): <strong id="tipoInicialVariable">3,25 %</strong>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="tae">TAE (%)
+                            <span class="info-icon" title="Tasa Anual Equivalente - incluye todos los costes del préstamo">?</span>
+                        </label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="tae" value="3.5" min="0" max="25" step="0.1">
+                            <span class="input-suffix">%</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1087,6 +1204,24 @@
         let persona2Activo = false;
         let ultimoCalculo = null;
         let tipoAmortizacion = 'cuota'; // 'cuota' o 'plazo'
+        let tipoHipoteca = 'fijo'; // 'fijo' o 'variable'
+
+        // Cambiar tipo de hipoteca
+        function setTipoHipoteca(tipo) {
+            tipoHipoteca = tipo;
+            document.getElementById('btnTipoFijo').classList.toggle('active', tipo === 'fijo');
+            document.getElementById('btnTipoVariable').classList.toggle('active', tipo === 'variable');
+            document.getElementById('seccionFijo').classList.toggle('active', tipo === 'fijo');
+            document.getElementById('seccionVariable').classList.toggle('active', tipo === 'variable');
+        }
+
+        // Actualizar tipo inicial variable
+        function actualizarTipoVariable() {
+            const euribor = parseFloat(document.getElementById('euribor').value) || 0;
+            const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
+            const tipoInicial = euribor + diferencial;
+            document.getElementById('tipoInicialVariable').textContent = tipoInicial.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
+        }
 
         // Toggle persona 2
         function togglePersona2() {
@@ -1156,7 +1291,19 @@
             const ahorros1 = parseFloat(document.getElementById('ahorros1').value) || 0;
             const ahorros2 = persona2Activo ? (parseFloat(document.getElementById('ahorros2').value) || 0) : 0;
             const totalAhorros = ahorros1 + ahorros2;
-            const tin = parseFloat(document.getElementById('tin').value) || 0;
+            
+            // Obtener tipo de interés según tipo de hipoteca
+            let tin, tae;
+            if (tipoHipoteca === 'fijo') {
+                tin = parseFloat(document.getElementById('tin').value) || 0;
+                tae = tin; // Para tipo fijo, TAE ≈ TIN (simplificado)
+            } else {
+                const euribor = parseFloat(document.getElementById('euribor').value) || 0;
+                const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
+                tin = euribor + diferencial; // Tipo inicial = Euribor + Diferencial
+                tae = parseFloat(document.getElementById('tae').value) || tin;
+            }
+            
             const plazoHipoteca = parseInt(document.getElementById('plazoHipoteca').value) || 25;
             const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
             
@@ -1176,7 +1323,7 @@
             const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
             
             // Guardar último cálculo
-            ultimoCalculo = { cuota, capital, tin, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
+            ultimoCalculo = { cuota, capital, tin, tae, tipoHipoteca, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
             
             // Mostrar resultados
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
@@ -1360,6 +1507,7 @@
 
         // Inicializar
         actualizarTotalGastos();
+        actualizarTipoVariable();
     </script>
 </body>
 </html>
