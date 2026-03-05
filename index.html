@@ -586,6 +586,108 @@
             color: #78350f;
         }
 
+        /* Promotional Period Toggle */
+        .promo-toggle {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .promo-toggle:hover {
+            border-color: var(--primary-light);
+            background: var(--primary-light);
+        }
+
+        .promo-toggle.active {
+            background: #dbeafe;
+            border-color: var(--primary);
+        }
+
+        .promo-content {
+            display: none;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .promo-content.show {
+            display: block;
+        }
+
+        .promo-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #0369a1;
+            font-weight: 600;
+        }
+
+        .tramo-box {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tramo-box.tramo-promo {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+
+        .tramo-box.tramo-variable {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .tramo-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .tramo-promo .tramo-label {
+            color: #0369a1;
+        }
+
+        .tramo-variable .tramo-label {
+            color: #b45309;
+        }
+
+        .tramo-details {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tramo-item {
+            text-align: center;
+        }
+
+        .tramo-item-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .tramo-item-label {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+        }
+
         /* Amortization Section */
         .amort-card {
             background: linear-gradient(135deg, #6ded3a31 0%, #04cf04ad 100%);
@@ -852,15 +954,50 @@
                 <!-- Tipo Variable -->
                 <div class="rate-section" id="seccionVariable">
                     <div class="variable-info">
-                        ⚠️ <strong>Nota:</strong> En hipotecas variables, la cuota puede cambiar según la evolución del Euríbor. Este cálculo usa el tipo inicial.
+                        ⚠️ <strong>Nota:</strong> En hipotecas variables, la cuota puede cambiar según la evolución del Euríbor. Revisión anual habitual.
                     </div>
+
+                    <!-- Toggle periodo promocional -->
+                    <div class="promo-toggle" id="promoToggle" onclick="togglePeriodoPromo()">
+                        <span>🎁 ¿Tipo inicial promocional? (ej: primer año reducido)</span>
+                        <span class="chevron">▼</span>
+                    </div>
+
+                    <!-- Periodo promocional -->
+                    <div class="promo-content" id="promoContent">
+                        <div class="promo-header">
+                            <span>🌟</span> Periodo Promocional / Tipo Inicial Fijo
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tinPromo">TIN Promocional (%)
+                                    <span class="info-icon" title="Tipo de interés del periodo inicial">?</span>
+                                </label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="tinPromo" value="1.89" min="0" max="10" step="0.01" oninput="actualizarResumenVariable()">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="duracionPromo">Duración (meses)
+                                    <span class="info-icon" title="Meses con tipo promocional">?</span>
+                                </label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="duracionPromo" value="12" min="1" max="120" step="1" oninput="actualizarResumenVariable()">
+                                    <span class="input-suffix">meses</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tipo variable resto del plazo -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="euribor">Euríbor (%)
                                 <span class="info-icon" title="Índice de referencia europeo">?</span>
                             </label>
                             <div class="input-with-suffix">
-                                <input type="number" id="euribor" value="2.5" min="-1" max="10" step="0.01" oninput="actualizarTipoVariable()">
+                                <input type="number" id="euribor" value="2.22" min="-1" max="10" step="0.01" oninput="actualizarTipoVariable()">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
@@ -869,23 +1006,62 @@
                                 <span class="info-icon" title="Margen que añade el banco al Euríbor">?</span>
                             </label>
                             <div class="input-with-suffix">
-                                <input type="number" id="diferencial" value="0.75" min="0" max="5" step="0.05" oninput="actualizarTipoVariable()">
+                                <input type="number" id="diferencial" value="1.50" min="0" max="5" step="0.05" oninput="actualizarTipoVariable()">
                                 <span class="input-suffix">%</span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-                        <label style="margin-bottom: 0; color: var(--primary);">
-                            📈 Tipo inicial (Euríbor + Diferencial): <strong id="tipoInicialVariable">3,25 %</strong>
+                    <div class="form-group" style="background: #fffbeb; border: 1px solid #f59e0b; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                        <label style="margin-bottom: 0; color: #b45309;">
+                            📈 Tipo variable (Euríbor + Diferencial): <strong id="tipoInicialVariable">3,72 %</strong>
                         </label>
                     </div>
                     <div class="form-group">
-                        <label for="tae">TAE (%)
-                            <span class="info-icon" title="Tasa Anual Equivalente - incluye todos los costes del préstamo">?</span>
+                        <label for="tae">TAE Variable (%)
+                            <span class="info-icon" title="Tasa Anual Equivalente - indicador del coste total">?</span>
                         </label>
                         <div class="input-with-suffix">
-                            <input type="number" id="tae" value="3.5" min="0" max="25" step="0.1">
+                            <input type="number" id="tae" value="3.99" min="0" max="25" step="0.01">
                             <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+
+                    <!-- Resumen por tramos -->
+                    <div id="resumenTramos" style="display: none; margin-top: 16px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block;">📊 Resumen por tramos</label>
+                        <div class="tramo-box tramo-promo">
+                            <div class="tramo-label">🎁 Periodo Promocional</div>
+                            <div class="tramo-details">
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoCuotaPromo">-</div>
+                                    <div class="tramo-item-label">Cuota/mes</div>
+                                </div>
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoTinPromo">-</div>
+                                    <div class="tramo-item-label">TIN</div>
+                                </div>
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoDuracionPromo">-</div>
+                                    <div class="tramo-item-label">Duración</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tramo-box tramo-variable">
+                            <div class="tramo-label">📈 Resto del Plazo (Variable)</div>
+                            <div class="tramo-details">
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoCuotaVariable">-</div>
+                                    <div class="tramo-item-label">Cuota/mes</div>
+                                </div>
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoTinVariable">-</div>
+                                    <div class="tramo-item-label">TIN</div>
+                                </div>
+                                <div class="tramo-item">
+                                    <div class="tramo-item-value" id="tramoDuracionVariable">-</div>
+                                    <div class="tramo-item-label">Duración</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1205,6 +1381,7 @@
         let ultimoCalculo = null;
         let tipoAmortizacion = 'cuota'; // 'cuota' o 'plazo'
         let tipoHipoteca = 'fijo'; // 'fijo' o 'variable'
+        let periodoPromoActivo = false;
 
         // Cambiar tipo de hipoteca
         function setTipoHipoteca(tipo) {
@@ -1215,12 +1392,40 @@
             document.getElementById('seccionVariable').classList.toggle('active', tipo === 'variable');
         }
 
+        // Toggle periodo promocional
+        function togglePeriodoPromo() {
+            periodoPromoActivo = !periodoPromoActivo;
+            document.getElementById('promoToggle').classList.toggle('active', periodoPromoActivo);
+            document.getElementById('promoContent').classList.toggle('show', periodoPromoActivo);
+            document.getElementById('resumenTramos').style.display = periodoPromoActivo ? 'block' : 'none';
+            actualizarResumenVariable();
+        }
+
         // Actualizar tipo inicial variable
         function actualizarTipoVariable() {
             const euribor = parseFloat(document.getElementById('euribor').value) || 0;
             const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
             const tipoInicial = euribor + diferencial;
             document.getElementById('tipoInicialVariable').textContent = tipoInicial.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
+            actualizarResumenVariable();
+        }
+
+        // Actualizar resumen de tramos variable
+        function actualizarResumenVariable() {
+            if (!periodoPromoActivo) return;
+            
+            const tinPromo = parseFloat(document.getElementById('tinPromo').value) || 0;
+            const duracionPromo = parseInt(document.getElementById('duracionPromo').value) || 12;
+            const euribor = parseFloat(document.getElementById('euribor').value) || 0;
+            const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
+            const tinVariable = euribor + diferencial;
+            const plazoTotal = parseInt(document.getElementById('plazoHipoteca').value) || 25;
+            const mesesRestantes = (plazoTotal * 12) - duracionPromo;
+            
+            document.getElementById('tramoTinPromo').textContent = tinPromo.toFixed(2) + '%';
+            document.getElementById('tramoDuracionPromo').textContent = duracionPromo + ' meses';
+            document.getElementById('tramoTinVariable').textContent = tinVariable.toFixed(2) + '%';
+            document.getElementById('tramoDuracionVariable').textContent = Math.max(0, mesesRestantes) + ' meses';
         }
 
         // Toggle persona 2
@@ -1257,7 +1462,7 @@
             return valor.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';
         }
 
-        // Calcular cuota mensual
+        // Calcular cuota mensual (plazo en años)
         function calcularCuota(capital, tin, plazoAnios) {
             const r = tin / 100 / 12;
             const n = plazoAnios * 12;
@@ -1277,6 +1482,19 @@
             return { cuota, totalPagado, interesesTotales };
         }
 
+        // Calcular cuota mensual (plazo en meses)
+        function calcularCuotaMensual(capital, tin, plazoMeses) {
+            const r = tin / 100 / 12;
+            const n = plazoMeses;
+            
+            if (r === 0 || n === 0) {
+                return { cuota: n > 0 ? capital / n : 0 };
+            }
+            
+            const cuota = (capital * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            return { cuota };
+        }
+
         // Función principal de cálculo
         function calcular() {
             // Obtener valores
@@ -1293,16 +1511,8 @@
             const totalAhorros = ahorros1 + ahorros2;
             
             // Obtener tipo de interés según tipo de hipoteca
-            let tin, tae;
-            if (tipoHipoteca === 'fijo') {
-                tin = parseFloat(document.getElementById('tin').value) || 0;
-                tae = tin; // Para tipo fijo, TAE ≈ TIN (simplificado)
-            } else {
-                const euribor = parseFloat(document.getElementById('euribor').value) || 0;
-                const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
-                tin = euribor + diferencial; // Tipo inicial = Euribor + Diferencial
-                tae = parseFloat(document.getElementById('tae').value) || tin;
-            }
+            let tin, tae, cuota, totalPagado, interesesTotales;
+            let cuotaPromo = 0, cuotaVariable = 0;
             
             const plazoHipoteca = parseInt(document.getElementById('plazoHipoteca').value) || 25;
             const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
@@ -1312,18 +1522,88 @@
             const gastosRegistro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
             const gastosTasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
             
-            // Cálculos
+            // Cálculos base
             const impuestoCompra = costeVivienda * (taxRate / 100);
             const gastosGestion = gastosEscritura + gastosRegistro + gastosTasacion;
             const capital = Math.max(0, costeVivienda - totalAhorros + impuestoCompra + gastosGestion);
             const entrada = Math.max(0, totalAhorros - impuestoCompra - gastosGestion);
             
-            const { cuota, totalPagado, interesesTotales } = calcularCuota(capital, tin, plazoHipoteca);
+            if (tipoHipoteca === 'fijo') {
+                // Hipoteca tipo fijo - cálculo simple
+                tin = parseFloat(document.getElementById('tin').value) || 0;
+                tae = tin;
+                const resultado = calcularCuota(capital, tin, plazoHipoteca);
+                cuota = resultado.cuota;
+                totalPagado = resultado.totalPagado;
+                interesesTotales = resultado.interesesTotales;
+            } else {
+                // Hipoteca tipo variable
+                const euribor = parseFloat(document.getElementById('euribor').value) || 0;
+                const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
+                const tinVariable = euribor + diferencial;
+                tae = parseFloat(document.getElementById('tae').value) || tinVariable;
+                
+                if (periodoPromoActivo) {
+                    // Cálculo con periodo promocional (hipoteca mixta/tramos)
+                    const tinPromo = parseFloat(document.getElementById('tinPromo').value) || 0;
+                    const duracionPromoMeses = parseInt(document.getElementById('duracionPromo').value) || 12;
+                    const plazoTotalMeses = plazoHipoteca * 12;
+                    const mesesRestantes = plazoTotalMeses - duracionPromoMeses;
+                    
+                    // Calcular cuota del periodo promocional (como si fuera todo el plazo)
+                    const resultadoPromo = calcularCuotaMensual(capital, tinPromo, plazoTotalMeses);
+                    cuotaPromo = resultadoPromo.cuota;
+                    
+                    // Capital pagado durante el periodo promocional
+                    let capitalRestante = capital;
+                    let interesesPromo = 0;
+                    const rPromo = tinPromo / 100 / 12;
+                    
+                    for (let i = 0; i < duracionPromoMeses; i++) {
+                        const interesMes = capitalRestante * rPromo;
+                        const capitalMes = cuotaPromo - interesMes;
+                        interesesPromo += interesMes;
+                        capitalRestante -= capitalMes;
+                    }
+                    
+                    // Calcular cuota del periodo variable con el capital restante
+                    if (mesesRestantes > 0 && capitalRestante > 0) {
+                        const resultadoVariable = calcularCuotaMensual(capitalRestante, tinVariable, mesesRestantes);
+                        cuotaVariable = resultadoVariable.cuota;
+                        
+                        // Intereses del periodo variable
+                        const interesesVariable = (cuotaVariable * mesesRestantes) - capitalRestante;
+                        
+                        interesesTotales = interesesPromo + Math.max(0, interesesVariable);
+                        totalPagado = (cuotaPromo * duracionPromoMeses) + (cuotaVariable * mesesRestantes);
+                    } else {
+                        interesesTotales = interesesPromo;
+                        totalPagado = cuotaPromo * duracionPromoMeses;
+                        cuotaVariable = 0;
+                    }
+                    
+                    // La cuota mostrada será la del periodo variable (la más representativa)
+                    cuota = cuotaVariable > 0 ? cuotaVariable : cuotaPromo;
+                    tin = tinVariable; // Para la tabla comparativa
+                    
+                    // Actualizar resumen de tramos
+                    document.getElementById('tramoCuotaPromo').textContent = formatearMoneda(cuotaPromo);
+                    document.getElementById('tramoCuotaVariable').textContent = cuotaVariable > 0 ? formatearMoneda(cuotaVariable) : '-';
+                } else {
+                    // Variable sin periodo promocional
+                    tin = tinVariable;
+                    const resultado = calcularCuota(capital, tin, plazoHipoteca);
+                    cuota = resultado.cuota;
+                    totalPagado = resultado.totalPagado;
+                    interesesTotales = resultado.interesesTotales;
+                }
+            }
+            
             const finHipoteca = inicioHipoteca + plazoHipoteca;
             const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
             
             // Guardar último cálculo
-            ultimoCalculo = { cuota, capital, tin, tae, tipoHipoteca, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
+            ultimoCalculo = { cuota, cuotaPromo, cuotaVariable, capital, tin, tae, tipoHipoteca, periodoPromoActivo, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
             
             // Mostrar resultados
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
@@ -1508,6 +1788,7 @@
         // Inicializar
         actualizarTotalGastos();
         actualizarTipoVariable();
+        actualizarResumenVariable();
     </script>
 </body>
 </html>
