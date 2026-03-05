@@ -1139,6 +1139,10 @@
                     <span class="result-value" id="resEntrada">-</span>
                 </div>
                 <div class="result-item">
+                    <span class="result-label">📝 Impuestos + Gastos gestión</span>
+                    <span class="result-value" id="resImpuestosGastos">-</span>
+                </div>
+                <div class="result-item">
                     <span class="result-label">🏦 Capital hipotecado</span>
                     <span class="result-value" id="resCapital">-</span>
                 </div>
@@ -1517,7 +1521,9 @@
             const plazoHipoteca = parseInt(document.getElementById('plazoHipoteca').value) || 25;
             const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
             
-            const taxRate = parseFloat(document.getElementById('taxRate').value) || 7.5;
+            // Usar parseFloat con manejo de valores 0 (no usar || que trata 0 como falsy)
+            const taxRateInput = document.getElementById('taxRate').value;
+            const taxRate = taxRateInput !== '' ? parseFloat(taxRateInput) : 7.5;
             const gastosEscritura = parseFloat(document.getElementById('gastosEscritura').value) || 0;
             const gastosRegistro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
             const gastosTasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
@@ -1608,9 +1614,10 @@
             // Mostrar resultados
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
             document.getElementById('resCosteVivienda').textContent = formatearMoneda(costeVivienda);
-            document.getElementById('resEntrada').textContent = formatearMoneda(Math.max(0, entrada));
+            document.getElementById('resEntrada').textContent = formatearMoneda(entrada);
+            document.getElementById('resImpuestosGastos').textContent = formatearMoneda(impuestoCompra + gastosGestion);
             document.getElementById('resCapital').textContent = formatearMoneda(capital);
-            document.getElementById('resIntereses').textContent = formatearMoneda(interesesTotales);
+            document.getElementById('resIntereses').textContent = formatearMoneda(Math.max(0, interesesTotales));
             document.getElementById('resTotalPagado').textContent = formatearMoneda(totalPagado);
             document.getElementById('resCosteTotalVivienda').textContent = formatearMoneda(costeTotalVivienda);
             document.getElementById('resFinHipoteca').textContent = finHipoteca;
