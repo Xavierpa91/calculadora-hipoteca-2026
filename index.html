@@ -874,8 +874,8 @@
                             <option value="10">10 años</option>
                             <option value="15">15 años</option>
                             <option value="20">20 años</option>
-                            <option value="25" selected>25 años</option>
-                            <option value="30">30 años</option>
+                            <option value="25">25 años</option>
+                            <option value="30" selected>30 años</option>
                             <option value="35">35 años</option>
                         </select>
                     </div>
@@ -913,6 +913,26 @@
                     <label style="margin-bottom: 0; color: var(--primary);">
                         💰 Total ahorros: <strong id="totalAhorros">0 €</strong>
                     </label>
+                </div>
+
+                <div class="section-divider">O introducir capital</div>
+
+                <div class="toggle-section" id="capitalDirectoToggle" onclick="toggleCapitalDirecto()">
+                    <span>🏦 ¿Introducir importe del préstamo directamente?</span>
+                    <span class="chevron">▼</span>
+                </div>
+
+                <div class="form-group toggle-content" id="capitalDirectoContainer">
+                    <label for="capitalDirecto">Importe del préstamo (€)
+                        <span class="info-icon" title="Capital a hipotecar (como en calculadoras de bancos)">?</span>
+                    </label>
+                    <div class="input-with-suffix">
+                        <input type="number" id="capitalDirecto" placeholder="245000" min="0" step="1000">
+                        <span class="input-suffix">€</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: 8px;">
+                        ⚠️ Al activar esto, se ignoran precio vivienda, ahorros, ITP y gastos. Útil para comparar con calculadoras de bancos.
+                    </p>
                 </div>
             </div>
 
@@ -1386,6 +1406,14 @@
         let tipoAmortizacion = 'cuota'; // 'cuota' o 'plazo'
         let tipoHipoteca = 'fijo'; // 'fijo' o 'variable'
         let periodoPromoActivo = false;
+        let capitalDirectoActivo = false;
+
+        // Toggle capital directo
+        function toggleCapitalDirecto() {
+            capitalDirectoActivo = !capitalDirectoActivo;
+            document.getElementById('capitalDirectoToggle').classList.toggle('active', capitalDirectoActivo);
+            document.getElementById('capitalDirectoContainer').classList.toggle('show', capitalDirectoActivo);
+        }
 
         // Cambiar tipo de hipoteca
         function setTipoHipoteca(tipo) {
@@ -1522,17 +1550,32 @@
             const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
             
             // Usar parseFloat con manejo de valores 0 (no usar || que trata 0 como falsy)
-            const taxRateInput = document.getElementById('taxRate').value;
-            const taxRate = taxRateInput !== '' ? parseFloat(taxRateInput) : 7.5;
-            const gastosEscritura = parseFloat(document.getElementById('gastosEscritura').value) || 0;
-            const gastosRegistro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
-            const gastosTasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
-            
             // Cálculos base
-            const impuestoCompra = costeVivienda * (taxRate / 100);
-            const gastosGestion = gastosEscritura + gastosRegistro + gastosTasacion;
-            const capital = Math.max(0, costeVivienda - totalAhorros + impuestoCompra + gastosGestion);
-            const entrada = Math.max(0, totalAhorros - impuestoCompra - gastosGestion);
+            let capital, entrada, impuestoCompra, gastosGestion;
+            
+            if (capitalDirectoActivo) {
+                // Usar capital introducido directamente (modo banco)
+                capital = parseFloat(document.getElementById('capitalDirecto').value) || 0;
+                if (capital <= 0) {
+                    alert('Introduce el importe del préstamo');
+                    return;
+                }
+                entrada = 0; // No aplica en modo directo
+                impuestoCompra = 0;
+                gastosGestion = 0;
+            } else {
+                // Calcular capital desde precio vivienda y ahorros
+                const taxRateInput = document.getElementById('taxRate').value;
+                const taxRate = taxRateInput !== '' ? parseFloat(taxRateInput) : 7.5;
+                const gastosEscritura = parseFloat(document.getElementById('gastosEscritura').value) || 0;
+                const gastosRegistro = parseFloat(document.getElementById('gastosRegistro').value) || 0;
+                const gastosTasacion = parseFloat(document.getElementById('gastosTasacion').value) || 0;
+                
+                impuestoCompra = costeVivienda * (taxRate / 100);
+                gastosGestion = gastosEscritura + gastosRegistro + gastosTasacion;
+                capital = Math.max(0, costeVivienda - totalAhorros + impuestoCompra + gastosGestion);
+                entrada = Math.max(0, totalAhorros - impuestoCompra - gastosGestion);
+            }
             
             if (tipoHipoteca === 'fijo') {
                 // Hipoteca tipo fijo - cálculo simple
@@ -1606,16 +1649,18 @@
             }
             
             const finHipoteca = inicioHipoteca + plazoHipoteca;
-            const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
+            const costeTotalVivienda = capitalDirectoActivo 
+                ? capital + interesesTotales 
+                : costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
             
             // Guardar último cálculo
-            ultimoCalculo = { cuota, cuotaPromo, cuotaVariable, capital, tin, tae, tipoHipoteca, periodoPromoActivo, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
+            ultimoCalculo = { cuota, cuotaPromo, cuotaVariable, capital, tin, tae, tipoHipoteca, periodoPromoActivo, capitalDirectoActivo, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
             
             // Mostrar resultados
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
-            document.getElementById('resCosteVivienda').textContent = formatearMoneda(costeVivienda);
-            document.getElementById('resEntrada').textContent = formatearMoneda(entrada);
-            document.getElementById('resImpuestosGastos').textContent = formatearMoneda(impuestoCompra + gastosGestion);
+            document.getElementById('resCosteVivienda').textContent = capitalDirectoActivo ? '-' : formatearMoneda(costeVivienda);
+            document.getElementById('resEntrada').textContent = capitalDirectoActivo ? '-' : formatearMoneda(entrada);
+            document.getElementById('resImpuestosGastos').textContent = capitalDirectoActivo ? '-' : formatearMoneda(impuestoCompra + gastosGestion);
             document.getElementById('resCapital').textContent = formatearMoneda(capital);
             document.getElementById('resIntereses').textContent = formatearMoneda(Math.max(0, interesesTotales));
             document.getElementById('resTotalPagado').textContent = formatearMoneda(totalPagado);
