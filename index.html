@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Hipoteca 2026</title>
+    <title>Calculadora Hipoteca 2026 - V2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -41,10 +41,42 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
+        /* === V2 Layout === */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: min(1600px, 95vw);
             margin: 0 auto;
             padding: 20px;
+        }
+
+        @media (min-width: 1400px) {
+            .page-layout {
+                grid-template-columns: 1fr 380px;
+            }
+            .sidebar {
+                position: sticky;
+                top: 20px;
+                align-self: start;
+                max-height: calc(100vh - 40px);
+                overflow-y: auto;
+                scrollbar-width: thin;
+            }
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 1399px) and (min-width: 768px) {
+            .sidebar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
         }
 
         header {
@@ -485,7 +517,7 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .container {
+            .page-layout {
                 padding: 12px;
             }
 
@@ -814,7 +846,7 @@
                 flex-direction: row;
                 align-items: end;
             }
-            
+
             .amort-input-row .input-with-suffix {
                 flex: 1;
             }
@@ -838,6 +870,188 @@
         .amort-input-row .btn:hover {
             background: rgba(255,255,255,0.9);
         }
+
+        /* === V2: ECB Card === */
+        .ecb-rate-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.875rem;
+        }
+        .ecb-rate-label {
+            color: var(--gray-700);
+        }
+        .ecb-rate-value {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1rem;
+        }
+        .ecb-euribor-highlight {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .ecb-euribor-highlight:hover {
+            transform: scale(1.02);
+        }
+        .ecb-euribor-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #92400e;
+        }
+        .ecb-euribor-label {
+            font-size: 0.85rem;
+            color: #b45309;
+            margin-top: 4px;
+        }
+
+        /* === V2: Bank Offers Card === */
+        .ofertas-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .ofertas-tab {
+            flex: 1;
+            padding: 10px 8px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            background: var(--gray-50);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .ofertas-tab:hover {
+            border-color: var(--primary-light);
+            background: var(--primary-light);
+        }
+        .ofertas-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+        .ofertas-list {
+            max-height: 600px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        .oferta-item {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s ease;
+        }
+        .oferta-item:hover {
+            border-color: var(--primary);
+        }
+        .oferta-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .oferta-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .oferta-banco {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .ltv-indicators {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .ltv-badge {
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 6px 12px;
+            text-align: center;
+        }
+        .ltv-badge-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .ltv-badge-label {
+            font-size: 0.7rem;
+            opacity: 0.85;
+        }
+        .oferta-rates {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        .oferta-rate {
+            text-align: center;
+        }
+        .oferta-rate-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .oferta-rate-label {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+        }
+        .oferta-condiciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .oferta-cond-tag {
+            display: inline-block;
+            background: var(--gray-200);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            color: var(--gray-700);
+        }
+        .oferta-usar-btn {
+            width: 100%;
+            padding: 8px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        .oferta-usar-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* === V2: Mobile responsive for offers === */
+        @media (max-width: 767px) {
+            .ofertas-list {
+                max-height: 400px;
+            }
+            .oferta-rates {
+                gap: 8px;
+            }
+            .oferta-rate-value {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -846,623 +1060,753 @@
         <p>Calcula tu hipoteca y gastos mensuales de forma sencilla</p>
     </header>
 
-    <div class="container">
-        <div class="main-grid">
-            <!-- Datos de la vivienda -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon blue">🏡</div>
-                    <div>
-                        <div class="card-title">Datos de la Vivienda</div>
-                        <div class="card-subtitle">Información básica de la compra</div>
+    <div class="page-layout">
+        <div class="main-content">
+            <div class="main-grid">
+                <!-- Datos de la vivienda -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon blue">🏡</div>
+                        <div>
+                            <div class="card-title">Datos de la Vivienda</div>
+                            <div class="card-subtitle">Información básica de la compra</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="costeVivienda">Precio de la vivienda (€)</label>
-                    <div class="input-with-suffix">
-                        <input type="number" id="costeVivienda" placeholder="0" min="0" step="1000">
-                        <span class="input-suffix">€</span>
-                    </div>
-                </div>
-
-                <div class="form-row">
                     <div class="form-group">
-                        <label for="plazoHipoteca">Plazo (años)</label>
-                        <select id="plazoHipoteca">
-                            <option value="5">5 años</option>
-                            <option value="10">10 años</option>
-                            <option value="15">15 años</option>
-                            <option value="20">20 años</option>
-                            <option value="25">25 años</option>
-                            <option value="30" selected>30 años</option>
-                            <option value="35">35 años</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inicioHipoteca">Año firma</label>
-                        <input type="number" id="inicioHipoteca" value="2026" min="2024" max="2050">
-                    </div>
-                </div>
-
-                <div class="section-divider">Ahorros</div>
-
-                <div class="toggle-section" onclick="togglePersona2()">
-                    <span>👥 ¿Compra conjunta? (2 personas)</span>
-                    <span class="chevron">▼</span>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="ahorros1">Ahorros Persona 1 (€)</label>
+                        <label for="costeVivienda">Precio de la vivienda (€)</label>
                         <div class="input-with-suffix">
-                            <input type="number" id="ahorros1" placeholder="0" min="0" step="1000">
+                            <input type="number" id="costeVivienda" placeholder="0" min="0" step="1000">
                             <span class="input-suffix">€</span>
                         </div>
                     </div>
-                    <div class="form-group toggle-content" id="persona2Container">
-                        <label for="ahorros2">Ahorros Persona 2 (€)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="ahorros2" placeholder="0" min="0" step="1000">
-                            <span class="input-suffix">€</span>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plazoHipoteca">Plazo (años)</label>
+                            <select id="plazoHipoteca">
+                                <option value="5">5 años</option>
+                                <option value="10">10 años</option>
+                                <option value="15">15 años</option>
+                                <option value="20">20 años</option>
+                                <option value="25">25 años</option>
+                                <option value="30" selected>30 años</option>
+                                <option value="35">35 años</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inicioHipoteca">Año firma</label>
+                            <input type="number" id="inicioHipoteca" value="2026" min="2024" max="2050">
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
-                    <label style="margin-bottom: 0; color: var(--primary);">
-                        💰 Total ahorros: <strong id="totalAhorros">0 €</strong>
-                    </label>
-                </div>
+                    <div class="section-divider">Ahorros</div>
 
-                <div class="section-divider">O introducir capital</div>
-
-                <div class="toggle-section" id="capitalDirectoToggle" onclick="toggleCapitalDirecto()">
-                    <span>🏦 ¿Introducir importe del préstamo directamente?</span>
-                    <span class="chevron">▼</span>
-                </div>
-
-                <div class="form-group toggle-content" id="capitalDirectoContainer">
-                    <label for="capitalDirecto">Importe del préstamo (€)
-                        <span class="info-icon" title="Capital a hipotecar (como en calculadoras de bancos)">?</span>
-                    </label>
-                    <div class="input-with-suffix">
-                        <input type="number" id="capitalDirecto" placeholder="0" min="0" step="1000">
-                        <span class="input-suffix">€</span>
-                    </div>
-                    <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: 8px;">
-                        ⚠️ Al activar esto, se ignoran precio vivienda, ahorros, ITP y gastos. Útil para comparar con calculadoras de bancos.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Configuración de la Hipoteca -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon purple">⚙️</div>
-                    <div>
-                        <div class="card-title">Configuración</div>
-                        <div class="card-subtitle">Ajusta los parámetros del cálculo</div>
-                    </div>
-                </div>
-
-                <label style="margin-bottom: 8px; display: block;">Tipo de hipoteca</label>
-                <div class="type-selector">
-                    <button type="button" class="type-btn active" id="btnTipoFijo" onclick="setTipoHipoteca('fijo')">
-                        <span class="type-icon">🔒</span>
-                        Tipo Fijo
-                    </button>
-                    <button type="button" class="type-btn" id="btnTipoVariable" onclick="setTipoHipoteca('variable')">
-                        <span class="type-icon">📊</span>
-                        Tipo Variable
-                    </button>
-                </div>
-
-                <!-- Tipo Fijo -->
-                <div class="rate-section active" id="seccionFijo">
-                    <div class="form-group">
-                        <label for="tin">TIN Anual (%)
-                            <span class="info-icon" title="Tipo de Interés Nominal anual">?</span>
-                        </label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="tin" value="2.5" min="0" max="20" step="0.1">
-                            <span class="input-suffix">%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tipo Variable -->
-                <div class="rate-section" id="seccionVariable">
-                    <div class="variable-info">
-                        ⚠️ <strong>Nota:</strong> En hipotecas variables, la cuota puede cambiar según la evolución del Euríbor. Revisión anual habitual.
-                    </div>
-
-                    <!-- Toggle periodo promocional -->
-                    <div class="promo-toggle" id="promoToggle" onclick="togglePeriodoPromo()">
-                        <span>🎁 ¿Tipo inicial promocional? (ej: primer año reducido)</span>
+                    <div class="toggle-section" onclick="togglePersona2()">
+                        <span>👥 ¿Compra conjunta? (2 personas)</span>
                         <span class="chevron">▼</span>
                     </div>
 
-                    <!-- Periodo promocional -->
-                    <div class="promo-content" id="promoContent">
-                        <div class="promo-header">
-                            <span>🌟</span> Periodo Promocional / Tipo Inicial Fijo
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ahorros1">Ahorros Persona 1 (€)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="ahorros1" placeholder="0" min="0" step="1000">
+                                <span class="input-suffix">€</span>
+                            </div>
                         </div>
+                        <div class="form-group toggle-content" id="persona2Container">
+                            <label for="ahorros2">Ahorros Persona 2 (€)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="ahorros2" placeholder="0" min="0" step="1000">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
+                        <label style="margin-bottom: 0; color: var(--primary);">
+                            💰 Total ahorros: <strong id="totalAhorros">0 €</strong>
+                        </label>
+                    </div>
+
+                    <div class="section-divider">O introducir capital</div>
+
+                    <div class="toggle-section" id="capitalDirectoToggle" onclick="toggleCapitalDirecto()">
+                        <span>🏦 ¿Introducir importe del préstamo directamente?</span>
+                        <span class="chevron">▼</span>
+                    </div>
+
+                    <div class="form-group toggle-content" id="capitalDirectoContainer">
+                        <label for="capitalDirecto">Importe del préstamo (€)
+                            <span class="info-icon" title="Capital a hipotecar (como en calculadoras de bancos)">?</span>
+                        </label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="capitalDirecto" placeholder="0" min="0" step="1000">
+                            <span class="input-suffix">€</span>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: 8px;">
+                            ⚠️ Al activar esto, se ignoran precio vivienda, ahorros, ITP y gastos. Útil para comparar con calculadoras de bancos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Configuración de la Hipoteca -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">⚙️</div>
+                        <div>
+                            <div class="card-title">Configuración</div>
+                            <div class="card-subtitle">Ajusta los parámetros del cálculo</div>
+                        </div>
+                    </div>
+
+                    <label style="margin-bottom: 8px; display: block;">Tipo de hipoteca</label>
+                    <div class="type-selector">
+                        <button type="button" class="type-btn active" id="btnTipoFijo" onclick="setTipoHipoteca('fijo')">
+                            <span class="type-icon">🔒</span>
+                            Tipo Fijo
+                        </button>
+                        <button type="button" class="type-btn" id="btnTipoVariable" onclick="setTipoHipoteca('variable')">
+                            <span class="type-icon">📊</span>
+                            Tipo Variable
+                        </button>
+                    </div>
+
+                    <!-- Tipo Fijo -->
+                    <div class="rate-section active" id="seccionFijo">
+                        <div class="form-group">
+                            <label for="tin">TIN Anual (%)
+                                <span class="info-icon" title="Tipo de Interés Nominal anual">?</span>
+                            </label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="tin" value="2.5" min="0" max="20" step="0.1">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tipo Variable -->
+                    <div class="rate-section" id="seccionVariable">
+                        <div class="variable-info">
+                            ⚠️ <strong>Nota:</strong> En hipotecas variables, la cuota puede cambiar según la evolución del Euríbor. Revisión anual habitual.
+                        </div>
+
+                        <!-- Toggle periodo promocional -->
+                        <div class="promo-toggle" id="promoToggle" onclick="togglePeriodoPromo()">
+                            <span>🎁 ¿Tipo inicial promocional? (ej: primer año reducido)</span>
+                            <span class="chevron">▼</span>
+                        </div>
+
+                        <!-- Periodo promocional -->
+                        <div class="promo-content" id="promoContent">
+                            <div class="promo-header">
+                                <span>🌟</span> Periodo Promocional / Tipo Inicial Fijo
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tinPromo">TIN Promocional (%)
+                                        <span class="info-icon" title="Tipo de interés del periodo inicial">?</span>
+                                    </label>
+                                    <div class="input-with-suffix">
+                                        <input type="number" id="tinPromo" value="1.89" min="0" max="10" step="0.01" oninput="actualizarResumenVariable()">
+                                        <span class="input-suffix">%</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="duracionPromo">Duración (meses)
+                                        <span class="info-icon" title="Meses con tipo promocional">?</span>
+                                    </label>
+                                    <div class="input-with-suffix">
+                                        <input type="number" id="duracionPromo" value="12" min="1" max="120" step="1" oninput="actualizarResumenVariable()">
+                                        <span class="input-suffix">meses</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tipo variable resto del plazo -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="tinPromo">TIN Promocional (%)
-                                    <span class="info-icon" title="Tipo de interés del periodo inicial">?</span>
+                                <label for="euribor">Euríbor (%)
+                                    <span class="info-icon" title="Índice de referencia europeo">?</span>
                                 </label>
                                 <div class="input-with-suffix">
-                                    <input type="number" id="tinPromo" value="1.89" min="0" max="10" step="0.01" oninput="actualizarResumenVariable()">
+                                    <input type="number" id="euribor" value="2.22" min="-1" max="10" step="0.01" oninput="actualizarTipoVariable()">
                                     <span class="input-suffix">%</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="duracionPromo">Duración (meses)
-                                    <span class="info-icon" title="Meses con tipo promocional">?</span>
+                                <label for="diferencial">Diferencial (%)
+                                    <span class="info-icon" title="Margen que añade el banco al Euríbor">?</span>
                                 </label>
                                 <div class="input-with-suffix">
-                                    <input type="number" id="duracionPromo" value="12" min="1" max="120" step="1" oninput="actualizarResumenVariable()">
-                                    <span class="input-suffix">meses</span>
+                                    <input type="number" id="diferencial" value="1.50" min="0" max="5" step="0.05" oninput="actualizarTipoVariable()">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="background: #fffbeb; border: 1px solid #f59e0b; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                            <label style="margin-bottom: 0; color: #b45309;">
+                                📈 Tipo variable (Euríbor + Diferencial): <strong id="tipoInicialVariable">3,72 %</strong>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="tae">TAE Variable (%)
+                                <span class="info-icon" title="Tasa Anual Equivalente - indicador del coste total">?</span>
+                            </label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="tae" value="3.99" min="0" max="25" step="0.01">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+
+                        <!-- Resumen por tramos -->
+                        <div id="resumenTramos" style="display: none; margin-top: 16px;">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">📊 Resumen por tramos</label>
+                            <div class="tramo-box tramo-promo">
+                                <div class="tramo-label">🎁 Periodo Promocional</div>
+                                <div class="tramo-details">
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoCuotaPromo">-</div>
+                                        <div class="tramo-item-label">Cuota/mes</div>
+                                    </div>
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoTinPromo">-</div>
+                                        <div class="tramo-item-label">TIN</div>
+                                    </div>
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoDuracionPromo">-</div>
+                                        <div class="tramo-item-label">Duración</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tramo-box tramo-variable">
+                                <div class="tramo-label">📈 Resto del Plazo (Variable)</div>
+                                <div class="tramo-details">
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoCuotaVariable">-</div>
+                                        <div class="tramo-item-label">Cuota/mes</div>
+                                    </div>
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoTinVariable">-</div>
+                                        <div class="tramo-item-label">TIN</div>
+                                    </div>
+                                    <div class="tramo-item">
+                                        <div class="tramo-item-value" id="tramoDuracionVariable">-</div>
+                                        <div class="tramo-item-label">Duración</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tipo variable resto del plazo -->
+                    <div class="section-divider">Impuestos y Gastos</div>
+
+                    <label style="margin-bottom: 8px; display: block;">Tipo de vivienda</label>
+                    <div class="type-selector" style="margin-bottom: 16px;">
+                        <button type="button" class="type-btn active" id="btnSegundaMano" onclick="setTipoVivienda('segunda')">
+                            <span class="type-icon">🏠</span>
+                            Segunda Mano
+                        </button>
+                        <button type="button" class="type-btn" id="btnObraNueva" onclick="setTipoVivienda('nueva')">
+                            <span class="type-icon">🏗️</span>
+                            Obra Nueva
+                        </button>
+                    </div>
+
+                    <div id="seccionObraNueva" style="display: none;">
+                        <div class="form-group" style="background: #fef3c7; border: 1px solid #f59e0b; padding: 12px; border-radius: 8px;">
+                            <label style="margin-bottom: 0; color: #92400e;">
+                                🏗️ IVA Obra Nueva: <strong>10%</strong> (fijo)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="seccionSegundaMano">
+                        <div class="form-group">
+                            <label for="taxRateBase">ITP Base (%)
+                                <span class="info-icon" title="Tipo base del ITP en tu comunidad autónoma">?</span>
+                            </label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="taxRateBase" value="10" min="0" max="15" step="0.5">
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+                        <div id="bonificacionContainer">
+                            <div class="form-group" style="background: var(--gray-50); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+                                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer;">
+                                    <input type="checkbox" id="bonificacion1" onchange="actualizarBonificacion()">
+                                    <span>Persona 1: Bonificación Joven/VPO/Familia numerosa (5%)</span>
+                                </label>
+                            </div>
+                            <div class="form-group" id="bonificacion2Container" style="display: none; background: var(--gray-50); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+                                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer;">
+                                    <input type="checkbox" id="bonificacion2" onchange="actualizarBonificacion()">
+                                    <span>Persona 2: Bonificación Joven/VPO/Familia numerosa (5%)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
+                            <label style="margin-bottom: 0; color: var(--primary);">
+                                🏷️ ITP efectivo: <strong id="itpEfectivo">10%</strong>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="euribor">Euríbor (%)
-                                <span class="info-icon" title="Índice de referencia europeo">?</span>
+                            <label for="notariaRate">Notaría (% del precio)
+                                <span class="info-icon" title="Honorarios del notario">?</span>
                             </label>
-                            <div class="input-with-suffix">
-                                <input type="number" id="euribor" value="2.22" min="-1" max="10" step="0.01" oninput="actualizarTipoVariable()">
-                                <span class="input-suffix">%</span>
-                            </div>
+                            <select id="notariaRate">
+                                <option value="0.3">0,30%</option>
+                                <option value="0.35">0,35%</option>
+                                <option value="0.4" selected>0,40%</option>
+                                <option value="0.45">0,45%</option>
+                                <option value="0.5">0,50%</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="diferencial">Diferencial (%)
-                                <span class="info-icon" title="Margen que añade el banco al Euríbor">?</span>
+                            <label for="tasacionRate">Tasación (% del precio)
+                                <span class="info-icon" title="Coste de tasación del inmueble">?</span>
                             </label>
+                            <select id="tasacionRate">
+                                <option value="0.05">0,05%</option>
+                                <option value="0.06">0,06%</option>
+                                <option value="0.07">0,07%</option>
+                                <option value="0.08" selected>0,08%</option>
+                                <option value="0.09">0,09%</option>
+                                <option value="0.1">0,10%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gestoriaRate">Gestoría (% del precio)
+                                <span class="info-icon" title="Honorarios de la gestoría">?</span>
+                            </label>
+                            <select id="gestoriaRate">
+                                <option value="0.1">0,100%</option>
+                                <option value="0.125">0,125%</option>
+                                <option value="0.15" selected>0,150%</option>
+                                <option value="0.175">0,175%</option>
+                                <option value="0.2">0,200%</option>
+                            </select>
+                        </div>
+                        <div class="form-group"></div>
+                    </div>
+
+                    <div class="form-group" style="background: var(--gray-100); padding: 12px; border-radius: 8px;">
+                        <label style="margin-bottom: 0; color: var(--gray-700);">
+                            📋 Total gastos gestión: <strong id="totalGastos">0 €</strong>
+                            <span style="font-size: 0.75rem; color: var(--gray-500); display: block; margin-top: 4px;">
+                                Notaría: <span id="notariaImporte">0 €</span> |
+                                Tasación: <span id="tasacionImporte">0 €</span> |
+                                Gestoría: <span id="gestoriaImporte">0 €</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="calcular()" style="margin-top: 16px;">
+                        🧮 Calcular Hipoteca
+                    </button>
+                </div>
+
+                <!-- Resultados -->
+                <div class="card results-card" id="resultadosCard">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div>
+                            <div class="card-title">Resultados</div>
+                            <div class="card-subtitle">Resumen de tu hipoteca</div>
+                        </div>
+                    </div>
+
+                    <div class="result-highlight">
+                        <div class="amount" id="cuotaMensual">0 €</div>
+                        <div class="label">Cuota mensual</div>
+                        <div class="ltv-indicators" id="ltvIndicators" style="display: none;">
+                            <div class="ltv-badge">
+                                <div class="ltv-badge-value" id="ltvPorcentaje">-</div>
+                                <div class="ltv-badge-label">% Hipotecado (LTV)</div>
+                            </div>
+                            <div class="ltv-badge">
+                                <div class="ltv-badge-value" id="ahorrosPorcentaje">-</div>
+                                <div class="ltv-badge-label">% Ahorros usados</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">🏠 Precio vivienda</span>
+                        <span class="result-value" id="resCosteVivienda">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">💵 Entrada aportada</span>
+                        <span class="result-value" id="resEntrada">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">📝 Impuestos + Gastos gestión</span>
+                        <span class="result-value" id="resImpuestosGastos">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🏦 Capital hipotecado</span>
+                        <span class="result-value" id="resCapital">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">📈 Intereses totales</span>
+                        <span class="result-value" id="resIntereses">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">💳 Total a pagar</span>
+                        <span class="result-value" id="resTotalPagado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🏷️ Coste total vivienda</span>
+                        <span class="result-value" id="resCosteTotalVivienda">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">📅 Fin de hipoteca</span>
+                        <span class="result-value" id="resFinHipoteca">-</span>
+                    </div>
+                </div>
+
+                <!-- Simulador de Amortización -->
+                <div class="card amort-card">
+                    <div class="card-header">
+                        <div class="card-icon">📅</div>
+                        <div>
+                            <div class="card-title">Simulador de Amortización</div>
+                            <div class="card-subtitle">Calcula el ahorro al amortizar capital</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amortizacion">Cantidad a amortizar (€)
+                            <span class="info-icon" title="Importe que pagarás de forma anticipada" style="background: rgba(255,255,255,0.2); color: white;">?</span>
+                        </label>
+                        <div class="amort-input-row">
                             <div class="input-with-suffix">
-                                <input type="number" id="diferencial" value="1.50" min="0" max="5" step="0.05" oninput="actualizarTipoVariable()">
-                                <span class="input-suffix">%</span>
+                                <input type="number" id="amortizacion" placeholder="0" min="0" step="1000" style="background: rgba(255,255,255,0.9);">
+                                <span class="input-suffix" style="color: var(--gray-700);">€</span>
+                            </div>
+                            <button class="btn" onclick="calcularAmortizacion()">Simular</button>
+                        </div>
+                    </div>
+
+                    <div class="amort-option">
+                        <button class="amort-option-btn active" id="btnReducirCuota" onclick="setTipoAmortizacion('cuota')">
+                            📉 Reducir cuota
+                            <br><small>Mismo plazo</small>
+                        </button>
+                        <button class="amort-option-btn" id="btnReducirPlazo" onclick="setTipoAmortizacion('plazo')">
+                            ⏱️ Reducir plazo
+                            <br><small>Misma cuota</small>
+                        </button>
+                    </div>
+
+                    <div id="amortResultados" style="display: none;">
+                        <div class="amort-comparison">
+                            <div class="amort-box">
+                                <div class="amort-box-label">Cuota Original</div>
+                                <div class="amort-box-value" id="amortCuotaOriginal">-</div>
+                                <div class="amort-box-sub" id="amortPlazoOriginal">-</div>
+                            </div>
+                            <div class="amort-box highlight">
+                                <div class="amort-box-label">Nueva Cuota</div>
+                                <div class="amort-box-value" id="amortCuotaNueva">-</div>
+                                <div class="amort-box-sub" id="amortPlazoNuevo">-</div>
+                            </div>
+                        </div>
+
+                        <div class="amort-comparison" style="margin-top: 12px;">
+                            <div class="amort-box">
+                                <div class="amort-box-label">Intereses Originales</div>
+                                <div class="amort-box-value" id="amortInteresesOriginal">-</div>
+                            </div>
+                            <div class="amort-box highlight">
+                                <div class="amort-box-label">Nuevos Intereses</div>
+                                <div class="amort-box-value" id="amortInteresesNuevo">-</div>
+                            </div>
+                        </div>
+
+                        <div class="amort-savings">
+                            <div class="amort-savings-label">💰 Te ahorras en intereses</div>
+                            <div class="amort-savings-value" id="amortAhorro">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gastos Fijos -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon orange">💸</div>
+                        <div>
+                            <div class="card-title">Gastos Fijos Mensuales</div>
+                            <div class="card-subtitle">Calcula tus gastos de hogar</div>
+                        </div>
+                    </div>
+
+                    <div class="expense-grid">
+                        <div class="expense-item">
+                            <label><span class="emoji">💡</span> Luz (mensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoLuz" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">🔥</span> Gas (mensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoGas" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">💧</span> Agua (bimensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoAgua" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">🏛️</span> IBI (anual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoIBI" placeholder="0" min="0" step="50" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">🚌</span> AMB (anual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoAMB" placeholder="0" min="0" step="10" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">🛒</span> Alimentación (mensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoComida" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">📱</span> Teléfono e Internet (mensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoTelefono" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
+                            </div>
+                        </div>
+                        <div class="expense-item">
+                            <label><span class="emoji">📦</span> Otros / Imprevistos (mensual)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="gastoOtros" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
+                                <span class="input-suffix">€</span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="background: #fffbeb; border: 1px solid #f59e0b; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-                        <label style="margin-bottom: 0; color: #b45309;">
-                            📈 Tipo variable (Euríbor + Diferencial): <strong id="tipoInicialVariable">3,72 %</strong>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="tae">TAE Variable (%)
-                            <span class="info-icon" title="Tasa Anual Equivalente - indicador del coste total">?</span>
-                        </label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="tae" value="3.99" min="0" max="25" step="0.01">
-                            <span class="input-suffix">%</span>
+
+                    <div class="expense-summary">
+                        <div class="expense-summary-row">
+                            <span>💡 Luz</span>
+                            <span id="sumLuz">0 €/mes</span>
                         </div>
-                    </div>
-
-                    <!-- Resumen por tramos -->
-                    <div id="resumenTramos" style="display: none; margin-top: 16px;">
-                        <label style="font-weight: 600; margin-bottom: 8px; display: block;">📊 Resumen por tramos</label>
-                        <div class="tramo-box tramo-promo">
-                            <div class="tramo-label">🎁 Periodo Promocional</div>
-                            <div class="tramo-details">
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoCuotaPromo">-</div>
-                                    <div class="tramo-item-label">Cuota/mes</div>
-                                </div>
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoTinPromo">-</div>
-                                    <div class="tramo-item-label">TIN</div>
-                                </div>
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoDuracionPromo">-</div>
-                                    <div class="tramo-item-label">Duración</div>
-                                </div>
-                            </div>
+                        <div class="expense-summary-row">
+                            <span>🔥 Gas</span>
+                            <span id="sumGas">0 €/mes</span>
                         </div>
-                        <div class="tramo-box tramo-variable">
-                            <div class="tramo-label">📈 Resto del Plazo (Variable)</div>
-                            <div class="tramo-details">
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoCuotaVariable">-</div>
-                                    <div class="tramo-item-label">Cuota/mes</div>
-                                </div>
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoTinVariable">-</div>
-                                    <div class="tramo-item-label">TIN</div>
-                                </div>
-                                <div class="tramo-item">
-                                    <div class="tramo-item-value" id="tramoDuracionVariable">-</div>
-                                    <div class="tramo-item-label">Duración</div>
-                                </div>
-                            </div>
+                        <div class="expense-summary-row">
+                            <span>💧 Agua</span>
+                            <span id="sumAgua">0 €/mes</span>
                         </div>
-                    </div>
-                </div>
-
-                <div class="section-divider">Impuestos y Gastos</div>
-
-                <label style="margin-bottom: 8px; display: block;">Tipo de vivienda</label>
-                <div class="type-selector" style="margin-bottom: 16px;">
-                    <button type="button" class="type-btn active" id="btnSegundaMano" onclick="setTipoVivienda('segunda')">
-                        <span class="type-icon">🏠</span>
-                        Segunda Mano
-                    </button>
-                    <button type="button" class="type-btn" id="btnObraNueva" onclick="setTipoVivienda('nueva')">
-                        <span class="type-icon">🏗️</span>
-                        Obra Nueva
-                    </button>
-                </div>
-
-                <div id="seccionObraNueva" style="display: none;">
-                    <div class="form-group" style="background: #fef3c7; border: 1px solid #f59e0b; padding: 12px; border-radius: 8px;">
-                        <label style="margin-bottom: 0; color: #92400e;">
-                            🏗️ IVA Obra Nueva: <strong>10%</strong> (fijo)
-                        </label>
-                    </div>
-                </div>
-
-                <div id="seccionSegundaMano">
-                    <div class="form-group">
-                        <label for="taxRateBase">ITP Base (%)
-                            <span class="info-icon" title="Tipo base del ITP en tu comunidad autónoma">?</span>
-                        </label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="taxRateBase" value="10" min="0" max="15" step="0.5">
-                            <span class="input-suffix">%</span>
+                        <div class="expense-summary-row">
+                            <span>🏛️ IBI</span>
+                            <span id="sumIBI">0 €/mes</span>
                         </div>
-                    </div>
-                    <div id="bonificacionContainer">
-                        <div class="form-group" style="background: var(--gray-50); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
-                            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer;">
-                                <input type="checkbox" id="bonificacion1" onchange="actualizarBonificacion()">
-                                <span>Persona 1: Bonificación Joven/VPO/Familia numerosa (5%)</span>
-                            </label>
+                        <div class="expense-summary-row">
+                            <span>🚌 AMB</span>
+                            <span id="sumAMB">0 €/mes</span>
                         </div>
-                        <div class="form-group" id="bonificacion2Container" style="display: none; background: var(--gray-50); padding: 12px; border-radius: 8px; margin-bottom: 8px;">
-                            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 0; cursor: pointer;">
-                                <input type="checkbox" id="bonificacion2" onchange="actualizarBonificacion()">
-                                <span>Persona 2: Bonificación Joven/VPO/Familia numerosa (5%)</span>
-                            </label>
+                        <div class="expense-summary-row">
+                            <span>🛒 Alimentación</span>
+                            <span id="sumComida">0 €/mes</span>
                         </div>
-                    </div>
-                    <div class="form-group" style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
-                        <label style="margin-bottom: 0; color: var(--primary);">
-                            🏷️ ITP efectivo: <strong id="itpEfectivo">10%</strong>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="notariaRate">Notaría (% del precio)
-                            <span class="info-icon" title="Honorarios del notario">?</span>
-                        </label>
-                        <select id="notariaRate">
-                            <option value="0.3">0,30%</option>
-                            <option value="0.35">0,35%</option>
-                            <option value="0.4" selected>0,40%</option>
-                            <option value="0.45">0,45%</option>
-                            <option value="0.5">0,50%</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tasacionRate">Tasación (% del precio)
-                            <span class="info-icon" title="Coste de tasación del inmueble">?</span>
-                        </label>
-                        <select id="tasacionRate">
-                            <option value="0.05">0,05%</option>
-                            <option value="0.06">0,06%</option>
-                            <option value="0.07">0,07%</option>
-                            <option value="0.08" selected>0,08%</option>
-                            <option value="0.09">0,09%</option>
-                            <option value="0.1">0,10%</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="gestoriaRate">Gestoría (% del precio)
-                            <span class="info-icon" title="Honorarios de la gestoría">?</span>
-                        </label>
-                        <select id="gestoriaRate">
-                            <option value="0.1">0,100%</option>
-                            <option value="0.125">0,125%</option>
-                            <option value="0.15" selected>0,150%</option>
-                            <option value="0.175">0,175%</option>
-                            <option value="0.2">0,200%</option>
-                        </select>
-                    </div>
-                    <div class="form-group"></div>
-                </div>
-
-                <div class="form-group" style="background: var(--gray-100); padding: 12px; border-radius: 8px;">
-                    <label style="margin-bottom: 0; color: var(--gray-700);">
-                        📋 Total gastos gestión: <strong id="totalGastos">0 €</strong>
-                        <span style="font-size: 0.75rem; color: var(--gray-500); display: block; margin-top: 4px;">
-                            Notaría: <span id="notariaImporte">0 €</span> |
-                            Tasación: <span id="tasacionImporte">0 €</span> |
-                            Gestoría: <span id="gestoriaImporte">0 €</span>
-                        </span>
-                    </label>
-                </div>
-
-                <button class="btn btn-primary" onclick="calcular()" style="margin-top: 16px;">
-                    🧮 Calcular Hipoteca
-                </button>
-            </div>
-
-            <!-- Resultados -->
-            <div class="card results-card" id="resultadosCard">
-                <div class="card-header">
-                    <div class="card-icon">📊</div>
-                    <div>
-                        <div class="card-title">Resultados</div>
-                        <div class="card-subtitle">Resumen de tu hipoteca</div>
-                    </div>
-                </div>
-
-                <div class="result-highlight">
-                    <div class="amount" id="cuotaMensual">0 €</div>
-                    <div class="label">Cuota mensual</div>
-                </div>
-
-                <div class="result-item">
-                    <span class="result-label">🏠 Precio vivienda</span>
-                    <span class="result-value" id="resCosteVivienda">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">💵 Entrada aportada</span>
-                    <span class="result-value" id="resEntrada">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">📝 Impuestos + Gastos gestión</span>
-                    <span class="result-value" id="resImpuestosGastos">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">🏦 Capital hipotecado</span>
-                    <span class="result-value" id="resCapital">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">📈 Intereses totales</span>
-                    <span class="result-value" id="resIntereses">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">💳 Total a pagar</span>
-                    <span class="result-value" id="resTotalPagado">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">🏷️ Coste total vivienda</span>
-                    <span class="result-value" id="resCosteTotalVivienda">-</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">📅 Fin de hipoteca</span>
-                    <span class="result-value" id="resFinHipoteca">-</span>
-                </div>
-            </div>
-
-            <!-- Simulador de Amortización -->
-            <div class="card amort-card">
-                <div class="card-header">
-                    <div class="card-icon">📅</div>
-                    <div>
-                        <div class="card-title">Simulador de Amortización</div>
-                        <div class="card-subtitle">Calcula el ahorro al amortizar capital</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="amortizacion">Cantidad a amortizar (€)
-                        <span class="info-icon" title="Importe que pagarás de forma anticipada" style="background: rgba(255,255,255,0.2); color: white;">?</span>
-                    </label>
-                    <div class="amort-input-row">
-                        <div class="input-with-suffix">
-                            <input type="number" id="amortizacion" placeholder="0" min="0" step="1000" style="background: rgba(255,255,255,0.9);">
-                            <span class="input-suffix" style="color: var(--gray-700);">€</span>
+                        <div class="expense-summary-row">
+                            <span>📱 Teléfono e Internet</span>
+                            <span id="sumTelefono">0 €/mes</span>
                         </div>
-                        <button class="btn" onclick="calcularAmortizacion()">Simular</button>
-                    </div>
-                </div>
-
-                <div class="amort-option">
-                    <button class="amort-option-btn active" id="btnReducirCuota" onclick="setTipoAmortizacion('cuota')">
-                        📉 Reducir cuota
-                        <br><small>Mismo plazo</small>
-                    </button>
-                    <button class="amort-option-btn" id="btnReducirPlazo" onclick="setTipoAmortizacion('plazo')">
-                        ⏱️ Reducir plazo
-                        <br><small>Misma cuota</small>
-                    </button>
-                </div>
-
-                <div id="amortResultados" style="display: none;">
-                    <div class="amort-comparison">
-                        <div class="amort-box">
-                            <div class="amort-box-label">Cuota Original</div>
-                            <div class="amort-box-value" id="amortCuotaOriginal">-</div>
-                            <div class="amort-box-sub" id="amortPlazoOriginal">-</div>
+                        <div class="expense-summary-row">
+                            <span>📦 Otros</span>
+                            <span id="sumOtros">0 €/mes</span>
                         </div>
-                        <div class="amort-box highlight">
-                            <div class="amort-box-label">Nueva Cuota</div>
-                            <div class="amort-box-value" id="amortCuotaNueva">-</div>
-                            <div class="amort-box-sub" id="amortPlazoNuevo">-</div>
+                        <div class="expense-summary-row total">
+                            <span>📊 Total Gastos Fijos</span>
+                            <span id="totalGastosFijos">0 €/mes</span>
                         </div>
-                    </div>
-
-                    <div class="amort-comparison" style="margin-top: 12px;">
-                        <div class="amort-box">
-                            <div class="amort-box-label">Intereses Originales</div>
-                            <div class="amort-box-value" id="amortInteresesOriginal">-</div>
+                        <div class="expense-summary-row total" style="background: rgba(255,255,255,0.1); margin: 12px -20px -20px; padding: 16px 20px; border-radius: 0 0 8px 8px;">
+                            <span>🏠 Cuota + Gastos Fijos</span>
+                            <span id="totalCuotaGastos">0 €/mes</span>
                         </div>
-                        <div class="amort-box highlight">
-                            <div class="amort-box-label">Nuevos Intereses</div>
-                            <div class="amort-box-value" id="amortInteresesNuevo">-</div>
-                        </div>
-                    </div>
-
-                    <div class="amort-savings">
-                        <div class="amort-savings-label">💰 Te ahorras en intereses</div>
-                        <div class="amort-savings-value" id="amortAhorro">-</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Gastos Fijos -->
-            <div class="card">
+            <!-- Tabla comparativa -->
+            <div class="card" style="margin-top: 20px;">
                 <div class="card-header">
-                    <div class="card-icon orange">💸</div>
+                    <div class="card-icon green">📈</div>
                     <div>
-                        <div class="card-title">Gastos Fijos Mensuales</div>
-                        <div class="card-subtitle">Calcula tus gastos de hogar</div>
+                        <div class="card-title">Comparativa por Plazo</div>
+                        <div class="card-subtitle">Compara diferentes plazos de hipoteca</div>
                     </div>
                 </div>
 
-                <div class="expense-grid">
-                    <div class="expense-item">
-                        <label><span class="emoji">💡</span> Luz (mensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoLuz" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">🔥</span> Gas (mensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoGas" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">💧</span> Agua (bimensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoAgua" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">🏛️</span> IBI (anual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoIBI" placeholder="0" min="0" step="50" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">🚌</span> AMB (anual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoAMB" placeholder="0" min="0" step="10" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">🛒</span> Alimentación (mensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoComida" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">📱</span> Teléfono e Internet (mensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoTelefono" placeholder="0" min="0" step="5" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                    <div class="expense-item">
-                        <label><span class="emoji">📦</span> Otros / Imprevistos (mensual)</label>
-                        <div class="input-with-suffix">
-                            <input type="number" id="gastoOtros" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()">
-                            <span class="input-suffix">€</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="expense-summary">
-                    <div class="expense-summary-row">
-                        <span>💡 Luz</span>
-                        <span id="sumLuz">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>🔥 Gas</span>
-                        <span id="sumGas">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>💧 Agua</span>
-                        <span id="sumAgua">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>🏛️ IBI</span>
-                        <span id="sumIBI">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>🚌 AMB</span>
-                        <span id="sumAMB">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>🛒 Alimentación</span>
-                        <span id="sumComida">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>📱 Teléfono e Internet</span>
-                        <span id="sumTelefono">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row">
-                        <span>📦 Otros</span>
-                        <span id="sumOtros">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row total">
-                        <span>📊 Total Gastos Fijos</span>
-                        <span id="totalGastosFijos">0 €/mes</span>
-                    </div>
-                    <div class="expense-summary-row total" style="background: rgba(255,255,255,0.1); margin: 12px -20px -20px; padding: 16px 20px; border-radius: 0 0 8px 8px;">
-                        <span>🏠 Cuota + Gastos Fijos</span>
-                        <span id="totalCuotaGastos">0 €/mes</span>
-                    </div>
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table" id="tablaComparativa">
+                        <thead>
+                            <tr>
+                                <th>Plazo</th>
+                                <th>Cuota/mes</th>
+                                <th>Total pagado</th>
+                                <th>Intereses</th>
+                                <th>Coste total</th>
+                                <th>Fin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaBody">
+                            <!-- Se llena dinámicamente -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <!-- Tabla comparativa -->
-        <div class="card" style="margin-top: 20px;">
-            <div class="card-header">
-                <div class="card-icon green">📈</div>
-                <div>
-                    <div class="card-title">Comparativa por Plazo</div>
-                    <div class="card-subtitle">Compara diferentes plazos de hipoteca</div>
+        <!-- === V2: SIDEBAR === -->
+        <aside class="sidebar">
+            <!-- ECB Rates Card -->
+            <div class="card ecb-card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #fef3c7;">🏦</div>
+                    <div>
+                        <div class="card-title">Tipos BCE / Euríbor</div>
+                        <div class="card-subtitle">Actualizado: abril 2026</div>
+                    </div>
                 </div>
+
+                <div class="ecb-rate-row">
+                    <span class="ecb-rate-label">Facilidad de depósito</span>
+                    <span class="ecb-rate-value">2,50%</span>
+                </div>
+                <div class="ecb-rate-row">
+                    <span class="ecb-rate-label">Operaciones principales</span>
+                    <span class="ecb-rate-value">2,65%</span>
+                </div>
+                <div class="ecb-rate-row">
+                    <span class="ecb-rate-label">Facilidad marginal crédito</span>
+                    <span class="ecb-rate-value">2,90%</span>
+                </div>
+
+                <div class="ecb-euribor-highlight" onclick="usarEuribor(2.289)" title="Click para usar este valor en la calculadora">
+                    <div class="ecb-euribor-value">2,289%</div>
+                    <div class="ecb-euribor-label">Euríbor 12 meses</div>
+                    <div style="font-size: 0.7rem; opacity: 0.7; margin-top: 4px;">Click para usar en calculadora</div>
+                </div>
+
+                <p style="font-size: 0.7rem; color: var(--gray-500); margin-top: 8px; text-align: center;">
+                    Fuente: BCE / euribor-rates.eu
+                </p>
             </div>
 
-            <div style="overflow-x: auto;">
-                <table class="comparison-table" id="tablaComparativa">
-                    <thead>
-                        <tr>
-                            <th>Plazo</th>
-                            <th>Cuota/mes</th>
-                            <th>Total pagado</th>
-                            <th>Intereses</th>
-                            <th>Coste total</th>
-                            <th>Fin</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaBody">
-                        <!-- Se llena dinámicamente -->
-                    </tbody>
-                </table>
+            <!-- Bank Offers Card -->
+            <div class="card ofertas-card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #dbeafe;">💼</div>
+                    <div>
+                        <div class="card-title">Mejores Hipotecas</div>
+                        <div class="card-subtitle" id="ofertasDate">Abril 2026</div>
+                    </div>
+                </div>
+
+                <div class="ofertas-tabs">
+                    <button class="ofertas-tab active" onclick="cambiarTabOfertas('fijo', this)">🔒 Fijo</button>
+                    <button class="ofertas-tab" onclick="cambiarTabOfertas('variable', this)">📊 Variable</button>
+                    <button class="ofertas-tab" onclick="cambiarTabOfertas('mixto', this)">🔀 Mixto</button>
+                </div>
+
+                <div class="ofertas-list" id="ofertasList">
+                    <!-- Rendered by JS -->
+                </div>
+
+                <p style="font-size: 0.7rem; color: var(--gray-500); margin-top: 12px; text-align: center;">
+                    ⚠️ Datos orientativos. Consulta condiciones en cada entidad.
+                </p>
             </div>
-        </div>
+        </aside>
     </div>
 
     <footer>
-        <p>Calculadora Hipoteca 2026 — XPV <i>(personal project)</i></p>
+        <p>Calculadora Hipoteca 2026 V2 — XPV <i>(personal project)</i></p>
         <p style="margin-top: 8px; opacity: 0.7;">Esta calculadora es orientativa. Consulta con tu banco para datos oficiales.</p>
     </footer>
 
     <script>
+        /* === UPDATE BANK OFFERS HERE === */
+        /* === BANK LOGO DOMAINS - used to fetch favicons === */
+        const BANK_LOGOS = {
+            'Openbank': 'openbank.es',
+            'MyInvestor': 'myinvestor.es',
+            'Coinc (Bankinter)': 'coinc.es',
+            'Bankinter': 'bankinter.com',
+            'EVO Banco': 'evobanco.com',
+            'Kutxabank': 'kutxabank.es',
+            'ING': 'ing.es',
+            'CaixaBank': 'caixabank.es',
+            'Sabadell': 'bancsabadell.com',
+            'BBVA': 'bbva.es',
+            'Santander': 'bancosantander.es'
+        };
+
+        const OFERTAS_BANCOS = {
+            lastUpdated: 'Abril 2026',
+            fijo: [
+                { banco: 'Openbank', tin: 2.78, tae: 3.23, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'MyInvestor', tin: 2.80, tae: 3.15, condiciones: ['Sin vinculaciones'] },
+                { banco: 'Coinc (Bankinter)', tin: 2.85, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar'] },
+                { banco: 'EVO Banco', tin: 2.90, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Kutxabank', tin: 2.95, tae: 3.45, condiciones: ['Nómina >= 2.500€', 'Seguro hogar'] },
+                { banco: 'ING', tin: 2.99, tae: 3.55, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'CaixaBank', tin: 3.05, tae: 3.89, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
+                { banco: 'Sabadell', tin: 3.10, tae: 3.85, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'BBVA', tin: 3.15, tae: 3.96, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] },
+                { banco: 'Santander', tin: 3.20, tae: 4.05, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] }
+            ],
+            variable: [
+                { banco: 'MyInvestor', diferencial: 0.48, tae: 3.10, condiciones: ['Sin vinculaciones'] },
+                { banco: 'Openbank', diferencial: 0.55, tae: 3.20, condiciones: ['Nómina', 'Seguro hogar'] },
+                { banco: 'EVO Banco', diferencial: 0.60, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Kutxabank', diferencial: 0.49, tae: 3.15, condiciones: ['Nómina >= 3.000€', 'Plan pensiones'] },
+                { banco: 'ING', diferencial: 0.69, tae: 3.45, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Bankinter', diferencial: 0.65, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', '2 productos'] },
+                { banco: 'Sabadell', diferencial: 0.70, tae: 3.50, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'CaixaBank', diferencial: 0.75, tae: 3.60, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
+                { banco: 'BBVA', diferencial: 0.79, tae: 3.65, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Santander', diferencial: 0.85, tae: 3.75, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] }
+            ],
+            mixto: [
+                { banco: 'Openbank', tinFijo: 1.95, periodoFijo: '10 años', diferencial: 0.55, tae: 3.15, condiciones: ['Nómina', 'Seguro hogar'] },
+                { banco: 'MyInvestor', tinFijo: 2.15, periodoFijo: '5 años', diferencial: 0.48, tae: 3.05, condiciones: ['Sin vinculaciones'] },
+                { banco: 'Kutxabank', tinFijo: 1.89, periodoFijo: '5 años', diferencial: 0.49, tae: 3.10, condiciones: ['Nómina >= 3.000€'] },
+                { banco: 'Bankinter', tinFijo: 2.05, periodoFijo: '10 años', diferencial: 0.65, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', '2 productos'] },
+                { banco: 'ING', tinFijo: 2.20, periodoFijo: '10 años', diferencial: 0.69, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'EVO Banco', tinFijo: 2.10, periodoFijo: '5 años', diferencial: 0.60, tae: 3.25, condiciones: ['Nómina', 'Seguro hogar'] },
+                { banco: 'Sabadell', tinFijo: 2.30, periodoFijo: '10 años', diferencial: 0.70, tae: 3.50, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'CaixaBank', tinFijo: 2.25, periodoFijo: '5 años', diferencial: 0.75, tae: 3.55, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
+                { banco: 'BBVA', tinFijo: 2.40, periodoFijo: '10 años', diferencial: 0.79, tae: 3.60, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] },
+                { banco: 'Santander', tinFijo: 2.35, periodoFijo: '5 años', diferencial: 0.85, tae: 3.70, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] }
+            ]
+        };
+
         // Estado de la aplicación
         let persona2Activo = false;
         let ultimoCalculo = null;
@@ -1541,7 +1885,7 @@
         // Actualizar resumen de tramos variable
         function actualizarResumenVariable() {
             if (!periodoPromoActivo) return;
-            
+
             const tinPromo = parseFloat(document.getElementById('tinPromo').value) || 0;
             const duracionPromo = parseInt(document.getElementById('duracionPromo').value) || 12;
             const euribor = parseFloat(document.getElementById('euribor').value) || 0;
@@ -1549,7 +1893,7 @@
             const tinVariable = euribor + diferencial;
             const plazoTotal = parseInt(document.getElementById('plazoHipoteca').value) || 25;
             const mesesRestantes = (plazoTotal * 12) - duracionPromo;
-            
+
             document.getElementById('tramoTinPromo').textContent = tinPromo.toFixed(2) + '%';
             document.getElementById('tramoDuracionPromo').textContent = duracionPromo + ' meses';
             document.getElementById('tramoTinVariable').textContent = tinVariable.toFixed(2) + '%';
@@ -1561,7 +1905,7 @@
             const toggle = document.querySelector('.toggle-section');
             const container = document.getElementById('persona2Container');
             persona2Activo = !persona2Activo;
-            
+
             toggle.classList.toggle('active', persona2Activo);
             container.classList.toggle('show', persona2Activo);
 
@@ -1603,7 +1947,7 @@
         function calcularCuota(capital, tin, plazoAnios) {
             const r = tin / 100 / 12;
             const n = plazoAnios * 12;
-            
+
             if (r === 0) {
                 return {
                     cuota: capital / n,
@@ -1611,11 +1955,11 @@
                     interesesTotales: 0
                 };
             }
-            
+
             const cuota = (capital * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
             const totalPagado = cuota * n;
             const interesesTotales = totalPagado - capital;
-            
+
             return { cuota, totalPagado, interesesTotales };
         }
 
@@ -1623,11 +1967,11 @@
         function calcularCuotaMensual(capital, tin, plazoMeses) {
             const r = tin / 100 / 12;
             const n = plazoMeses;
-            
+
             if (r === 0 || n === 0) {
                 return { cuota: n > 0 ? capital / n : 0 };
             }
-            
+
             const cuota = (capital * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
             return { cuota };
         }
@@ -1636,40 +1980,37 @@
         function calcular() {
             // Obtener valores
             const costeVivienda = parseFloat(document.getElementById('costeVivienda').value) || 0;
-            
+
             // Validar que hay un precio de vivienda
             if (costeVivienda <= 0) {
                 alert('Introduce el precio de la vivienda');
                 return;
             }
-            
+
             const ahorros1 = parseFloat(document.getElementById('ahorros1').value) || 0;
             const ahorros2 = persona2Activo ? (parseFloat(document.getElementById('ahorros2').value) || 0) : 0;
             const totalAhorros = ahorros1 + ahorros2;
-            
+
             // Obtener tipo de interés según tipo de hipoteca
             let tin, tae, cuota, totalPagado, interesesTotales;
             let cuotaPromo = 0, cuotaVariable = 0;
-            
+
             const plazoHipoteca = parseInt(document.getElementById('plazoHipoteca').value) || 25;
             const inicioHipoteca = parseInt(document.getElementById('inicioHipoteca').value) || 2026;
-            
-            // Usar parseFloat con manejo de valores 0 (no usar || que trata 0 como falsy)
+
             // Cálculos base
             let capital, entrada, impuestoCompra, gastosGestion;
-            
+
             if (capitalDirectoActivo) {
-                // Usar capital introducido directamente (modo banco)
                 capital = parseFloat(document.getElementById('capitalDirecto').value) || 0;
                 if (capital <= 0) {
                     alert('Introduce el importe del préstamo');
                     return;
                 }
-                entrada = 0; // No aplica en modo directo
+                entrada = 0;
                 impuestoCompra = 0;
                 gastosGestion = 0;
             } else {
-                // Calcular capital desde precio vivienda y ahorros
                 const taxRate = calcularTipoImpositivo();
                 const notariaRate = parseFloat(document.getElementById('notariaRate').value) || 0.4;
                 const tasacionRate = parseFloat(document.getElementById('tasacionRate').value) || 0.08;
@@ -1683,9 +2024,8 @@
                 capital = Math.max(0, costeVivienda - totalAhorros + impuestoCompra + gastosGestion);
                 entrada = Math.max(0, totalAhorros - impuestoCompra - gastosGestion);
             }
-            
+
             if (tipoHipoteca === 'fijo') {
-                // Hipoteca tipo fijo - cálculo simple
                 tin = parseFloat(document.getElementById('tin').value) || 0;
                 tae = tin;
                 const resultado = calcularCuota(capital, tin, plazoHipoteca);
@@ -1693,43 +2033,37 @@
                 totalPagado = resultado.totalPagado;
                 interesesTotales = resultado.interesesTotales;
             } else {
-                // Hipoteca tipo variable
                 const euribor = parseFloat(document.getElementById('euribor').value) || 0;
                 const diferencial = parseFloat(document.getElementById('diferencial').value) || 0;
                 const tinVariable = euribor + diferencial;
                 tae = parseFloat(document.getElementById('tae').value) || tinVariable;
-                
+
                 if (periodoPromoActivo) {
-                    // Cálculo con periodo promocional (hipoteca mixta/tramos)
                     const tinPromo = parseFloat(document.getElementById('tinPromo').value) || 0;
                     const duracionPromoMeses = parseInt(document.getElementById('duracionPromo').value) || 12;
                     const plazoTotalMeses = plazoHipoteca * 12;
                     const mesesRestantes = plazoTotalMeses - duracionPromoMeses;
-                    
-                    // Calcular cuota del periodo promocional (como si fuera todo el plazo)
+
                     const resultadoPromo = calcularCuotaMensual(capital, tinPromo, plazoTotalMeses);
                     cuotaPromo = resultadoPromo.cuota;
-                    
-                    // Capital pagado durante el periodo promocional
+
                     let capitalRestante = capital;
                     let interesesPromo = 0;
                     const rPromo = tinPromo / 100 / 12;
-                    
+
                     for (let i = 0; i < duracionPromoMeses; i++) {
                         const interesMes = capitalRestante * rPromo;
                         const capitalMes = cuotaPromo - interesMes;
                         interesesPromo += interesMes;
                         capitalRestante -= capitalMes;
                     }
-                    
-                    // Calcular cuota del periodo variable con el capital restante
+
                     if (mesesRestantes > 0 && capitalRestante > 0) {
                         const resultadoVariable = calcularCuotaMensual(capitalRestante, tinVariable, mesesRestantes);
                         cuotaVariable = resultadoVariable.cuota;
-                        
-                        // Intereses del periodo variable
+
                         const interesesVariable = (cuotaVariable * mesesRestantes) - capitalRestante;
-                        
+
                         interesesTotales = interesesPromo + Math.max(0, interesesVariable);
                         totalPagado = (cuotaPromo * duracionPromoMeses) + (cuotaVariable * mesesRestantes);
                     } else {
@@ -1737,16 +2071,13 @@
                         totalPagado = cuotaPromo * duracionPromoMeses;
                         cuotaVariable = 0;
                     }
-                    
-                    // La cuota mostrada será la del periodo variable (la más representativa)
+
                     cuota = cuotaVariable > 0 ? cuotaVariable : cuotaPromo;
-                    tin = tinVariable; // Para la tabla comparativa
-                    
-                    // Actualizar resumen de tramos
+                    tin = tinVariable;
+
                     document.getElementById('tramoCuotaPromo').textContent = formatearMoneda(cuotaPromo);
                     document.getElementById('tramoCuotaVariable').textContent = cuotaVariable > 0 ? formatearMoneda(cuotaVariable) : '-';
                 } else {
-                    // Variable sin periodo promocional
                     tin = tinVariable;
                     const resultado = calcularCuota(capital, tin, plazoHipoteca);
                     cuota = resultado.cuota;
@@ -1754,17 +2085,28 @@
                     interesesTotales = resultado.interesesTotales;
                 }
             }
-            
+
             const finHipoteca = inicioHipoteca + plazoHipoteca;
-            const costeTotalVivienda = capitalDirectoActivo 
-                ? capital + interesesTotales 
+            const costeTotalVivienda = capitalDirectoActivo
+                ? capital + interesesTotales
                 : costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
-            
-            // Guardar último cálculo
+
             ultimoCalculo = { cuota, cuotaPromo, cuotaVariable, capital, tin, tae, tipoHipoteca, periodoPromoActivo, capitalDirectoActivo, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
-            
-            // Mostrar resultados
+
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
+
+            // LTV indicators
+            if (!capitalDirectoActivo && costeVivienda > 0) {
+                const ltv = (capital / costeVivienda * 100).toFixed(1);
+                const totalAhorrosUsed = totalAhorros;
+                const ahorrosUsados = totalAhorrosUsed > 0 ? ((impuestoCompra + gastosGestion + entrada) / totalAhorrosUsed * 100).toFixed(1) : 0;
+                document.getElementById('ltvPorcentaje').textContent = ltv + '%';
+                document.getElementById('ahorrosPorcentaje').textContent = ahorrosUsados + '%';
+                document.getElementById('ltvIndicators').style.display = 'flex';
+            } else {
+                document.getElementById('ltvIndicators').style.display = 'none';
+            }
+
             document.getElementById('resCosteVivienda').textContent = capitalDirectoActivo ? '-' : formatearMoneda(costeVivienda);
             document.getElementById('resEntrada').textContent = capitalDirectoActivo ? '-' : formatearMoneda(entrada);
             document.getElementById('resImpuestosGastos').textContent = capitalDirectoActivo ? '-' : formatearMoneda(impuestoCompra + gastosGestion);
@@ -1773,11 +2115,9 @@
             document.getElementById('resTotalPagado').textContent = formatearMoneda(totalPagado);
             document.getElementById('resCosteTotalVivienda').textContent = formatearMoneda(costeTotalVivienda);
             document.getElementById('resFinHipoteca').textContent = finHipoteca;
-            
-            // Actualizar tabla comparativa
+
             actualizarTablaComparativa(capital, tin, inicioHipoteca, gastosGestion, impuestoCompra, costeVivienda, plazoHipoteca);
-            
-            // Actualizar gastos fijos (para incluir la cuota)
+
             calcularGastosFijos();
         }
 
@@ -1785,19 +2125,19 @@
         function actualizarTablaComparativa(capital, tin, inicioHipoteca, gastosGestion, impuestoCompra, costeVivienda, plazoSeleccionado) {
             const tbody = document.getElementById('tablaBody');
             tbody.innerHTML = '';
-            
+
             const plazos = [5, 10, 15, 20, 25, 30, 35];
-            
+
             plazos.forEach(plazo => {
                 const { cuota, totalPagado, interesesTotales } = calcularCuota(capital, tin, plazo);
                 const finHipoteca = inicioHipoteca + plazo;
                 const costeTotalVivienda = costeVivienda + interesesTotales + gastosGestion + impuestoCompra;
-                
+
                 const tr = document.createElement('tr');
                 if (plazo === plazoSeleccionado) {
                     tr.classList.add('selected');
                 }
-                
+
                 tr.innerHTML = `
                     <td>${plazo} años</td>
                     <td>${formatearMoneda(cuota)}</td>
@@ -1806,7 +2146,7 @@
                     <td>${formatearMoneda(costeTotalVivienda)}</td>
                     <td>${finHipoteca}</td>
                 `;
-                
+
                 tbody.appendChild(tr);
             });
         }
@@ -1821,13 +2161,11 @@
             const comida = parseFloat(document.getElementById('gastoComida').value) || 0;
             const telefono = parseFloat(document.getElementById('gastoTelefono').value) || 0;
             const otros = parseFloat(document.getElementById('gastoOtros').value) || 0;
-            
-            // Convertir a mensual
+
             const aguaMensual = agua / 2;
             const ibiMensual = ibi / 12;
             const ambMensual = amb / 12;
-            
-            // Actualizar resumen
+
             document.getElementById('sumLuz').textContent = formatearMoneda(luz) + '/mes';
             document.getElementById('sumGas').textContent = formatearMoneda(gas) + '/mes';
             document.getElementById('sumAgua').textContent = formatearMoneda(aguaMensual) + '/mes';
@@ -1836,11 +2174,10 @@
             document.getElementById('sumComida').textContent = formatearMoneda(comida) + '/mes';
             document.getElementById('sumTelefono').textContent = formatearMoneda(telefono) + '/mes';
             document.getElementById('sumOtros').textContent = formatearMoneda(otros) + '/mes';
-            
+
             const totalGastosFijos = luz + gas + aguaMensual + ibiMensual + ambMensual + comida + telefono + otros;
             document.getElementById('totalGastosFijos').textContent = formatearMoneda(totalGastosFijos) + '/mes';
-            
-            // Cuota + gastos fijos
+
             const cuota = ultimoCalculo ? ultimoCalculo.cuota : 0;
             document.getElementById('totalCuotaGastos').textContent = formatearMoneda(cuota + totalGastosFijos) + '/mes';
         }
@@ -1859,8 +2196,7 @@
             tipoAmortizacion = tipo;
             document.getElementById('btnReducirCuota').classList.toggle('active', tipo === 'cuota');
             document.getElementById('btnReducirPlazo').classList.toggle('active', tipo === 'plazo');
-            
-            // Recalcular si ya hay datos
+
             if (document.getElementById('amortResultados').style.display !== 'none') {
                 calcularAmortizacion();
             }
@@ -1882,29 +2218,23 @@
             const { capital, tin, cuota, inicioHipoteca, plazoHipoteca } = ultimoCalculo;
             const plazoOriginal = plazoHipoteca;
 
-            // Validar que no amortice más de lo que debe
             if (amortizacion >= capital) {
                 alert('La cantidad a amortizar no puede ser mayor que el capital pendiente');
                 return;
             }
 
-            // Capital restante después de amortizar
             const nuevoCapital = capital - amortizacion;
 
-            // Cálculos originales
             const resultadoOriginal = calcularCuota(capital, tin, plazoOriginal);
 
             let nuevaCuota, nuevoPlazo, resultadoNuevo;
 
             if (tipoAmortizacion === 'cuota') {
-                // Reducir cuota manteniendo el plazo
                 nuevoPlazo = plazoOriginal;
                 resultadoNuevo = calcularCuota(nuevoCapital, tin, nuevoPlazo);
                 nuevaCuota = resultadoNuevo.cuota;
             } else {
-                // Reducir plazo manteniendo la cuota
                 nuevaCuota = cuota;
-                // Calcular nuevo plazo con la misma cuota
                 nuevoPlazo = calcularNuevoPlazo(nuevoCapital, tin, cuota);
                 resultadoNuevo = {
                     cuota: nuevaCuota,
@@ -1913,22 +2243,21 @@
                 };
             }
 
-            // Mostrar resultados
             document.getElementById('amortResultados').style.display = 'block';
-            
+
             document.getElementById('amortCuotaOriginal').textContent = formatearMoneda(resultadoOriginal.cuota);
             document.getElementById('amortPlazoOriginal').textContent = `${plazoOriginal} años (hasta ${inicioHipoteca + plazoOriginal})`;
-            
+
             document.getElementById('amortCuotaNueva').textContent = formatearMoneda(nuevaCuota);
-            
-            const plazoMostrar = tipoAmortizacion === 'cuota' 
+
+            const plazoMostrar = tipoAmortizacion === 'cuota'
                 ? `${nuevoPlazo} años (hasta ${inicioHipoteca + nuevoPlazo})`
                 : `${nuevoPlazo.toFixed(1)} años (hasta ${Math.ceil(inicioHipoteca + nuevoPlazo)})`;
             document.getElementById('amortPlazoNuevo').textContent = plazoMostrar;
-            
+
             document.getElementById('amortInteresesOriginal').textContent = formatearMoneda(resultadoOriginal.interesesTotales);
             document.getElementById('amortInteresesNuevo').textContent = formatearMoneda(resultadoNuevo.interesesTotales);
-            
+
             const ahorro = resultadoOriginal.interesesTotales - resultadoNuevo.interesesTotales;
             document.getElementById('amortAhorro').textContent = formatearMoneda(ahorro);
         }
@@ -1936,14 +2265,106 @@
         // Calcular nuevo plazo manteniendo la cuota
         function calcularNuevoPlazo(capital, tin, cuotaMensual) {
             const r = tin / 100 / 12;
-            
+
             if (r === 0) {
                 return capital / cuotaMensual / 12;
             }
-            
-            // Fórmula: n = -ln(1 - (capital * r / cuota)) / ln(1 + r)
+
             const n = -Math.log(1 - (capital * r / cuotaMensual)) / Math.log(1 + r);
-            return n / 12; // Convertir meses a años
+            return n / 12;
+        }
+
+        // === V2: ECB Euribor function ===
+        function usarEuribor(valor) {
+            document.getElementById('euribor').value = valor;
+            setTipoHipoteca('variable');
+            actualizarTipoVariable();
+            document.querySelector('.main-grid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // === V2: Bank offers functions ===
+        function cambiarTabOfertas(tipo, btn) {
+            document.querySelectorAll('.ofertas-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderOfertas(tipo);
+        }
+
+        function renderOfertas(tipo) {
+            const lista = document.getElementById('ofertasList');
+            const ofertas = OFERTAS_BANCOS[tipo];
+            lista.innerHTML = '';
+
+            ofertas.forEach(oferta => {
+                const div = document.createElement('div');
+                div.className = 'oferta-item';
+
+                let ratesHTML = '';
+                let btnOnclick = '';
+
+                if (tipo === 'fijo') {
+                    ratesHTML = `
+                        <div class="oferta-rate"><div class="oferta-rate-value">${oferta.tin.toFixed(2)}%</div><div class="oferta-rate-label">TIN</div></div>
+                        <div class="oferta-rate"><div class="oferta-rate-value">${oferta.tae.toFixed(2)}%</div><div class="oferta-rate-label">TAE</div></div>
+                    `;
+                    btnOnclick = `usarOferta('fijo', ${oferta.tin})`;
+                } else if (tipo === 'variable') {
+                    ratesHTML = `
+                        <div class="oferta-rate"><div class="oferta-rate-value">E+${oferta.diferencial.toFixed(2)}%</div><div class="oferta-rate-label">Diferencial</div></div>
+                        <div class="oferta-rate"><div class="oferta-rate-value">${oferta.tae.toFixed(2)}%</div><div class="oferta-rate-label">TAE</div></div>
+                    `;
+                    btnOnclick = `usarOferta('variable', null, ${oferta.diferencial})`;
+                } else {
+                    ratesHTML = `
+                        <div class="oferta-rate"><div class="oferta-rate-value">${oferta.tinFijo.toFixed(2)}%</div><div class="oferta-rate-label">TIN fijo ${oferta.periodoFijo}</div></div>
+                        <div class="oferta-rate"><div class="oferta-rate-value">E+${oferta.diferencial.toFixed(2)}%</div><div class="oferta-rate-label">Después</div></div>
+                        <div class="oferta-rate"><div class="oferta-rate-value">${oferta.tae.toFixed(2)}%</div><div class="oferta-rate-label">TAE</div></div>
+                    `;
+                    const mesesPromo = parseInt(oferta.periodoFijo) * 12;
+                    btnOnclick = `usarOferta('mixto', null, ${oferta.diferencial}, ${oferta.tinFijo}, ${mesesPromo})`;
+                }
+
+                const condsHTML = oferta.condiciones.length <= 3
+                    ? oferta.condiciones.map(c => `<span class="oferta-cond-tag">${c}</span>`).join('')
+                    : oferta.condiciones.slice(0, 2).map(c => `<span class="oferta-cond-tag">${c}</span>`).join('') +
+                      `<span class="oferta-cond-tag">+${oferta.condiciones.length - 2} más</span>`;
+
+                const domain = BANK_LOGOS[oferta.banco] || '';
+                const logoHTML = domain
+                    ? `<img class="oferta-logo" src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" alt="${oferta.banco}" onerror="this.style.display='none'">`
+                    : '';
+
+                div.innerHTML = `
+                    <div class="oferta-header">
+                        ${logoHTML}
+                        <span class="oferta-banco">${oferta.banco}</span>
+                    </div>
+                    <div class="oferta-rates">${ratesHTML}</div>
+                    <div class="oferta-condiciones">${condsHTML}</div>
+                    <button class="oferta-usar-btn" onclick="${btnOnclick}">Usar en calculadora →</button>
+                `;
+
+                lista.appendChild(div);
+            });
+        }
+
+        function usarOferta(tipo, tin, diferencial, tinPromo, duracionPromo) {
+            if (tipo === 'fijo') {
+                setTipoHipoteca('fijo');
+                document.getElementById('tin').value = tin;
+            } else if (tipo === 'variable') {
+                setTipoHipoteca('variable');
+                document.getElementById('diferencial').value = diferencial;
+                actualizarTipoVariable();
+            } else if (tipo === 'mixto') {
+                setTipoHipoteca('variable');
+                if (!periodoPromoActivo) togglePeriodoPromo();
+                document.getElementById('tinPromo').value = tinPromo;
+                document.getElementById('duracionPromo').value = duracionPromo;
+                document.getElementById('diferencial').value = diferencial;
+                actualizarTipoVariable();
+                actualizarResumenVariable();
+            }
+            document.querySelector('.main-grid').scrollIntoView({ behavior: 'smooth' });
         }
 
         // Inicializar
@@ -1951,6 +2372,7 @@
         actualizarTipoVariable();
         actualizarResumenVariable();
         actualizarBonificacion();
+        renderOfertas('fijo');
     </script>
 </body>
 </html>

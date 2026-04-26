@@ -1043,13 +1043,111 @@
         /* === V2: Mobile responsive for offers === */
         @media (max-width: 767px) {
             .ofertas-list {
-                max-height: 400px;
+                max-height: 350px;
             }
             .oferta-rates {
                 gap: 8px;
             }
             .oferta-rate-value {
-                font-size: 1rem;
+                font-size: 0.95rem;
+            }
+            .oferta-item {
+                padding: 10px;
+            }
+            .ofertas-tabs {
+                gap: 4px;
+            }
+            .ofertas-tab {
+                padding: 8px 4px;
+                font-size: 0.75rem;
+            }
+            .oferta-usar-btn {
+                padding: 6px;
+                font-size: 0.75rem;
+            }
+            .oferta-cond-tag {
+                font-size: 0.65rem;
+                padding: 1px 4px;
+            }
+            .ecb-euribor-value {
+                font-size: 1.4rem;
+            }
+            .ecb-rate-row {
+                font-size: 0.8rem;
+                padding: 8px 0;
+            }
+        }
+
+        /* === V2: Mobile sidebar reorder === */
+        @media (max-width: 767px) {
+            .page-layout {
+                display: flex;
+                flex-direction: column;
+            }
+            .sidebar {
+                order: -1;
+            }
+            .main-content {
+                order: 1;
+            }
+        }
+
+        /* === V2: Sidebar collapsible toggle on mobile === */
+        .sidebar-toggle {
+            display: none;
+            width: 100%;
+            padding: 14px 16px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+            text-align: left;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+        .sidebar-toggle .toggle-arrow {
+            float: right;
+            transition: transform 0.2s ease;
+        }
+        .sidebar-toggle.active .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 767px) {
+            .sidebar-toggle {
+                display: block;
+            }
+            .sidebar-collapsible {
+                display: none;
+            }
+            .sidebar-collapsible.show {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        /* === V2: ECB compact grid on mobile === */
+        @media (max-width: 767px) {
+            .ecb-rates-compact {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .ecb-rates-compact .ecb-rate-row {
+                flex-direction: column;
+                text-align: center;
+                border-bottom: none;
+                background: var(--gray-50);
+                border-radius: 6px;
+                padding: 8px;
+            }
+            .ecb-rates-compact .ecb-rate-label {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -1684,6 +1782,10 @@
 
         <!-- === V2: SIDEBAR === -->
         <aside class="sidebar">
+            <button class="sidebar-toggle" onclick="toggleSidebarMobile(this)">
+                🏦 Ver tipos BCE y ofertas bancarias <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="sidebar-collapsible">
             <!-- ECB Rates Card -->
             <div class="card ecb-card">
                 <div class="card-header">
@@ -1694,17 +1796,19 @@
                     </div>
                 </div>
 
-                <div class="ecb-rate-row">
-                    <span class="ecb-rate-label">Facilidad de depósito</span>
-                    <span class="ecb-rate-value">2,50%</span>
-                </div>
-                <div class="ecb-rate-row">
-                    <span class="ecb-rate-label">Operaciones principales</span>
-                    <span class="ecb-rate-value">2,65%</span>
-                </div>
-                <div class="ecb-rate-row">
-                    <span class="ecb-rate-label">Facilidad marginal crédito</span>
-                    <span class="ecb-rate-value">2,90%</span>
+                <div class="ecb-rates-compact">
+                    <div class="ecb-rate-row">
+                        <span class="ecb-rate-label">Facilidad de depósito</span>
+                        <span class="ecb-rate-value">2,50%</span>
+                    </div>
+                    <div class="ecb-rate-row">
+                        <span class="ecb-rate-label">Operaciones principales</span>
+                        <span class="ecb-rate-value">2,65%</span>
+                    </div>
+                    <div class="ecb-rate-row">
+                        <span class="ecb-rate-label">Facilidad marginal crédito</span>
+                        <span class="ecb-rate-value">2,90%</span>
+                    </div>
                 </div>
 
                 <div class="ecb-euribor-highlight" onclick="usarEuribor(2.289)" title="Click para usar este valor en la calculadora">
@@ -1742,6 +1846,7 @@
                     ⚠️ Datos orientativos. Consulta condiciones en cada entidad.
                 </p>
             </div>
+            </div><!-- end sidebar-collapsible -->
         </aside>
     </div>
 
@@ -2365,6 +2470,13 @@
                 actualizarResumenVariable();
             }
             document.querySelector('.main-grid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // === V2: Toggle sidebar on mobile ===
+        function toggleSidebarMobile(btn) {
+            btn.classList.toggle('active');
+            const content = btn.nextElementSibling;
+            content.classList.toggle('show');
         }
 
         // Inicializar
