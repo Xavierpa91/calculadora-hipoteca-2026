@@ -17,6 +17,7 @@ Una calculadora de hipotecas moderna y elegante, diseñada para ayudarte a plani
 ## 🚀 Demo
 
 Visita la calculadora en: [https://xavierpa91.github.io/calculadora-hipoteca-2026/]
+Calculadora comparativa con las mejores ofertas bancarias del mes: https://xavierpa91.github.io/calculadora-hipoteca-2026/index_v2.html
 
 ## 📱 Capturas de pantalla
 
