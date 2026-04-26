@@ -961,9 +961,36 @@
             gap: 8px;
             margin-bottom: 8px;
         }
+        .oferta-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
         .oferta-banco {
             font-weight: 600;
             font-size: 0.9rem;
+        }
+        .ltv-indicators {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .ltv-badge {
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 6px 12px;
+            text-align: center;
+        }
+        .ltv-badge-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .ltv-badge-label {
+            font-size: 0.7rem;
+            opacity: 0.85;
         }
         .oferta-rates {
             display: flex;
@@ -1399,6 +1426,16 @@
                     <div class="result-highlight">
                         <div class="amount" id="cuotaMensual">0 €</div>
                         <div class="label">Cuota mensual</div>
+                        <div class="ltv-indicators" id="ltvIndicators" style="display: none;">
+                            <div class="ltv-badge">
+                                <div class="ltv-badge-value" id="ltvPorcentaje">-</div>
+                                <div class="ltv-badge-label">% Hipotecado (LTV)</div>
+                            </div>
+                            <div class="ltv-badge">
+                                <div class="ltv-badge-value" id="ahorrosPorcentaje">-</div>
+                                <div class="ltv-badge-label">% Ahorros usados</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="result-item">
@@ -1715,6 +1752,21 @@
 
     <script>
         /* === UPDATE BANK OFFERS HERE === */
+        /* === BANK LOGO DOMAINS - used to fetch favicons === */
+        const BANK_LOGOS = {
+            'Openbank': 'openbank.es',
+            'MyInvestor': 'myinvestor.es',
+            'Coinc (Bankinter)': 'coinc.es',
+            'Bankinter': 'bankinter.com',
+            'EVO Banco': 'evobanco.com',
+            'Kutxabank': 'kutxabank.es',
+            'ING': 'ing.es',
+            'CaixaBank': 'caixabank.es',
+            'Sabadell': 'bancsabadell.com',
+            'BBVA': 'bbva.es',
+            'Santander': 'bancosantander.es'
+        };
+
         const OFERTAS_BANCOS = {
             lastUpdated: 'Abril 2026',
             fijo: [
@@ -2042,6 +2094,19 @@
             ultimoCalculo = { cuota, cuotaPromo, cuotaVariable, capital, tin, tae, tipoHipoteca, periodoPromoActivo, capitalDirectoActivo, impuestoCompra, gastosGestion, costeVivienda, inicioHipoteca, plazoHipoteca };
 
             document.getElementById('cuotaMensual').textContent = formatearMoneda(cuota);
+
+            // LTV indicators
+            if (!capitalDirectoActivo && costeVivienda > 0) {
+                const ltv = (capital / costeVivienda * 100).toFixed(1);
+                const totalAhorrosUsed = totalAhorros;
+                const ahorrosUsados = totalAhorrosUsed > 0 ? ((impuestoCompra + gastosGestion + entrada) / totalAhorrosUsed * 100).toFixed(1) : 0;
+                document.getElementById('ltvPorcentaje').textContent = ltv + '%';
+                document.getElementById('ahorrosPorcentaje').textContent = ahorrosUsados + '%';
+                document.getElementById('ltvIndicators').style.display = 'flex';
+            } else {
+                document.getElementById('ltvIndicators').style.display = 'none';
+            }
+
             document.getElementById('resCosteVivienda').textContent = capitalDirectoActivo ? '-' : formatearMoneda(costeVivienda);
             document.getElementById('resEntrada').textContent = capitalDirectoActivo ? '-' : formatearMoneda(entrada);
             document.getElementById('resImpuestosGastos').textContent = capitalDirectoActivo ? '-' : formatearMoneda(impuestoCompra + gastosGestion);
@@ -2263,8 +2328,14 @@
                     : oferta.condiciones.slice(0, 2).map(c => `<span class="oferta-cond-tag">${c}</span>`).join('') +
                       `<span class="oferta-cond-tag">+${oferta.condiciones.length - 2} más</span>`;
 
+                const domain = BANK_LOGOS[oferta.banco] || '';
+                const logoHTML = domain
+                    ? `<img class="oferta-logo" src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" alt="${oferta.banco}" onerror="this.style.display='none'">`
+                    : '';
+
                 div.innerHTML = `
                     <div class="oferta-header">
+                        ${logoHTML}
                         <span class="oferta-banco">${oferta.banco}</span>
                     </div>
                     <div class="oferta-rates">${ratesHTML}</div>
