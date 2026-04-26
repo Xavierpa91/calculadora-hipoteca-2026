@@ -10,16 +10,27 @@ def calcular_cuota(capital, TIN, plazo_hipoteca):
     intereses_totales = total_pagado - capital
     return cuota, total_pagado, intereses_totales
 
-def crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_hipoteca):
-    impuesto_compra = coste_vivienda * 0.075  # 7.5% ITP
-    gastos_gestion = 1960 + 560 + 400 # Escritura + Registro de la Propiedad + Tasación del Inmueble
+def crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_hipoteca,
+                          tipo_vivienda, tipo_hipoteca, impuesto_pct,
+                          notaria_pct, tasacion_pct, gestoria_pct,
+                          euribor=None, diferencial=None):
+    impuesto_compra = coste_vivienda * (impuesto_pct / 100)
+
+    notaria = coste_vivienda * (notaria_pct / 100)
+    tasacion = coste_vivienda * (tasacion_pct / 100)
+    gestoria = coste_vivienda * (gestoria_pct / 100)
+    gastos_gestion = notaria + tasacion + gestoria
 
     capital = coste_vivienda - ahorros + impuesto_compra + gastos_gestion
-    
+
     entrada = ahorros - impuesto_compra - gastos_gestion
 
     cuota, total_pagado, intereses_totales = calcular_cuota(capital, TIN, plazo_hipoteca)
     fin_hipoteca = inicio_hipoteca + plazo_hipoteca
+
+    tipo_vivienda_str = "Obra nueva" if tipo_vivienda == 2 else "Segunda mano"
+    tipo_hipoteca_str = "Variable" if tipo_hipoteca == 2 else "Fijo"
+    impuesto_nombre = "IVA" if tipo_vivienda == 2 else "ITP"
 
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -29,18 +40,31 @@ def crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_h
     ws["A1"] = "Parámetro"
     ws["B1"] = "Valor"
     datos_cabecera = {
+        "Tipo vivienda": tipo_vivienda_str,
+        "Tipo hipoteca": tipo_hipoteca_str,
         "Coste vivienda (€)": coste_vivienda,
         "Ahorros aportados (€)": ahorros,
-        "Impuestos compra (€)": round(impuesto_compra, 2),
-        "Gastos gestión (€)": gastos_gestion,
+        f"{impuesto_nombre} ({impuesto_pct}%) (€)": round(impuesto_compra, 2),
+        f"Notaría ({notaria_pct}%) (€)": round(notaria, 2),
+        f"Tasación ({tasacion_pct}%) (€)": round(tasacion, 2),
+        f"Gestoría ({gestoria_pct}%) (€)": round(gestoria, 2),
+        "Gastos gestión total (€)": round(gastos_gestion, 2),
         "Cantidad hipotecada (€)": round(capital, 2),
-        "TIN (%)": TIN,
-        "Plazo hipoteca (años)": plazo_hipoteca,
-        "Cuota fija mensual (€)": round(cuota, 2),
-        "Intereses totales (€)": round(intereses_totales, 2),
-        "Total pagado (€)": round(total_pagado, 2),
-        "Fin de hipoteca (año)": fin_hipoteca,
     }
+
+    if tipo_hipoteca == 2:
+        datos_cabecera["Euríbor (%)"] = euribor
+        datos_cabecera["Diferencial (%)"] = diferencial
+        datos_cabecera["TIN calculado (%)"] = TIN
+    else:
+        datos_cabecera["TIN (%)"] = TIN
+
+    datos_cabecera["Plazo hipoteca (años)"] = plazo_hipoteca
+    datos_cabecera["Cuota fija mensual (€)"] = round(cuota, 2)
+    datos_cabecera["Intereses totales (€)"] = round(intereses_totales, 2)
+    datos_cabecera["Total pagado (€)"] = round(total_pagado, 2)
+    datos_cabecera["Fin de hipoteca (año)"] = fin_hipoteca
+
     fila = 2
     for clave, valor in datos_cabecera.items():
         ws[f"A{fila}"] = clave
@@ -71,13 +95,25 @@ def crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_h
     wb.save(archivo)
     print(f"Archivo Excel generado: {archivo}")
 
-    # Solo imprimir resumen del plazo elegido (no la tabla completa)
+    # Resumen por consola
     print("\n📊 Resumen de la hipoteca para el plazo seleccionado:")
-    print(f"📉 TIN anual: {TIN}%")
+    print(f"🏠 Tipo vivienda: {tipo_vivienda_str}")
+    print(f"📋 Tipo hipoteca: {tipo_hipoteca_str}")
+    if tipo_hipoteca == 2:
+        print(f"📉 Euríbor: {euribor}%")
+        print(f"📉 Diferencial: {diferencial}%")
+        print(f"📉 TIN calculado: {TIN}%")
+    else:
+        print(f"📉 TIN anual: {TIN}%")
     print(f"💶 Cuota mensual: {round(cuota, 2)} €")
     print(f"🏠 Coste vivienda: {coste_vivienda} €")
-    print(f"💸 Entrada: {entrada} €")
+    print(f"💸 Entrada: {round(entrada, 2)} €")
     print(f"💰 Ahorros aportados: {ahorros} €")
+    print(f"💳 {impuesto_nombre} ({impuesto_pct}%): {round(impuesto_compra, 2)} €")
+    print(f"📝 Notaría ({notaria_pct}%): {round(notaria, 2)} €")
+    print(f"📝 Tasación ({tasacion_pct}%): {round(tasacion, 2)} €")
+    print(f"📝 Gestoría ({gestoria_pct}%): {round(gestoria, 2)} €")
+    print(f"📝 Gastos gestión total: {round(gastos_gestion, 2)} €")
     print(f"🏦 Cantidad hipotecada: {round(capital, 2)} €")
     print(f"🏠 Coste total vivienda (incl. impuestos y gestión): {round(coste_vivienda + intereses_totales + gastos_gestion + impuesto_compra, 2)} €")
     print(f"💸 Intereses totales: {round(intereses_totales, 2)} €")
@@ -88,11 +124,46 @@ def crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_h
 if __name__ == "__main__":
     print("🏠 Calculadora de Hipoteca 🏠")
     print("--------------------------------------")
-    
+
     coste_vivienda = float(input("¿Cuánto vale tu futura vivienda? (en euros): "))
     ahorros = float(input("¿De cuántos ahorros dispones? (en euros): "))
-    TIN = float(input("Introduce el TIN anual (en porcentaje): "))
+
+    # Tipo de vivienda
+    tipo_vivienda = int(input("¿Tipo de vivienda? (1: Segunda mano / 2: Obra nueva) [1]: ") or "1")
+    if tipo_vivienda == 2:
+        impuesto_pct = 10.0
+        print(f"  IVA aplicado: {impuesto_pct}%")
+    else:
+        itp_input = input("¿Porcentaje de ITP? [10]: ") or "10"
+        impuesto_pct = float(itp_input)
+        bonificacion = input("¿Tienes bonificación (joven/VPO/familia numerosa)? (s/n) [n]: ") or "n"
+        if bonificacion.lower() == "s":
+            impuesto_pct = 5.0
+            print(f"  ITP bonificado aplicado: {impuesto_pct}%")
+        else:
+            print(f"  ITP aplicado: {impuesto_pct}%")
+
+    # Gastos de gestión por porcentaje
+    notaria_pct = float(input("¿Porcentaje de notaría? [0.4]: ") or "0.4")
+    tasacion_pct = float(input("¿Porcentaje de tasación? [0.08]: ") or "0.08")
+    gestoria_pct = float(input("¿Porcentaje de gestoría? [0.15]: ") or "0.15")
+
+    # Tipo de hipoteca
+    tipo_hipoteca = int(input("¿Tipo de hipoteca? (1: Fijo / 2: Variable) [1]: ") or "1")
+    euribor = None
+    diferencial = None
+    if tipo_hipoteca == 2:
+        euribor = float(input("Introduce el Euríbor actual (en porcentaje): "))
+        diferencial = float(input("Introduce el diferencial (en porcentaje): "))
+        TIN = euribor + diferencial
+        print(f"  TIN calculado (Euríbor + diferencial): {TIN}%")
+    else:
+        TIN = float(input("Introduce el TIN anual (en porcentaje): "))
+
     plazo_hipoteca = int(input("Introduce el plazo del préstamo (en años): "))
     inicio_hipoteca = int(input("¿Cuándo vas a firmar la hipoteca? (año de la firma): "))
 
-    crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_hipoteca)
+    crear_excel_y_mostrar(coste_vivienda, ahorros, TIN, plazo_hipoteca, inicio_hipoteca,
+                          tipo_vivienda, tipo_hipoteca, impuesto_pct,
+                          notaria_pct, tasacion_pct, gestoria_pct,
+                          euribor, diferencial)
