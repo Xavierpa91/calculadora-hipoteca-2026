@@ -50,4 +50,4 @@ MIT License - Siéntete libre de usar y modificar este proyecto.
 
 ---
 
-Creado con ❤️ en 2026
+Created by XPV, 2026 _(personal project)_
