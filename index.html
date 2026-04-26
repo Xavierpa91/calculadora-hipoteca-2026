@@ -1694,21 +1694,22 @@
                     </div>
                 </div>
 
+                <!-- === UPDATE RATES HERE === -->
                 <div class="ecb-rate-row">
                     <span class="ecb-rate-label">Facilidad de depósito</span>
-                    <span class="ecb-rate-value">2,50%</span>
+                    <span class="ecb-rate-value">2,00%</span>
                 </div>
                 <div class="ecb-rate-row">
                     <span class="ecb-rate-label">Operaciones principales</span>
-                    <span class="ecb-rate-value">2,65%</span>
+                    <span class="ecb-rate-value">2,15%</span>
                 </div>
                 <div class="ecb-rate-row">
                     <span class="ecb-rate-label">Facilidad marginal crédito</span>
-                    <span class="ecb-rate-value">2,90%</span>
+                    <span class="ecb-rate-value">2,40%</span>
                 </div>
 
-                <div class="ecb-euribor-highlight" onclick="usarEuribor(2.289)" title="Click para usar este valor en la calculadora">
-                    <div class="ecb-euribor-value">2,289%</div>
+                <div class="ecb-euribor-highlight" onclick="usarEuribor(2.739)" title="Click para usar este valor en la calculadora">
+                    <div class="ecb-euribor-value">2,739%</div>
                     <div class="ecb-euribor-label">Euríbor 12 meses</div>
                     <div style="font-size: 0.7rem; opacity: 0.7; margin-top: 4px;">Click para usar en calculadora</div>
                 </div>
@@ -1752,58 +1753,53 @@
 
     <script>
         /* === UPDATE BANK OFFERS HERE === */
+        /* Fuentes: Rankia, Kelisto, idealista, Rastreator, HelpMyCash — Abril 2026 */
         /* === BANK LOGO DOMAINS - used to fetch favicons === */
         const BANK_LOGOS = {
+            'Unicaja': 'unicajabanco.es',
+            'Ibercaja': 'ibercaja.es',
+            'Pibank': 'pibank.es',
             'Openbank': 'openbank.es',
-            'MyInvestor': 'myinvestor.es',
-            'Coinc (Bankinter)': 'coinc.es',
             'Bankinter': 'bankinter.com',
-            'EVO Banco': 'evobanco.com',
             'Kutxabank': 'kutxabank.es',
             'ING': 'ing.es',
             'CaixaBank': 'caixabank.es',
             'Sabadell': 'bancsabadell.com',
             'BBVA': 'bbva.es',
-            'Santander': 'bancosantander.es'
+            'Cajamar': 'cajamar.es'
         };
 
         const OFERTAS_BANCOS = {
             lastUpdated: 'Abril 2026',
             fijo: [
-                { banco: 'Openbank', tin: 2.78, tae: 3.23, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'MyInvestor', tin: 2.80, tae: 3.15, condiciones: ['Sin vinculaciones'] },
-                { banco: 'Coinc (Bankinter)', tin: 2.85, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar'] },
-                { banco: 'EVO Banco', tin: 2.90, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Unicaja', tin: 2.00, tae: 2.10, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Ibercaja', tin: 2.30, tae: 3.25, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'CaixaBank', tin: 2.35, tae: 2.50, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
+                { banco: 'BBVA', tin: 2.45, tae: 2.60, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] },
+                { banco: 'Sabadell', tin: 2.75, tae: 3.58, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Openbank', tin: 2.80, tae: 3.41, condiciones: ['Nómina', 'Seguro hogar'] },
                 { banco: 'Kutxabank', tin: 2.95, tae: 3.45, condiciones: ['Nómina >= 2.500€', 'Seguro hogar'] },
-                { banco: 'ING', tin: 2.99, tae: 3.55, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'CaixaBank', tin: 3.05, tae: 3.89, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
-                { banco: 'Sabadell', tin: 3.10, tae: 3.85, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'BBVA', tin: 3.15, tae: 3.96, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] },
-                { banco: 'Santander', tin: 3.20, tae: 4.05, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] }
+                { banco: 'ING', tin: 2.99, tae: 3.49, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Bankinter', tin: 3.20, tae: 3.79, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] }
             ],
             variable: [
-                { banco: 'MyInvestor', diferencial: 0.48, tae: 3.10, condiciones: ['Sin vinculaciones'] },
-                { banco: 'Openbank', diferencial: 0.55, tae: 3.20, condiciones: ['Nómina', 'Seguro hogar'] },
-                { banco: 'EVO Banco', diferencial: 0.60, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'Kutxabank', diferencial: 0.49, tae: 3.15, condiciones: ['Nómina >= 3.000€', 'Plan pensiones'] },
-                { banco: 'ING', diferencial: 0.69, tae: 3.45, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'Bankinter', diferencial: 0.65, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', '2 productos'] },
-                { banco: 'Sabadell', diferencial: 0.70, tae: 3.50, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'CaixaBank', diferencial: 0.75, tae: 3.60, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
-                { banco: 'BBVA', diferencial: 0.79, tae: 3.65, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'Santander', diferencial: 0.85, tae: 3.75, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] }
+                { banco: 'Kutxabank', diferencial: 0.49, tae: 3.17, condiciones: ['Nómina >= 3.000€', 'Plan pensiones'] },
+                { banco: 'Bankinter', diferencial: 0.50, tae: 3.20, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '2 productos'] },
+                { banco: 'Cajamar', diferencial: 0.50, tae: 3.20, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Sabadell', diferencial: 0.55, tae: 3.25, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Ibercaja', diferencial: 0.60, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'BBVA', diferencial: 0.60, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Openbank', diferencial: 0.70, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar'] },
+                { banco: 'ING', diferencial: 0.79, tae: 3.49, condiciones: ['Nómina', 'Seguro hogar'] }
             ],
             mixto: [
-                { banco: 'Openbank', tinFijo: 1.95, periodoFijo: '10 años', diferencial: 0.55, tae: 3.15, condiciones: ['Nómina', 'Seguro hogar'] },
-                { banco: 'MyInvestor', tinFijo: 2.15, periodoFijo: '5 años', diferencial: 0.48, tae: 3.05, condiciones: ['Sin vinculaciones'] },
-                { banco: 'Kutxabank', tinFijo: 1.89, periodoFijo: '5 años', diferencial: 0.49, tae: 3.10, condiciones: ['Nómina >= 3.000€'] },
-                { banco: 'Bankinter', tinFijo: 2.05, periodoFijo: '10 años', diferencial: 0.65, tae: 3.30, condiciones: ['Nómina', 'Seguro hogar', '2 productos'] },
-                { banco: 'ING', tinFijo: 2.20, periodoFijo: '10 años', diferencial: 0.69, tae: 3.40, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
-                { banco: 'EVO Banco', tinFijo: 2.10, periodoFijo: '5 años', diferencial: 0.60, tae: 3.25, condiciones: ['Nómina', 'Seguro hogar'] },
-                { banco: 'Sabadell', tinFijo: 2.30, periodoFijo: '10 años', diferencial: 0.70, tae: 3.50, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Pibank', tinFijo: 1.60, periodoFijo: '4 años', diferencial: 0.65, tae: 3.10, condiciones: ['Sin vinculaciones'] },
+                { banco: 'Ibercaja', tinFijo: 1.80, periodoFijo: '5 años', diferencial: 0.60, tae: 3.15, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Sabadell', tinFijo: 1.80, periodoFijo: '5 años', diferencial: 0.70, tae: 3.25, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
+                { banco: 'Kutxabank', tinFijo: 2.65, periodoFijo: '5 años', diferencial: 0.70, tae: 3.40, condiciones: ['Nómina >= 3.000€', 'Seguro hogar'] },
+                { banco: 'Openbank', tinFijo: 2.80, periodoFijo: '5 años', diferencial: 0.60, tae: 3.35, condiciones: ['Nómina', 'Seguro hogar'] },
                 { banco: 'CaixaBank', tinFijo: 2.25, periodoFijo: '5 años', diferencial: 0.75, tae: 3.55, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', '3 productos'] },
-                { banco: 'BBVA', tinFijo: 2.40, periodoFijo: '10 años', diferencial: 0.79, tae: 3.60, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] },
-                { banco: 'Santander', tinFijo: 2.35, periodoFijo: '5 años', diferencial: 0.85, tae: 3.70, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] }
+                { banco: 'BBVA', tinFijo: 2.40, periodoFijo: '10 años', diferencial: 0.60, tae: 3.45, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida', 'Plan pensiones'] }
             ]
         };
 
