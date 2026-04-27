@@ -21,3 +21,7 @@ Thumbs.db
 
 # Logs
 *.log
+data/fetch.log
+
+# Scraper backups (keep the actual data files)
+data/*.backup.json

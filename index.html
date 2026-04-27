@@ -1052,7 +1052,42 @@
                 font-size: 1rem;
             }
         }
+        /* === Share Buttons === */
+        .share-buttons {
+            display: grid;
+        }
+        .btn-share {
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-pdf {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-pdf:hover { background: #b91c1c; transform: translateY(-1px); }
+        .btn-email {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+        .btn-email:hover { background: var(--gray-200); transform: translateY(-1px); }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .btn-whatsapp:hover { background: #1da851; transform: translateY(-1px); }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
 </head>
 <body>
     <header>
@@ -1470,6 +1505,21 @@
                         <span class="result-label">📅 Fin de hipoteca</span>
                         <span class="result-value" id="resFinHipoteca">-</span>
                     </div>
+
+                    <div class="share-buttons" id="shareButtons" style="display: none; gap: 10px; margin-top: 20px; grid-template-columns: 1fr 1fr 1fr;">
+                        <button class="btn btn-share btn-pdf" onclick="descargarPDF()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            PDF
+                        </button>
+                        <button class="btn btn-share btn-email" onclick="compartirEmail()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            Email
+                        </button>
+                        <button class="btn btn-share btn-whatsapp" onclick="compartirWhatsApp()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WhatsApp
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Simulador de Amortización -->
@@ -1766,10 +1816,20 @@
             'CaixaBank': 'caixabank.es',
             'Sabadell': 'bancsabadell.com',
             'BBVA': 'bbva.es',
-            'Cajamar': 'cajamar.es'
+            'Cajamar': 'cajamar.es',
+            'Banca March': 'bancamarch.es',
+            'COINC': 'coinc.es',
+            'Santander': 'bancosantander.es',
+            'MyInvestor': 'myinvestor.es',
+            'Caixa Enginyers': 'caixaenginyers.com',
+            'Deutsche Bank': 'db.com',
+            'ABANCA': 'abanca.com',
+            'Laboral Kutxa': 'laboralkutxa.com',
+            'EVO Banco': 'evobanco.com',
+            'imaginBank': 'imaginbank.com'
         };
 
-        const OFERTAS_BANCOS = {
+        let OFERTAS_BANCOS = {
             lastUpdated: 'Abril 2026',
             fijo: [
                 { banco: 'Unicaja', tin: 2.00, tae: 2.10, condiciones: ['Nómina', 'Seguro hogar', 'Seguro vida'] },
@@ -2115,6 +2175,9 @@
             actualizarTablaComparativa(capital, tin, inicioHipoteca, gastosGestion, impuestoCompra, costeVivienda, plazoHipoteca);
 
             calcularGastosFijos();
+
+            // Show share buttons
+            document.getElementById('shareButtons').style.display = 'grid';
         }
 
         // Actualizar tabla comparativa
@@ -2363,12 +2426,179 @@
             document.querySelector('.main-grid').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // === Dynamic data loading from JSON (updated by fetch_bank_data.py) ===
+        async function loadBankData() {
+            try {
+                const [euriborRes, offersRes] = await Promise.all([
+                    fetch('data/euribor.json').catch(() => null),
+                    fetch('data/bank_offers.json').catch(() => null)
+                ]);
+
+                if (euriborRes && euriborRes.ok) {
+                    const euribor = await euriborRes.json();
+                    updateEuriborDisplay(euribor);
+                }
+
+                if (offersRes && offersRes.ok) {
+                    const offers = await offersRes.json();
+                    // Merge BANK_LOGOS for any new banks from JSON
+                    OFERTAS_BANCOS = offers;
+                    document.getElementById('ofertasDate').textContent = offers.lastUpdated || 'Actualizado';
+                    renderOfertas('fijo');
+                }
+            } catch (e) {
+                console.warn('No se pudieron cargar datos dinámicos, usando valores por defecto:', e);
+            }
+        }
+
+        function updateEuriborDisplay(euribor) {
+            const rate12m = euribor.rates && euribor.rates['12_months'];
+            if (rate12m != null) {
+                // Update Euribor highlight
+                const highlight = document.querySelector('.ecb-euribor-highlight');
+                if (highlight) {
+                    highlight.onclick = () => usarEuribor(rate12m);
+                    highlight.title = 'Click para usar este valor en la calculadora';
+                    const valueEl = highlight.querySelector('.ecb-euribor-value');
+                    if (valueEl) valueEl.textContent = rate12m.toLocaleString('es-ES', {minimumFractionDigits: 3}) + '%';
+                }
+            }
+
+            // Update ECB rates if available
+            const ecb = euribor.ecb_rates;
+            if (ecb) {
+                const rateRows = document.querySelectorAll('.ecb-rate-row');
+                const ecbMap = [
+                    { key: 'deposito', label: 'Facilidad de depósito' },
+                    { key: 'operaciones', label: 'Operaciones principales' },
+                    { key: 'marginal', label: 'Facilidad marginal crédito' }
+                ];
+                ecbMap.forEach((item, i) => {
+                    if (ecb[item.key] != null && rateRows[i]) {
+                        const valEl = rateRows[i].querySelector('.ecb-rate-value');
+                        if (valEl) valEl.textContent = ecb[item.key].toLocaleString('es-ES', {minimumFractionDigits: 2}) + '%';
+                    }
+                });
+            }
+
+            // Update source date
+            if (euribor.lastUpdated) {
+                const dateStr = new Date(euribor.lastUpdated).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+                const sourceEl = document.querySelector('.ecb-rate-row')?.closest('.card')?.querySelector('p[style*="font-size: 0.7rem"]');
+                if (sourceEl) sourceEl.textContent = `Fuente: BCE / euribor-rates.eu — ${dateStr}`;
+            }
+        }
+
+        // === PDF / Email / WhatsApp ===
+        function getResumenTexto() {
+            if (!ultimoCalculo) return '';
+            const c = ultimoCalculo;
+            const fmt = v => v.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const tipo = c.tipoHipoteca === 'fijo' ? 'Fijo' : 'Variable';
+            let lines = [
+                `RESUMEN HIPOTECA`,
+                ``,
+                `Tipo: ${tipo}`,
+                `Cuota mensual: ${fmt(c.cuota)} EUR`,
+            ];
+            if (!c.capitalDirectoActivo) {
+                lines.push(`Precio vivienda: ${fmt(c.costeVivienda)} EUR`);
+                lines.push(`Impuestos + Gastos: ${fmt(c.impuestoCompra + c.gastosGestion)} EUR`);
+            }
+            lines.push(`Capital hipotecado: ${fmt(c.capital)} EUR`);
+            lines.push(`TIN: ${c.tin}%`);
+            lines.push(`Plazo: ${c.plazoHipoteca} anos`);
+            lines.push(`Fin hipoteca: ${c.inicioHipoteca + c.plazoHipoteca}`);
+            const totalPagado = document.getElementById('resTotalPagado').textContent;
+            const intereses = document.getElementById('resIntereses').textContent;
+            const costeTotal = document.getElementById('resCosteTotalVivienda').textContent;
+            lines.push(`Intereses totales: ${intereses}`);
+            lines.push(`Total a pagar: ${totalPagado}`);
+            lines.push(`Coste total vivienda: ${costeTotal}`);
+            lines.push(``);
+            lines.push(`Generado con Calculadora Hipoteca 2026`);
+            return lines.join('\n');
+        }
+
+        async function descargarPDF() {
+            if (!ultimoCalculo) return;
+            const card = document.getElementById('resultadosCard');
+
+            try {
+                const canvas = await html2canvas(card, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    logging: false,
+                });
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 15;
+                const maxWidth = pageWidth - margin * 2;
+
+                const imgRatio = canvas.height / canvas.width;
+                const imgWidth = maxWidth;
+                const imgHeight = imgWidth * imgRatio;
+
+                // Title
+                pdf.setFontSize(18);
+                pdf.setTextColor(37, 99, 235);
+                pdf.text('Resumen Hipoteca', margin, 20);
+                pdf.setFontSize(10);
+                pdf.setTextColor(107, 114, 128);
+                pdf.text(`Generado: ${new Date().toLocaleDateString('es-ES')}`, margin, 27);
+
+                // Results image
+                const imgData = canvas.toDataURL('image/png');
+                const yStart = 35;
+                if (imgHeight > pageHeight - yStart - margin) {
+                    const scale = (pageHeight - yStart - margin) / imgHeight;
+                    pdf.addImage(imgData, 'PNG', margin, yStart, imgWidth * scale, imgHeight * scale);
+                } else {
+                    pdf.addImage(imgData, 'PNG', margin, yStart, imgWidth, imgHeight);
+                }
+
+                // Footer
+                pdf.setFontSize(8);
+                pdf.setTextColor(156, 163, 175);
+                pdf.text('Calculadora Hipoteca 2026 - XPV (datos orientativos)', margin, pageHeight - 8);
+
+                pdf.save('resumen-hipoteca.pdf');
+            } catch (e) {
+                console.error('Error generando PDF:', e);
+                // Fallback: text-based PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const text = getResumenTexto();
+                pdf.setFontSize(12);
+                pdf.text(text.split('\n'), 15, 20);
+                pdf.save('resumen-hipoteca.pdf');
+            }
+        }
+
+        function compartirEmail() {
+            if (!ultimoCalculo) return;
+            const subject = encodeURIComponent('Mi Resumen de Hipoteca');
+            const body = encodeURIComponent(getResumenTexto());
+            window.open(`mailto:?subject=${subject}&body=${body}`);
+        }
+
+        function compartirWhatsApp() {
+            if (!ultimoCalculo) return;
+            const text = encodeURIComponent(getResumenTexto());
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
         // Inicializar
         actualizarTotalGastos();
         actualizarTipoVariable();
         actualizarResumenVariable();
         actualizarBonificacion();
         renderOfertas('fijo');
+        loadBankData();
     </script>
 </body>
 </html>

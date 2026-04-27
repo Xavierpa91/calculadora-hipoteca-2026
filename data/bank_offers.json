@@ -1,0 +1,329 @@
+{
+  "lastUpdated": "Abril 2026",
+  "fetchDate": "2026-04-27T23:34:48",
+  "source": "helpmycash.com",
+  "fijo": [
+    {
+      "banco": "Broker",
+      "tin": 2.3,
+      "tae": 2.55,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Tarjeta"
+      ]
+    },
+    {
+      "banco": "Banca March",
+      "tin": 2.3,
+      "tae": 2.56,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Santander",
+      "tin": 2.45,
+      "tae": 3.07,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Sabadell",
+      "tin": 2.5,
+      "tae": 3.41,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida",
+        "Seguro protección"
+      ]
+    },
+    {
+      "banco": "Openbank",
+      "tin": 2.57,
+      "tae": 3.13,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Unicaja",
+      "tin": 2.65,
+      "tae": 3.45,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "COINC",
+      "tin": 2.69,
+      "tae": 2.93,
+      "condiciones": [
+        "Consultar condiciones"
+      ]
+    },
+    {
+      "banco": "Bankinter",
+      "tin": 2.69,
+      "tae": 3.3,
+      "condiciones": [
+        "Seguro hogar",
+        "Seguro vida",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "Caixa Enginyers",
+      "tin": 2.8,
+      "tae": 3.51,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida",
+        "Tarjeta",
+        "Seguro protección"
+      ]
+    },
+    {
+      "banco": "MyInvestor",
+      "tin": 3.1,
+      "tae": 3.3,
+      "condiciones": [
+        "Sin vinculaciones"
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "banco": "Broker",
+      "diferencial": 0.3,
+      "tae": 2.81,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Kutxabank",
+      "diferencial": 0.49,
+      "tae": 3.01,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "Unicaja",
+      "diferencial": 0.5,
+      "tae": 3.61,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "Banca March",
+      "diferencial": 0.6,
+      "tae": 3.21,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "BBVA",
+      "diferencial": 0.6,
+      "tae": 3.63,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Openbank",
+      "diferencial": 0.65,
+      "tae": 3.51,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "ING",
+      "diferencial": 0.65,
+      "tae": 3.63,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "COINC",
+      "diferencial": 0.7,
+      "tae": 3.27,
+      "condiciones": [
+        "Consultar condiciones"
+      ]
+    },
+    {
+      "banco": "Bankinter",
+      "diferencial": 0.7,
+      "tae": 3.63,
+      "condiciones": [
+        "Seguro hogar",
+        "Seguro vida",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "MyInvestor",
+      "diferencial": 0.79,
+      "tae": 3.35,
+      "condiciones": [
+        "Sin vinculaciones"
+      ]
+    }
+  ],
+  "mixto": [
+    {
+      "banco": "Broker",
+      "tinFijo": 1.4,
+      "diferencial": 0.4,
+      "periodoFijo": "5 años",
+      "tae": 2.58,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Ibercaja",
+      "tinFijo": 1.75,
+      "diferencial": 0.65,
+      "periodoFijo": "5 años",
+      "tae": 3.47,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida",
+        "Tarjeta"
+      ]
+    },
+    {
+      "banco": "Cajamar",
+      "tinFijo": 1.79,
+      "diferencial": 0.5,
+      "periodoFijo": "5 años",
+      "tae": 3.33,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Sabadell",
+      "tinFijo": 2.0,
+      "diferencial": 0.75,
+      "periodoFijo": "3 años",
+      "tae": 3.37,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Pibank",
+      "tinFijo": 2.15,
+      "diferencial": 0.75,
+      "periodoFijo": "3 años",
+      "tae": 3.2,
+      "condiciones": [
+        "Sin vinculaciones"
+      ]
+    },
+    {
+      "banco": "Banca March",
+      "tinFijo": 2.3,
+      "diferencial": 0.6,
+      "periodoFijo": "4 años",
+      "tae": 3.07,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Deutsche Bank",
+      "tinFijo": 2.3,
+      "diferencial": 0.6,
+      "periodoFijo": "5 años",
+      "tae": 3.47,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Plan pensiones",
+        "Tarjeta",
+        "Seguro protección"
+      ]
+    },
+    {
+      "banco": "ING",
+      "tinFijo": 2.3,
+      "diferencial": 0.79,
+      "periodoFijo": "5 años",
+      "tae": 3.51,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Openbank",
+      "tinFijo": 2.51,
+      "diferencial": 0.6,
+      "periodoFijo": "5 años",
+      "tae": 3.36,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Bankinter",
+      "tinFijo": 2.79,
+      "diferencial": 0.7,
+      "periodoFijo": "10 años",
+      "tae": 3.5,
+      "condiciones": [
+        "Seguro hogar",
+        "Seguro vida",
+        "Plan pensiones"
+      ]
+    }
+  ]
+}

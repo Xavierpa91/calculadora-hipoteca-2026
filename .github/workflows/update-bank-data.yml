@@ -1,0 +1,43 @@
+name: Update Bank Data
+
+on:
+  schedule:
+    # Daily at midnight (00:03 UTC to avoid the :00 rush)
+    - cron: '3 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run bank data scraper
+        run: python fetch_bank_data.py
+
+      - name: Check for changes
+        id: check
+        run: |
+          git diff --quiet data/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push updated data
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/euribor.json data/bank_offers.json
+          git commit -m "chore: update bank data $(date +'%Y-%m-%d')"
+          git push

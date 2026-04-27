@@ -1,6 +1,24 @@
+import json
 import math
+from pathlib import Path
+
 import openpyxl
 from openpyxl.utils import get_column_letter
+
+DATA_DIR = Path(__file__).parent / "data"
+
+
+def cargar_euribor_12m() -> float | None:
+    """Load latest 12-month Euribor rate from data/euribor.json if available."""
+    try:
+        with open(DATA_DIR / "euribor.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            rate = data["rates"]["12_months"]
+            updated = data.get("lastUpdated", "?")
+            print(f"  Euríbor 12m cargado: {rate}% (actualizado: {updated})")
+            return rate
+    except (FileNotFoundError, KeyError, json.JSONDecodeError):
+        return None
 
 def calcular_cuota(capital, TIN, plazo_hipoteca):
     r = TIN / 100 / 12
@@ -153,7 +171,12 @@ if __name__ == "__main__":
     euribor = None
     diferencial = None
     if tipo_hipoteca == 2:
-        euribor = float(input("Introduce el Euríbor actual (en porcentaje): "))
+        euribor_default = cargar_euribor_12m()
+        if euribor_default is not None:
+            euribor_input = input(f"Introduce el Euríbor actual (en porcentaje) [{euribor_default}]: ") or str(euribor_default)
+        else:
+            euribor_input = input("Introduce el Euríbor actual (en porcentaje): ")
+        euribor = float(euribor_input)
         diferencial = float(input("Introduce el diferencial (en porcentaje): "))
         TIN = euribor + diferencial
         print(f"  TIN calculado (Euríbor + diferencial): {TIN}%")
