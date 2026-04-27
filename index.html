@@ -2566,24 +2566,16 @@
             const includeGastos = totalGastos && totalGastos !== '0 €/mes';
             if (includeGastos) cards.push(gastosCard);
 
-            // Capture each card - use onclone to force correct background on all cards
+            // Capture each card directly from the page
             const canvases = [];
             for (const card of cards) {
+                // results-card has its own gradient, others need white bg
+                const isResultsCard = card.id === 'resultadosCard';
                 const c = await html2canvas(card, {
                     scale: 2,
-                    backgroundColor: null,
+                    backgroundColor: isResultsCard ? null : '#ffffff',
                     useCORS: true,
                     logging: false,
-                    onclone: (doc, el) => {
-                        // Force background on the cloned element to preserve styling
-                        const styles = window.getComputedStyle(card);
-                        el.style.background = styles.background;
-                        el.style.backgroundColor = styles.backgroundColor;
-                        el.style.color = styles.color;
-                        el.style.borderRadius = styles.borderRadius;
-                        el.style.padding = styles.padding;
-                        el.style.boxShadow = 'none';
-                    },
                 });
                 canvases.push(c);
             }
