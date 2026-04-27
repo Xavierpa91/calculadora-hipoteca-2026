@@ -2566,18 +2566,42 @@
             const includeGastos = totalGastos && totalGastos !== '0 €/mes';
             if (includeGastos) cards.push(gastosCard);
 
-            // Capture each card directly from the page
+            // Force inline styles before capture so html2canvas picks them up
+            const savedStyles = [];
+            for (const card of cards) {
+                const save = { el: card, bg: card.style.background, color: card.style.color };
+                savedStyles.push(save);
+                if (card.id !== 'resultadosCard') {
+                    card.style.background = '#ffffff';
+                }
+                // Also force styles on child elements with gradients
+                card.querySelectorAll('.expense-summary').forEach(el => {
+                    save['expBg'] = el.style.background;
+                    el.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    el.style.color = 'white';
+                });
+            }
+
+            // Capture each card
             const canvases = [];
             for (const card of cards) {
-                // results-card has its own gradient, others need white bg
-                const isResultsCard = card.id === 'resultadosCard';
                 const c = await html2canvas(card, {
                     scale: 2,
-                    backgroundColor: isResultsCard ? null : '#ffffff',
+                    backgroundColor: null,
                     useCORS: true,
                     logging: false,
                 });
                 canvases.push(c);
+            }
+
+            // Restore original styles
+            for (const save of savedStyles) {
+                save.el.style.background = save.bg;
+                save.el.style.color = save.color;
+                save.el.querySelectorAll('.expense-summary').forEach(el => {
+                    el.style.background = save.expBg || '';
+                    el.style.color = '';
+                });
             }
 
             // Restore share buttons
