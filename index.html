@@ -2540,21 +2540,25 @@
         }
 
         async function capturarCards() {
-            // Hide all share buttons during capture
-            document.querySelectorAll('.share-buttons').forEach(el => el.style.display = 'none');
+            // Hide share buttons during capture
+            const shareEl = document.getElementById('shareButtons');
+            shareEl.style.display = 'none';
 
-            // Capture only the results card
+            // Force the gradient inline so html2canvas picks it up
             const card = document.getElementById('resultadosCard');
+            const savedBg = card.style.background;
+            card.style.background = 'linear-gradient(135deg, #d2dfff 0%, #211b75 100%)';
 
             const canvas = await html2canvas(card, {
                 scale: 2,
-                backgroundColor: null,
+                backgroundColor: '#ffffff',
                 useCORS: true,
                 logging: false,
             });
 
-            // Restore share buttons
-            document.querySelectorAll('.share-buttons').forEach(el => el.style.display = 'grid');
+            // Restore
+            card.style.background = savedBg;
+            shareEl.style.display = 'grid';
 
             return canvas;
         }
