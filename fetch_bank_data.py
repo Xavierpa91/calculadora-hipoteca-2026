@@ -296,10 +296,11 @@ def parse_product_cards(html: str) -> tuple[list[dict], list[dict], list[dict]]:
         if vinculaciones == 0:
             conditions = ["Sin vinculaciones"]
 
-        # Skip duplicate bank entries per type (keep first = best offer)
-        if bank_name in seen[mort_type]:
+        # Skip exact duplicates (same bank + same rate)
+        dup_key = f"{bank_name}_{tin_initial}_{tae}_{mort_type}"
+        if dup_key in seen[mort_type]:
             continue
-        seen[mort_type].add(bank_name)
+        seen[mort_type].add(dup_key)
 
         if mort_type == "fixed":
             offer = {"banco": bank_name, "tin": tin_initial, "tae": tae, "condiciones": conditions}

@@ -1,8 +1,18 @@
 {
   "lastUpdated": "Abril 2026",
-  "fetchDate": "2026-04-27T22:03:03",
+  "fetchDate": "2026-04-28T00:05:01",
   "source": "helpmycash.com",
   "fijo": [
+    {
+      "banco": "Broker",
+      "tin": 2.1,
+      "tae": 2.35,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Tarjeta"
+      ]
+    },
     {
       "banco": "Broker",
       "tin": 2.3,
@@ -66,6 +76,16 @@
       ]
     },
     {
+      "banco": "Banca March",
+      "tin": 2.65,
+      "tae": 2.91,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
       "banco": "COINC",
       "tin": 2.69,
       "tae": 2.93,
@@ -116,9 +136,29 @@
       ]
     },
     {
+      "banco": "Broker",
+      "diferencial": 0.3,
+      "tae": 2.79,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
       "banco": "Kutxabank",
       "diferencial": 0.49,
       "tae": 3.01,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Plan pensiones"
+      ]
+    },
+    {
+      "banco": "Kutxabank",
+      "diferencial": 0.49,
+      "tae": 2.98,
       "condiciones": [
         "Nómina",
         "Seguro hogar",
@@ -150,6 +190,16 @@
       "banco": "BBVA",
       "diferencial": 0.6,
       "tae": 3.63,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Banca March",
+      "diferencial": 0.6,
+      "tae": 2.92,
       "condiciones": [
         "Nómina",
         "Seguro hogar",
@@ -217,6 +267,18 @@
       ]
     },
     {
+      "banco": "Broker",
+      "tinFijo": 1.4,
+      "diferencial": 0.4,
+      "periodoFijo": "5 años",
+      "tae": 2.56,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
       "banco": "Ibercaja",
       "tinFijo": 1.75,
       "diferencial": 0.65,
@@ -239,6 +301,28 @@
         "Nómina",
         "Seguro hogar",
         "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Banca March",
+      "tinFijo": 1.9,
+      "diferencial": 0.6,
+      "periodoFijo": "4 años",
+      "tae": 2.75,
+      "condiciones": [
+        "Nómina",
+        "Seguro hogar",
+        "Seguro vida"
+      ]
+    },
+    {
+      "banco": "Pibank",
+      "tinFijo": 1.99,
+      "diferencial": 0.75,
+      "periodoFijo": "3 años",
+      "tae": 2.95,
+      "condiciones": [
+        "Sin vinculaciones"
       ]
     },
     {
