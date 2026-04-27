@@ -3,7 +3,7 @@ name: Update Bank Data
 on:
   schedule:
     # Daily at midnight (00:03 UTC to avoid the :00 rush)
-    - cron: '3 0 * * *'
+    - cron: '0 12 * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
