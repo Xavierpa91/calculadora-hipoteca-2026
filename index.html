@@ -1103,7 +1103,7 @@
         .btn-whatsapp:hover { background: #1da851; transform: translateY(-1px); }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 </head>
 <body>
     <header>
@@ -2539,35 +2539,52 @@
         }
 
         async function capturarCards() {
-            // Create a temporary container with both cards for capture
-            const container = document.createElement('div');
-            container.style.cssText = 'position:absolute;left:-9999px;top:0;background:#fff;padding:20px;width:500px;';
-            document.body.appendChild(container);
+            // Hide share buttons during capture
+            const shareEl = document.getElementById('shareButtons');
+            shareEl.style.display = 'none';
 
-            // Clone results card
-            const resultsClone = document.getElementById('resultadosCard').cloneNode(true);
-            // Remove the share buttons from the clone
-            const shareBtn = resultsClone.querySelector('.share-buttons');
-            if (shareBtn) shareBtn.remove();
-            container.appendChild(resultsClone);
-
-            // Clone gastos fijos card if it has data
+            // Collect cards to capture: results + gastos fijos (if filled)
+            const cards = [document.getElementById('resultadosCard')];
             const totalGastos = document.getElementById('totalGastosFijos').textContent;
             if (totalGastos && totalGastos !== '0 €/mes') {
-                const gastosClone = document.getElementById('gastosFijosCard').cloneNode(true);
-                gastosClone.style.marginTop = '16px';
-                container.appendChild(gastosClone);
+                cards.push(document.getElementById('gastosFijosCard'));
             }
 
-            const canvas = await html2canvas(container, {
-                scale: 2,
-                backgroundColor: '#ffffff',
-                useCORS: true,
-                logging: false,
-            });
+            // Capture each card individually and stitch them together
+            const canvases = [];
+            for (const card of cards) {
+                const c = await html2canvas(card, {
+                    scale: 2,
+                    backgroundColor: null, // preserve original background
+                    useCORS: true,
+                    logging: false,
+                });
+                canvases.push(c);
+            }
 
-            document.body.removeChild(container);
-            return canvas;
+            // Restore share buttons
+            shareEl.style.display = 'grid';
+
+            // Stitch canvases vertically with a small gap
+            const gap = 20;
+            const totalWidth = Math.max(...canvases.map(c => c.width));
+            const totalHeight = canvases.reduce((h, c) => h + c.height, 0) + gap * (canvases.length - 1) + gap * 2;
+
+            const final = document.createElement('canvas');
+            final.width = totalWidth + gap * 2;
+            final.height = totalHeight;
+            const ctx = final.getContext('2d');
+            ctx.fillStyle = '#f9fafb';
+            ctx.fillRect(0, 0, final.width, final.height);
+
+            let y = gap;
+            for (const c of canvases) {
+                const x = Math.round((final.width - c.width) / 2);
+                ctx.drawImage(c, x, y);
+                y += c.height + gap;
+            }
+
+            return final;
         }
 
         async function descargarPDF() {
