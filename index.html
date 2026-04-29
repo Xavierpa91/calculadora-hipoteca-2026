@@ -11,9 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
-    --bg: #FAF8F5;
-    --surface: #FFFEFA;
-    --surface-2: #F5F2EE;
+    --bg: #F5F0E8;
+    --surface: #FBF8F3;
+    --surface-2: #EFE9E0;
     --ink: oklch(0.18 0.01 80);
     --ink-2: oklch(0.38 0.01 80);
     --ink-3: oklch(0.58 0.008 80);
@@ -2494,46 +2494,73 @@ async function capturarCards() {
   if (shareRow) shareRow.style.display = 'none';
 
   try {
-    /* Clonar y resolver oklch → rgb via computed styles */
+    const w = zone.offsetWidth;
     const clone = zone.cloneNode(true);
-    const cssProps = ['background', 'background-color', 'color', 'border-color', 'border',
-      'border-top-color', 'border-bottom-color', 'border-left-color', 'border-right-color',
-      'box-shadow', 'outline-color', 'text-decoration-color', 'fill', 'stroke'];
 
-    function resolveColors(src, dst) {
+    /* Inlinar TODOS los computed styles (oklch ya resuelto a rgb por el navegador) */
+    function inlineAll(src, dst) {
       const cs = getComputedStyle(src);
-      for (const prop of cssProps) {
-        const val = cs.getPropertyValue(prop);
-        if (val) dst.style.setProperty(prop, val);
+      let cssText = '';
+      for (let i = 0; i < cs.length; i++) {
+        const p = cs[i];
+        cssText += p + ':' + cs.getPropertyValue(p) + ';';
       }
-      /* Also carry over background-image for gradients */
-      const bg = cs.getPropertyValue('background-image');
-      if (bg && bg !== 'none') dst.style.setProperty('background-image', bg);
+      dst.setAttribute('style', cssText);
       for (let i = 0; i < src.children.length; i++) {
-        resolveColors(src.children[i], dst.children[i]);
+        inlineAll(src.children[i], dst.children[i]);
       }
     }
-    resolveColors(zone, clone);
+    inlineAll(zone, clone);
 
-    /* Esconder imágenes externas para evitar taint */
-    clone.querySelectorAll('img').forEach(img => img.style.display = 'none');
+    /* Esconder imágenes externas */
+    clone.querySelectorAll('img').forEach(img => img.setAttribute('style', 'display:none'));
 
-    /* Montar clon oculto en el DOM para que html2canvas pueda medirlo */
-    clone.style.position = 'fixed';
-    clone.style.left = '-9999px';
-    clone.style.top = '0';
-    clone.style.width = zone.offsetWidth + 'px';
-    clone.style.zIndex = '-1';
-    document.body.appendChild(clone);
+    /* Crear iframe aislado — sin hojas de estilo, html2canvas no verá oklch */
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:' + w + 'px;height:1px;border:none;opacity:0';
+    document.body.appendChild(iframe);
 
-    const canvas = await html2canvas(clone, {
+    const idoc = iframe.contentDocument;
+    idoc.open();
+    idoc.write('<!DOCTYPE html><html><head></head><body style="margin:0;padding:0"></body></html>');
+    idoc.close();
+
+    /* Copiar fuentes al iframe */
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+      const l = idoc.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = link.href;
+      idoc.head.appendChild(l);
+    });
+
+    /* Inyectar html2canvas en el iframe */
+    const scriptEl = idoc.createElement('script');
+    scriptEl.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    idoc.head.appendChild(scriptEl);
+    await new Promise(r => { scriptEl.onload = r; });
+
+    /* Esperar a que las fuentes carguen en el iframe */
+    await new Promise(r => setTimeout(r, 300));
+
+    clone.style.width = w + 'px';
+    clone.style.position = 'static';
+    clone.style.display = 'flex';
+    clone.style.flexDirection = 'column';
+    clone.style.gap = '20px';
+    idoc.body.appendChild(clone);
+
+    iframe.style.height = idoc.body.scrollHeight + 'px';
+
+    /* Usar html2canvas del iframe — no ve las hojas de estilo con oklch */
+    const iframeH2C = iframe.contentWindow.html2canvas;
+    const canvas = await iframeH2C(clone, {
       scale: 2,
-      backgroundColor: '#ffffff',
-      useCORS: true,
+      backgroundColor: '#F5F0E8',
+      useCORS: false,
       logging: false,
     });
 
-    document.body.removeChild(clone);
+    document.body.removeChild(iframe);
     return canvas;
   } finally {
     if (shareRow) shareRow.style.display = '';
