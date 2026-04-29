@@ -1488,14 +1488,14 @@
                   <label class="field-label" for="taxRateBase">ITP base</label>
                   <div class="field-input"><input type="number" id="taxRateBase" value="10" min="0" max="15" step="0.5"><span class="suffix">%</span></div>
                 </div>
-                <div class="toggle-row" id="bonif1Toggle" onclick="toggleBonif(1)">
+                <div class="toggle-row active" id="bonif1Toggle" onclick="toggleBonif(1)">
                   <div>
                     <div class="label">Persona 1 — Bonificación ITP</div>
                     <div class="desc">Joven / VPO / familia numerosa (5%)</div>
                   </div>
                   <div class="switch"></div>
                 </div>
-                <div class="toggle-row" id="bonif2Toggle" style="display:none; margin-top:8px" onclick="toggleBonif(2)">
+                <div class="toggle-row active" id="bonif2Toggle" style="display:none; margin-top:8px" onclick="toggleBonif(2)">
                   <div>
                     <div class="label">Persona 2 — Bonificación ITP</div>
                     <div class="desc">Joven / VPO / familia numerosa (5%)</div>
@@ -1928,8 +1928,8 @@ let capitalDirectoActivo = false;
 let tipoHipoteca = 'fijo';
 let periodoPromoActivo = false;
 let tipoVivienda = 'segunda';
-let bonifPersona1 = false;
-let bonifPersona2 = false;
+let bonifPersona1 = true;
+let bonifPersona2 = true;
 let tipoAmortizacion = 'cuota';
 let ultimoCalculo = null;
 
