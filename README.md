@@ -21,9 +21,10 @@ Una calculadora de hipotecas moderna y elegante, diseñada para ayudarte a plani
 
 | Versión | URL |
 |---------|-----|
-| **Principal** (V2 completa) | [xavierpa91.github.io/calculadora-hipoteca-2026/](https://xavierpa91.github.io/calculadora-hipoteca-2026/) |
+| **Principal** (Nuevo diseño 2026) | [xavierpa91.github.io/calculadora-hipoteca-2026/](https://xavierpa91.github.io/calculadora-hipoteca-2026/) |
+| **Classic** (versión anterior completa) | [.../index_classic.html](https://xavierpa91.github.io/calculadora-hipoteca-2026/index_classic.html) |
 | **V2 Mobile-first** (sidebar optimizada) | [.../index_v2.html](https://xavierpa91.github.io/calculadora-hipoteca-2026/index_v2.html) |
-| **V1** (versión anterior) | [.../index_v1.html](https://xavierpa91.github.io/calculadora-hipoteca-2026/index_v1.html) |
+| **V1** (versión legacy) | [.../index_v1.html](https://xavierpa91.github.io/calculadora-hipoteca-2026/index_v1.html) |
 
 ## 🛠️ Tecnologías
 
