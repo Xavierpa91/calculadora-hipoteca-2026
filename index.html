@@ -180,11 +180,11 @@
   @media (max-width: 1024px) {
     .market-toggle { display: flex; }
     .market-wrap { order: -1; margin-bottom: 16px; }
-    .results-col { display: contents; }
+    .results-col { display: flex; flex-direction: column; gap: 20px; }
   }
   body.force-mobile .market-toggle { display: flex; }
   body.force-mobile .market-wrap { order: -1; margin-bottom: 16px; }
-  body.force-mobile .results-col { display: contents; }
+  body.force-mobile .results-col { display: flex; flex-direction: column; gap: 20px; position: static; }
 
   /* ============ HERO HEADLINE ============ */
   .hero {
@@ -1771,7 +1771,7 @@
       <div class="results-col">
 
         <!-- Capture wrapper -->
-        <div id="captureZone">
+        <div id="captureZone" style="display:flex; flex-direction:column; gap:20px">
 
         <!-- Quote -->
         <div class="quote-card" style="background-color: rgb(61, 75, 59); font-family: -apple-system; opacity: 1; padding: 52px 30px 26px">
@@ -2490,16 +2490,17 @@ async function capturarCards() {
   const zone = document.getElementById('captureZone');
   const shareRow = document.querySelector('.share-row');
   if (shareRow) shareRow.style.display = 'none';
-
-  const canvas = await html2canvas(zone, {
-    scale: 2,
-    backgroundColor: null,
-    useCORS: true,
-    logging: false,
-  });
-
-  if (shareRow) shareRow.style.display = '';
-  return canvas;
+  try {
+    const canvas = await html2canvas(zone, {
+      scale: 2,
+      backgroundColor: null,
+      useCORS: true,
+      logging: false,
+    });
+    return canvas;
+  } finally {
+    if (shareRow) shareRow.style.display = '';
+  }
 }
 
 async function exportarPDF() {
