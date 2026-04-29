@@ -11,9 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
-    --bg: #F5F0E8;
-    --surface: #FBF8F3;
-    --surface-2: #EFE9E0;
+    --bg: #EDE5D8;
+    --surface: #F7F2EA;
+    --surface-2: #E8E0D3;
     --ink: oklch(0.18 0.01 80);
     --ink-2: oklch(0.38 0.01 80);
     --ink-3: oklch(0.58 0.008 80);
@@ -343,7 +343,7 @@
     border-radius: var(--radius-sm);
     background: var(--bg);
     color: var(--ink);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
     font-variant-numeric: tabular-nums;
     font-size: 14px;
     transition: all 0.15s ease;
@@ -446,7 +446,7 @@
   }
   .seg-rates button {
     height: 38px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
     font-size: 12px;
   }
   .seg-rates button.active {
@@ -630,7 +630,7 @@
     color: oklch(0.95 0.01 85 / 0.78);
   }
   .quote-meta-item .v {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
     font-size: 17px;
     font-weight: 600;
     margin-top: 6px;
@@ -661,7 +661,7 @@
   }
   .br-row + .br-row { border-top: 1px solid var(--line); }
   .br-row .k { color: var(--ink-2); }
-  .br-row .v { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 500; }
+  .br-row .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; color: var(--ink); font-weight: 500; }
   .br-row.total .k { font-weight: 600; color: var(--ink); }
   .br-row.total .v { font-weight: 700; }
 
@@ -747,7 +747,7 @@
   .ltv-legend .k { color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
   .ltv-legend .k::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: #E04F31; }
   .ltv-legend > div:nth-child(2) .k::before { background: oklch(0.78 0.21 130); opacity: 1; }
-  .ltv-legend .v { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink); font-size: 14px; }
+  .ltv-legend .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-weight: 600; color: var(--ink); font-size: 14px; }
 
   /* ============ COMPARISON TABLE ============ */
   .compare-panel { padding: 24px 28px 28px; }
@@ -793,7 +793,7 @@
   }
   .compare-table th:first-child,
   .compare-table td:first-child { text-align: left; }
-  .compare-table tbody td { font-family: 'JetBrains Mono', monospace; color: var(--ink); border-bottom: 1px solid var(--line); transition: background 0.15s ease; }
+  .compare-table tbody td { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; color: var(--ink); border-bottom: 1px solid var(--line); transition: background 0.15s ease; }
   .compare-table tbody tr { cursor: pointer; }
   .compare-table tbody tr:hover td { background: var(--surface-2); }
   .compare-table tbody tr:last-child td { border-bottom: none; }
@@ -946,7 +946,7 @@
     width: 80px; height: 34px;
     border: 1px solid var(--line-2); border-radius: 7px;
     padding: 0 28px 0 10px;
-    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 13px;
     background: var(--bg); text-align: right;
     transition: all 0.15s ease;
   }
@@ -980,7 +980,7 @@
   }
   .exp-summary-row .lbl { display: inline-flex; align-items: center; gap: 8px; }
   .exp-summary-row .lbl .swatch { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-  .exp-summary-row .v { font-family: 'JetBrains Mono', monospace; }
+  .exp-summary-row .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
   .exp-summary-row.total {
     margin-top: 10px;
     padding-top: 14px;
@@ -1042,7 +1042,7 @@
     padding: 12px;
   }
   .ecb-tile .k { font-size: 11px; color: var(--ink-3); }
-  .ecb-tile .v { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; margin-top: 4px; }
+  .ecb-tile .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 16px; font-weight: 600; margin-top: 4px; }
 
   .euribor-card {
     background: var(--ink);
@@ -1100,7 +1100,7 @@
   .offer-bank { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
   .offer-bank img { width: 18px; height: 18px; border-radius: 3px; }
   .offer-rates { display: flex; gap: 14px; margin-bottom: 10px; }
-  .offer-rate .v { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .offer-rate .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); }
   .offer-rate .k { font-size: 10px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
   .offer-conds { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
   .offer-cond {
@@ -1193,7 +1193,7 @@
     color: var(--accent-ink);
     font-size: 13px;
   }
-  .computed .v { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; }
+  .computed .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-weight: 700; font-size: 15px; }
 
   /* ============ FOOTER ============ */
   footer {
@@ -2493,76 +2493,58 @@ async function capturarCards() {
   const shareRow = document.querySelector('.share-row');
   if (shareRow) shareRow.style.display = 'none';
 
-  try {
-    const w = zone.offsetWidth;
-    const clone = zone.cloneNode(true);
+  /* 1. Clonar el nodo */
+  const clone = zone.cloneNode(true);
 
-    /* Inlinar TODOS los computed styles (oklch ya resuelto a rgb por el navegador) */
-    function inlineAll(src, dst) {
-      const cs = getComputedStyle(src);
-      let cssText = '';
-      for (let i = 0; i < cs.length; i++) {
-        const p = cs[i];
-        cssText += p + ':' + cs.getPropertyValue(p) + ';';
-      }
-      dst.setAttribute('style', cssText);
-      for (let i = 0; i < src.children.length; i++) {
-        inlineAll(src.children[i], dst.children[i]);
-      }
+  /* 2. Inlinar TODOS los computed styles en el clon
+        (el navegador ya resolvió oklch → rgb) */
+  function inlineAll(src, dst) {
+    const cs = getComputedStyle(src);
+    let txt = '';
+    for (let i = 0; i < cs.length; i++) {
+      const p = cs[i];
+      txt += p + ':' + cs.getPropertyValue(p) + ';';
     }
-    inlineAll(zone, clone);
+    dst.setAttribute('style', txt);
+    for (let i = 0; i < src.children.length; i++) {
+      if (dst.children[i]) inlineAll(src.children[i], dst.children[i]);
+    }
+  }
+  inlineAll(zone, clone);
 
-    /* Esconder imágenes externas */
-    clone.querySelectorAll('img').forEach(img => img.setAttribute('style', 'display:none'));
+  /* 3. Esconder imágenes externas que pueden taint */
+  clone.querySelectorAll('img').forEach(img => {
+    img.removeAttribute('src');
+    img.style.display = 'none';
+  });
 
-    /* Crear iframe aislado — sin hojas de estilo, html2canvas no verá oklch */
-    const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:' + w + 'px;height:1px;border:none;opacity:0';
-    document.body.appendChild(iframe);
+  /* 4. Posicionar clon offscreen */
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  clone.style.width = zone.offsetWidth + 'px';
+  clone.style.display = 'flex';
+  clone.style.flexDirection = 'column';
+  clone.style.gap = '20px';
+  clone.style.zIndex = '-1';
 
-    const idoc = iframe.contentDocument;
-    idoc.open();
-    idoc.write('<!DOCTYPE html><html><head></head><body style="margin:0;padding:0"></body></html>');
-    idoc.close();
+  /* 5. Desactivar la hoja de estilos con oklch para que html2canvas no la parsee */
+  const styleEl = document.querySelector('style');
+  styleEl.disabled = true;
 
-    /* Copiar fuentes al iframe */
-    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-      const l = idoc.createElement('link');
-      l.rel = 'stylesheet';
-      l.href = link.href;
-      idoc.head.appendChild(l);
-    });
-
-    /* Inyectar html2canvas en el iframe */
-    const scriptEl = idoc.createElement('script');
-    scriptEl.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    idoc.head.appendChild(scriptEl);
-    await new Promise(r => { scriptEl.onload = r; });
-
-    /* Esperar a que las fuentes carguen en el iframe */
-    await new Promise(r => setTimeout(r, 300));
-
-    clone.style.width = w + 'px';
-    clone.style.position = 'static';
-    clone.style.display = 'flex';
-    clone.style.flexDirection = 'column';
-    clone.style.gap = '20px';
-    idoc.body.appendChild(clone);
-
-    iframe.style.height = idoc.body.scrollHeight + 'px';
-
-    /* Usar html2canvas del iframe — no ve las hojas de estilo con oklch */
-    const iframeH2C = iframe.contentWindow.html2canvas;
-    const canvas = await iframeH2C(clone, {
+  /* 6. Montar clon y capturar */
+  document.body.appendChild(clone);
+  try {
+    const canvas = await html2canvas(clone, {
       scale: 2,
-      backgroundColor: '#F5F0E8',
-      useCORS: false,
+      backgroundColor: '#EDE5D8',
+      useCORS: true,
       logging: false,
     });
-
-    document.body.removeChild(iframe);
     return canvas;
   } finally {
+    document.body.removeChild(clone);
+    styleEl.disabled = false;
     if (shareRow) shareRow.style.display = '';
   }
 }
