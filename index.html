@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es" style="--accent: #E04F31; --accent-soft: oklch(0.95 0.05 30); --accent-ink: #B8351A;"><head>
+<!DOCTYPE html><html lang="es" style="--accent: #E04F31; --accent-soft: #f5e0d5; --accent-ink: #B8351A;"><head>
 
 
 <meta charset="UTF-8">
@@ -14,39 +14,39 @@
     --bg: #fafad5;
     --surface: #fdfde8;
     --surface-2: #f5f5c8;
-    --ink: oklch(0.18 0.01 80);
-    --ink-2: oklch(0.38 0.01 80);
-    --ink-3: oklch(0.58 0.008 80);
-    --line: oklch(0.91 0.006 85);
-    --line-2: oklch(0.85 0.008 85);
-    --accent: oklch(0.42 0.10 155);
-    --accent-soft: oklch(0.94 0.04 155);
-    --accent-ink: oklch(0.32 0.09 155);
-    --warn: oklch(0.55 0.12 60);
-    --warn-soft: oklch(0.96 0.04 80);
-    --danger: oklch(0.55 0.16 25);
+    --ink: #2b2926;
+    --ink-2: #5c5955;
+    --ink-3: #8d8a87;
+    --line: #e5e3e0;
+    --line-2: #d4d1cd;
+    --accent: #2d6b4f;
+    --accent-soft: #dff0e6;
+    --accent-ink: #1a5038;
+    --warn: #9b7530;
+    --warn-soft: #f6f0e0;
+    --danger: #b04030;
     --radius: 14px;
     --radius-sm: 8px;
-    --shadow-sm: 0 1px 0 oklch(0.9 0.005 85), 0 1px 2px oklch(0.85 0.005 85 / 0.3);
+    --shadow-sm: 0 1px 0 #e2e0dd, 0 1px 2px rgba(210,208,205,0.3);
   }
 
   body.dark {
-    --bg: oklch(0.16 0.008 80);
-    --surface: oklch(0.21 0.008 80);
-    --surface-2: oklch(0.25 0.008 80);
-    --ink: oklch(0.96 0.005 85);
-    --ink-2: oklch(0.78 0.008 80);
-    --ink-3: oklch(0.58 0.008 80);
-    --line: oklch(0.30 0.008 80);
-    --line-2: oklch(0.36 0.008 80);
-    --shadow-sm: 0 1px 0 oklch(0.10 0.005 80), 0 1px 2px oklch(0 0 0 / 0.4);
+    --bg: #252321;
+    --surface: #333130;
+    --surface-2: #3e3c3a;
+    --ink: #f4f3f2;
+    --ink-2: #c4c1be;
+    --ink-3: #8d8a87;
+    --line: #484644;
+    --line-2: #575452;
+    --shadow-sm: 0 1px 0 #1a1918, 0 1px 2px rgba(0,0,0,0.4);
   }
-  body.dark .quote-card { background: oklch(0.32 0.10 155); }
-  body.dark .exp-summary-row.grand { background: oklch(0.32 0.10 155); }
-  body.dark .exp-card input { background: oklch(0.18 0.008 80); border-color: var(--line-2); color: var(--ink); }
+  body.dark .quote-card { background: #1a5038; }
+  body.dark .exp-summary-row.grand { background: #1a5038; }
+  body.dark .exp-card input { background: #2b2926; border-color: var(--line-2); color: var(--ink); }
   body.dark input,
   body.dark select,
-  body.dark textarea { background: oklch(0.18 0.008 80); color: var(--ink); }
+  body.dark textarea { background: #2b2926; color: var(--ink); }
   body.dark .panel { background: var(--surface); }
   body.dark .breakdown { background: var(--surface); }
 
@@ -559,7 +559,7 @@
   }
 
   .quote-card {
-    background: oklch(0.42 0.13 155);
+    background: #1e7a4e;
     color: #fff;
     border-radius: var(--radius);
     padding: 28px 30px 26px;
@@ -571,7 +571,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(120% 100% at 100% 0%, oklch(0.55 0.16 155 / 0.55), transparent 60%);
+    background: radial-gradient(120% 100% at 100% 0%, rgba(30,140,80,0.55), transparent 60%);
     pointer-events: none;
   }
   .quote-card > * { position: relative; }
@@ -604,20 +604,20 @@
   .quote-amount .per {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: oklch(0.85 0.01 85 / 0.5);
+    color: rgba(212,210,207,0.5);
     font-weight: 400;
     margin-left: 6px;
   }
   .quote-detail {
     margin-top: 4px;
     font-size: 13px;
-    color: oklch(0.85 0.01 85 / 0.7);
+    color: rgba(212,210,207,0.7);
   }
 
   .quote-meta {
     margin-top: 28px;
     padding-top: 22px;
-    border-top: 1px solid oklch(1 0 0 / 0.18);
+    border-top: 1px solid rgba(255,255,255,0.18);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
@@ -627,7 +627,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: oklch(0.95 0.01 85 / 0.78);
+    color: rgba(238,236,233,0.78);
   }
   .quote-meta-item .v {
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
@@ -672,13 +672,13 @@
     background: var(--swatch, var(--ink-3));
     flex-shrink: 0;
   }
-  .br-row[data-cat="precio"]    { --swatch: oklch(0.55 0.15 250); }
-  .br-row[data-cat="entrada"]   { --swatch: oklch(0.65 0.20 130); }
+  .br-row[data-cat="precio"]    { --swatch: #2670b5; }
+  .br-row[data-cat="entrada"]   { --swatch: #4ca850; }
   .br-row[data-cat="impuestos"] { --swatch: #E04F31; }
-  .br-row[data-cat="capital"]   { --swatch: oklch(0.55 0.15 290); }
-  .br-row[data-cat="totalpag"]  { --swatch: oklch(0.55 0.15 70); }
-  .br-row[data-cat="fin"]       { --swatch: oklch(0.55 0.10 200); }
-  .br-row[data-cat="costetotal"]{ --swatch: oklch(0.42 0.13 155); }
+  .br-row[data-cat="capital"]   { --swatch: #7040b5; }
+  .br-row[data-cat="totalpag"]  { --swatch: #9a7520; }
+  .br-row[data-cat="fin"]       { --swatch: #357088; }
+  .br-row[data-cat="costetotal"]{ --swatch: #1e7a4e; }
   .br-row.total .k::before { width: 10px; height: 10px; border-radius: 3px; }
 
   /* Share buttons */
@@ -702,7 +702,7 @@
   .share-btn svg { width: 22px; height: 22px; }
   .share-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
   .share-pdf   { background: #E04F31; }
-  .share-email { background: oklch(0.50 0.15 250); }
+  .share-email { background: #1d60a8; }
   .share-wa    { background: #25D366; color: #002b15; }
   .share-wa svg { color: #002b15; }
 
@@ -734,7 +734,7 @@
     transition: width 0.5s cubic-bezier(.6,0,0,1);
   }
   .ltv-bar .ltv-rest {
-    background: oklch(0.78 0.21 130);
+    background: #6cc44a;
     transition: width 0.5s cubic-bezier(.6,0,0,1);
   }
   .ltv-legend {
@@ -746,7 +746,7 @@
   .ltv-legend > div { display: flex; flex-direction: column; gap: 2px; }
   .ltv-legend .k { color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
   .ltv-legend .k::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: #E04F31; }
-  .ltv-legend > div:nth-child(2) .k::before { background: oklch(0.78 0.21 130); opacity: 1; }
+  .ltv-legend > div:nth-child(2) .k::before { background: #6cc44a; opacity: 1; }
   .ltv-legend .v { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-weight: 600; color: var(--ink); font-size: 14px; }
 
   /* ============ COMPARISON TABLE ============ */
@@ -857,8 +857,8 @@
     padding: 16px;
   }
   .amort-box.highlight {
-    background: oklch(0.92 0.12 145);
-    border-color: oklch(0.65 0.18 145);
+    background: #c8f0c0;
+    border-color: #3aad48;
   }
   .amort-box .k {
     font-size: 11px;
@@ -867,7 +867,7 @@
     color: var(--ink-3);
     margin-bottom: 6px;
   }
-  .amort-box.highlight .k { color: oklch(0.35 0.12 145); }
+  .amort-box.highlight .k { color: #1a6030; }
   .amort-box.highlight .v { color: #1a1a1a; }
   .amort-box .v {
     font-family: 'Instrument Serif', serif;
@@ -878,7 +878,7 @@
   .amort-box .sub { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
 
   .savings-banner {
-    background: oklch(0.65 0.18 145);
+    background: #3aad48;
     color: #1a1a1a;
     border-radius: var(--radius-sm);
     padding: 16px 20px;
@@ -902,7 +902,7 @@
   /* Amort segmented buttons — green theme */
   #btnReducirCuota.active,
   #btnReducirPlazo.active {
-    background: oklch(0.65 0.18 145) !important;
+    background: #3aad48 !important;
     color: #1a1a1a !important;
   }
 
@@ -955,14 +955,14 @@
   .exp-card .input-wrap .e { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--ink-3); pointer-events: none; }
 
   /* Per-category icon colors */
-  .ico-luz   { background: oklch(0.96 0.07 95);  color: oklch(0.50 0.15 75); }
-  .ico-gas   { background: oklch(0.95 0.06 30);  color: oklch(0.50 0.16 30); }
-  .ico-agua  { background: oklch(0.94 0.06 230); color: oklch(0.45 0.14 235); }
-  .ico-ibi   { background: oklch(0.94 0.05 280); color: oklch(0.42 0.14 290); }
-  .ico-amb   { background: oklch(0.94 0.06 155); color: oklch(0.40 0.12 155); }
-  .ico-comida{ background: oklch(0.95 0.06 50);  color: oklch(0.50 0.15 45); }
-  .ico-tel   { background: oklch(0.94 0.05 250); color: oklch(0.42 0.14 250); }
-  .ico-otros { background: oklch(0.94 0.02 80);  color: oklch(0.40 0.02 80); }
+  .ico-luz   { background: #f8f0d0;  color: #8a7020; }
+  .ico-gas   { background: #f8e0d0;  color: #a04830; }
+  .ico-agua  { background: #d0e4f8; color: #1858a0; }
+  .ico-ibi   { background: #e0d8f0; color: #5030a0; }
+  .ico-amb   { background: #d0f0e0; color: #1a6040; }
+  .ico-comida{ background: #f8e8d0;  color: #984820; }
+  .ico-tel   { background: #d0e0f8; color: #1850a0; }
+  .ico-otros { background: #ede8e0;  color: #646058; }
 
   .exp-summary {
     margin-top: 20px;
@@ -991,7 +991,7 @@
   .exp-summary-row.grand {
     margin: 14px -18px -16px;
     padding: 22px 24px;
-    background: oklch(0.42 0.13 155);
+    background: #1e7a4e;
     color: #fff;
     border-radius: 0 0 var(--radius-sm) var(--radius-sm);
     font-weight: 700;
@@ -1001,7 +1001,7 @@
   }
   .exp-summary-row.grand::before {
     content:''; position: absolute; inset: 0;
-    background: radial-gradient(120% 100% at 0% 100%, oklch(0.55 0.16 155), transparent 70%);
+    background: radial-gradient(120% 100% at 0% 100%, #1e8c50, transparent 70%);
     opacity: 0.5; pointer-events: none;
   }
   .exp-summary-row.grand > * { position: relative; }
@@ -1134,7 +1134,7 @@
     color: var(--bg);
     padding: 14px 20px;
     z-index: 50;
-    border-top: 1px solid oklch(0.95 0.005 85 / 0.1);
+    border-top: 1px solid rgba(238,236,234,0.1);
   }
   .mobile-bar-row {
     display: flex;
@@ -1169,11 +1169,11 @@
   /* ============ INFO BANNER (variable warnings etc) ============ */
   .info-banner {
     background: var(--warn-soft);
-    border: 1px solid oklch(0.85 0.06 80);
+    border: 1px solid #d8c8a8;
     border-radius: var(--radius-sm);
     padding: 12px 14px;
     font-size: 12px;
-    color: oklch(0.35 0.08 60);
+    color: #5c4020;
     display: flex;
     gap: 10px;
     align-items: flex-start;
@@ -1724,14 +1724,14 @@
             </div>
 
             <div class="exp-summary">
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.50 0.15 75)"></span>Luz</span><span class="v" id="sumLuz">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.50 0.16 30)"></span>Gas</span><span class="v" id="sumGas">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.45 0.14 235)"></span>Agua</span><span class="v" id="sumAgua">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.42 0.14 290)"></span>IBI <em style="color:var(--ink-3); font-style: normal">/12</em></span><span class="v" id="sumIBI">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.40 0.12 155)"></span>AMB <em style="color:var(--ink-3); font-style: normal">/12</em></span><span class="v" id="sumAMB">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.50 0.15 45)"></span>Alimentación</span><span class="v" id="sumComida">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.42 0.14 250)"></span>Tel. e Internet</span><span class="v" id="sumTelefono">0 €</span></div>
-              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:oklch(0.40 0.02 80)"></span>Otros</span><span class="v" id="sumOtros">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#8a7020"></span>Luz</span><span class="v" id="sumLuz">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#a04830"></span>Gas</span><span class="v" id="sumGas">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#1858a0"></span>Agua</span><span class="v" id="sumAgua">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#5030a0"></span>IBI <em style="color:var(--ink-3); font-style: normal">/12</em></span><span class="v" id="sumIBI">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#1a6040"></span>AMB <em style="color:var(--ink-3); font-style: normal">/12</em></span><span class="v" id="sumAMB">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#984820"></span>Alimentación</span><span class="v" id="sumComida">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#1850a0"></span>Tel. e Internet</span><span class="v" id="sumTelefono">0 €</span></div>
+              <div class="exp-summary-row"><span class="lbl"><span class="swatch" style="background:#646058"></span>Otros</span><span class="v" id="sumOtros">0 €</span></div>
               <div class="exp-summary-row total"><span>Total gastos fijos</span><span class="v" id="totalGastosFijos">0 €/mes</span></div>
               <div class="exp-summary-row grand"><span>Cuota + gastos fijos</span><span class="v" id="totalCuotaGastos" style="font-size: 46px">0 €/mes</span></div>
             </div>
@@ -2492,50 +2492,8 @@ async function capturarCards() {
   const zone = document.getElementById('captureZone');
   const shareRow = document.querySelector('.share-row');
   if (shareRow) shareRow.style.display = 'none';
-
-  /* 1. Clonar el nodo */
-  const clone = zone.cloneNode(true);
-
-  /* 2. Inlinar TODOS los computed styles en el clon
-        (el navegador ya resolvió oklch → rgb) */
-  function inlineAll(src, dst) {
-    const cs = getComputedStyle(src);
-    let txt = '';
-    for (let i = 0; i < cs.length; i++) {
-      const p = cs[i];
-      txt += p + ':' + cs.getPropertyValue(p) + ';';
-    }
-    dst.setAttribute('style', txt);
-    for (let i = 0; i < src.children.length; i++) {
-      if (dst.children[i]) inlineAll(src.children[i], dst.children[i]);
-    }
-  }
-  inlineAll(zone, clone);
-
-  /* 3. Esconder imágenes externas que pueden taint */
-  clone.querySelectorAll('img').forEach(img => {
-    img.removeAttribute('src');
-    img.style.display = 'none';
-  });
-
-  /* 4. Posicionar clon offscreen */
-  clone.style.position = 'fixed';
-  clone.style.left = '-9999px';
-  clone.style.top = '0';
-  clone.style.width = zone.offsetWidth + 'px';
-  clone.style.display = 'flex';
-  clone.style.flexDirection = 'column';
-  clone.style.gap = '20px';
-  clone.style.zIndex = '-1';
-
-  /* 5. Desactivar la hoja de estilos con oklch para que html2canvas no la parsee */
-  const styleEl = document.querySelector('style');
-  styleEl.disabled = true;
-
-  /* 6. Montar clon y capturar */
-  document.body.appendChild(clone);
   try {
-    const canvas = await html2canvas(clone, {
+    const canvas = await html2canvas(zone, {
       scale: 2,
       backgroundColor: '#fafad5',
       useCORS: true,
@@ -2543,8 +2501,6 @@ async function capturarCards() {
     });
     return canvas;
   } finally {
-    document.body.removeChild(clone);
-    styleEl.disabled = false;
     if (shareRow) shareRow.style.display = '';
   }
 }
@@ -2664,14 +2620,14 @@ function applyTweaks() {
   document.body.classList.toggle('dark', !!tweaks.darkMode);
 
   const accentMap = {
-    green:    { accent: 'oklch(0.42 0.10 155)', soft: 'oklch(0.94 0.04 155)', ink: 'oklch(0.32 0.09 155)' },
-    claude:   { accent: '#E04F31',               soft: 'oklch(0.95 0.05 30)',  ink: '#B8351A' },
-    tangerine:{ accent: 'oklch(0.70 0.18 50)',  soft: 'oklch(0.96 0.05 60)',  ink: 'oklch(0.50 0.16 45)'  },
-    coral:    { accent: 'oklch(0.66 0.18 30)',  soft: 'oklch(0.95 0.05 30)',  ink: 'oklch(0.46 0.16 25)'  },
-    amber:    { accent: 'oklch(0.74 0.16 70)',  soft: 'oklch(0.96 0.06 80)',  ink: 'oklch(0.50 0.14 65)'  },
-    rust:     { accent: 'oklch(0.55 0.16 35)',  soft: 'oklch(0.94 0.05 40)',  ink: 'oklch(0.38 0.13 30)'  },
-    blue:     { accent: 'oklch(0.45 0.15 250)', soft: 'oklch(0.94 0.04 250)', ink: 'oklch(0.35 0.13 250)' },
-    plum:     { accent: 'oklch(0.42 0.13 320)', soft: 'oklch(0.94 0.04 320)', ink: 'oklch(0.32 0.11 320)' }
+    green:    { accent: '#2d6b4f', soft: '#dff0e6', ink: '#1a5038' },
+    claude:   { accent: '#E04F31',               soft: '#f5e0d5',  ink: '#B8351A' },
+    tangerine:{ accent: '#d08830',  soft: '#f8ecd8',  ink: '#984820'  },
+    coral:    { accent: '#c86040',  soft: '#f5e0d5',  ink: '#983828'  },
+    amber:    { accent: '#c8a040',  soft: '#f6ecd0',  ink: '#8a6828'  },
+    rust:     { accent: '#a84830',  soft: '#f2dcd0',  ink: '#702820'  },
+    blue:     { accent: '#1860a8', soft: '#d8e4f5', ink: '#103880' },
+    plum:     { accent: '#802870', soft: '#f0d8e8', ink: '#601858' }
   };
   const a = accentMap[tweaks.accent] || accentMap.green;
   document.documentElement.style.setProperty('--accent', a.accent);
@@ -2721,7 +2677,7 @@ function renderTweaksPanel() {
         <div style="text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); margin-bottom: 6px">Acento</div>
         <div style="display:flex; gap:6px">
           ${['claude','tangerine','orange','coral','amber','rust','green','blue','plum'].filter(c=>c!=='orange'||tweaks.accent==='orange').map(c => `
-            <button onclick="setTweak('accent','${c}')" style="flex:1; height:28px; border-radius:6px; border:2px solid ${tweaks.accent===c?'var(--ink)':'var(--line)'}; background: ${({green:'oklch(0.42 0.10 155)',claude:'#E04F31',tangerine:'oklch(0.70 0.18 50)',coral:'oklch(0.66 0.18 30)',amber:'oklch(0.74 0.16 70)',rust:'oklch(0.55 0.16 35)',orange:'oklch(0.66 0.17 45)',blue:'oklch(0.45 0.15 250)',plum:'oklch(0.42 0.13 320)'})[c]}; cursor: pointer" title="${c}"></button>
+            <button onclick="setTweak('accent','${c}')" style="flex:1; height:28px; border-radius:6px; border:2px solid ${tweaks.accent===c?'var(--ink)':'var(--line)'}; background: ${({green:'#2d6b4f',claude:'#E04F31',tangerine:'#d08830',coral:'#c86040',amber:'#c8a040',rust:'#a84830',orange:'#c07030',blue:'#1860a8',plum:'#802870'})[c]}; cursor: pointer" title="${c}"></button>
           `).join('')}
         </div>
       </div>
