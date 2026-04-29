@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
     --bg: oklch(0.985 0.005 85);
@@ -563,6 +565,7 @@
     padding: 28px 30px 26px;
     position: relative;
     overflow: hidden;
+    margin-bottom: 4px;
   }
   .quote-card::before {
     content: '';
@@ -709,6 +712,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 22px 24px;
+    margin-bottom: 4px;
   }
   .ltv-gauge h3 {
     font-size: 11px;
@@ -1948,8 +1952,6 @@
     </div>
   </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ==================================================================
    STATE
@@ -2487,15 +2489,17 @@ function _resumenTexto() {
 • Coste total vivienda: ${coste}`;
 }
 async function capturarCards() {
+  if (typeof html2canvas === 'undefined') throw new Error('html2canvas no cargado');
   const zone = document.getElementById('captureZone');
   const shareRow = document.querySelector('.share-row');
   if (shareRow) shareRow.style.display = 'none';
   try {
     const canvas = await html2canvas(zone, {
       scale: 2,
-      backgroundColor: null,
+      backgroundColor: '#ffffff',
       useCORS: true,
       logging: false,
+      allowTaint: true,
     });
     return canvas;
   } finally {
@@ -2504,6 +2508,10 @@ async function capturarCards() {
 }
 
 async function exportarPDF() {
+  if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
+    alert('Las librerías de exportación aún no se han cargado. Espera unos segundos y vuelve a intentarlo.');
+    return;
+  }
   const btn = document.querySelector('.share-pdf');
   const orig = btn.innerHTML;
   btn.innerHTML = '<span>Generando...</span>';
@@ -2540,7 +2548,7 @@ async function exportarPDF() {
     pdf.save('resumen-hipoteca.pdf');
   } catch (e) {
     console.error('Error generando PDF:', e);
-    alert('Error generando PDF. Comprueba tu conexión a internet.');
+    alert('Error generando PDF: ' + e.message);
   } finally {
     btn.innerHTML = orig;
     btn.disabled = false;
@@ -2554,6 +2562,11 @@ function enviarEmail() {
 }
 
 async function enviarWhatsapp() {
+  if (typeof html2canvas === 'undefined') {
+    const text = encodeURIComponent(_resumenTexto());
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+    return;
+  }
   const btn = document.querySelector('.share-wa');
   const orig = btn.innerHTML;
   btn.innerHTML = '<span>Capturando...</span>';
