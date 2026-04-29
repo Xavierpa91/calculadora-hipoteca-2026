@@ -1781,6 +1781,9 @@
       <!-- ====================================================== -->
       <div class="results-col">
 
+        <!-- Capture wrapper -->
+        <div id="captureZone">
+
         <!-- Quote -->
         <div class="quote-card" style="background-color: rgb(61, 75, 59); font-family: -apple-system; opacity: 1; padding: 52px 30px 26px">
           <div class="quote-label">Cuota mensual estimada</div>
@@ -1841,6 +1844,8 @@
           <div class="br-row" data-cat="fin"><span class="k">Fin de hipoteca</span><span class="v" id="resFinHipoteca">2056</span></div>
           <div class="br-row total" data-cat="costetotal"><span class="k">Coste total vivienda</span><span class="v" id="resCosteTotalVivienda">516.979 €</span></div>
         </div>
+
+        </div><!-- /captureZone -->
 
         <!-- Share row -->
         <div class="share-row">
@@ -1954,6 +1959,8 @@
     </div>
   </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <script>
 /* ==================================================================
    STATE
@@ -2490,15 +2497,113 @@ function _resumenTexto() {
 • Intereses: ${intereses}
 • Coste total vivienda: ${coste}`;
 }
-function exportarPDF() { window.print(); }
+async function capturarCards() {
+  const zone = document.getElementById('captureZone');
+  const shareRow = document.querySelector('.share-row');
+  if (shareRow) shareRow.style.display = 'none';
+
+  const canvas = await html2canvas(zone, {
+    scale: 2,
+    backgroundColor: null,
+    useCORS: true,
+    logging: false,
+  });
+
+  if (shareRow) shareRow.style.display = '';
+  return canvas;
+}
+
+async function exportarPDF() {
+  const btn = document.querySelector('.share-pdf');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<span>Generando...</span>';
+  btn.disabled = true;
+  try {
+    const canvas = await capturarCards();
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pw = pdf.internal.pageSize.getWidth();
+    const ph = pdf.internal.pageSize.getHeight();
+    const margin = 15;
+    const maxW = pw - margin * 2;
+    const ratio = canvas.height / canvas.width;
+    const imgW = maxW;
+    const imgH = imgW * ratio;
+
+    pdf.setFontSize(18);
+    pdf.setTextColor(37, 99, 235);
+    pdf.text('Resumen Hipoteca', margin, 20);
+    pdf.setFontSize(10);
+    pdf.setTextColor(107, 114, 128);
+    pdf.text('Generado: ' + new Date().toLocaleDateString('es-ES'), margin, 27);
+
+    const imgData = canvas.toDataURL('image/png');
+    const yStart = 35;
+    const avail = ph - yStart - 15;
+    const finalH = Math.min(imgH, avail);
+    const finalW = finalH === avail ? imgW * (avail / imgH) : imgW;
+    pdf.addImage(imgData, 'PNG', margin, yStart, finalW, finalH);
+
+    pdf.setFontSize(8);
+    pdf.setTextColor(156, 163, 175);
+    pdf.text('Calculadora Hipoteca 2026 - XPV (datos orientativos)', margin, ph - 8);
+    pdf.save('resumen-hipoteca.pdf');
+  } catch (e) {
+    console.error('Error generando PDF:', e);
+    alert('Error generando PDF. Comprueba tu conexión a internet.');
+  } finally {
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }
+}
+
 function enviarEmail() {
   const body = encodeURIComponent(_resumenTexto());
   const subject = encodeURIComponent('Simulación de hipoteca');
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
-function enviarWhatsapp() {
-  const text = encodeURIComponent(_resumenTexto());
-  window.open(`https://wa.me/?text=${text}`, '_blank');
+
+async function enviarWhatsapp() {
+  const btn = document.querySelector('.share-wa');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<span>Capturando...</span>';
+  btn.disabled = true;
+  try {
+    const canvas = await capturarCards();
+    canvas.toBlob(async (blob) => {
+      try {
+        const file = new File([blob], 'resumen-hipoteca.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: 'Resumen Hipoteca',
+            text: _resumenTexto().split('\n').slice(0, 5).join('\n'),
+            files: [file],
+          });
+        } else {
+          const link = document.createElement('a');
+          link.download = 'resumen-hipoteca.png';
+          link.href = URL.createObjectURL(blob);
+          link.click();
+          URL.revokeObjectURL(link.href);
+          const text = encodeURIComponent(_resumenTexto());
+          setTimeout(() => window.open(`https://wa.me/?text=${text}`, '_blank'), 500);
+        }
+      } catch (e) {
+        const text = encodeURIComponent(_resumenTexto());
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+      } finally {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+      }
+    }, 'image/png');
+    return;
+  } catch (e) {
+    console.error('Error capturando imagen:', e);
+    const text = encodeURIComponent(_resumenTexto());
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  }
+  btn.innerHTML = orig;
+  btn.disabled = false;
 }
 
 /* ==================================================================
