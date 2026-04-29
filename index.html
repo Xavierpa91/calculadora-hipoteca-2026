@@ -7,12 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
-    --bg: oklch(0.985 0.005 85);
-    --surface: oklch(1 0 0);
-    --surface-2: oklch(0.97 0.006 85);
+    --bg: #FAF8F5;
+    --surface: #FFFEFA;
+    --surface-2: #F5F2EE;
     --ink: oklch(0.18 0.01 80);
     --ink-2: oklch(0.38 0.01 80);
     --ink-3: oklch(0.58 0.008 80);
@@ -2493,77 +2494,46 @@ async function capturarCards() {
   if (shareRow) shareRow.style.display = 'none';
 
   try {
-    const rect = zone.getBoundingClientRect();
-    const scale = 2;
-    const w = rect.width;
-    const h = rect.height;
-
-    /* Clonar el nodo y resolver computed styles para que el SVG foreignObject lo renderice */
+    /* Clonar y resolver oklch → rgb via computed styles */
     const clone = zone.cloneNode(true);
-    clone.style.width = w + 'px';
-    clone.style.height = h + 'px';
-    clone.style.position = 'static';
-    clone.style.overflow = 'visible';
+    const cssProps = ['background', 'background-color', 'color', 'border-color', 'border',
+      'border-top-color', 'border-bottom-color', 'border-left-color', 'border-right-color',
+      'box-shadow', 'outline-color', 'text-decoration-color', 'fill', 'stroke'];
 
-    /* Inlinar todos los computed styles en el clon */
-    function inlineStyles(src, dst) {
+    function resolveColors(src, dst) {
       const cs = getComputedStyle(src);
-      for (let i = 0; i < cs.length; i++) {
-        const prop = cs[i];
-        dst.style.setProperty(prop, cs.getPropertyValue(prop));
+      for (const prop of cssProps) {
+        const val = cs.getPropertyValue(prop);
+        if (val) dst.style.setProperty(prop, val);
       }
-      const srcKids = src.children;
-      const dstKids = dst.children;
-      for (let i = 0; i < srcKids.length; i++) {
-        inlineStyles(srcKids[i], dstKids[i]);
+      /* Also carry over background-image for gradients */
+      const bg = cs.getPropertyValue('background-image');
+      if (bg && bg !== 'none') dst.style.setProperty('background-image', bg);
+      for (let i = 0; i < src.children.length; i++) {
+        resolveColors(src.children[i], dst.children[i]);
       }
     }
-    inlineStyles(zone, clone);
+    resolveColors(zone, clone);
 
-    /* Convertir imágenes externas a data URIs */
-    const imgs = clone.querySelectorAll('img');
-    for (const img of imgs) {
-      try {
-        const resp = await fetch(img.src, { mode: 'cors' });
-        const blob = await resp.blob();
-        const dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); });
-        img.src = dataUrl;
-      } catch(e) { img.style.display = 'none'; }
-    }
+    /* Esconder imágenes externas para evitar taint */
+    clone.querySelectorAll('img').forEach(img => img.style.display = 'none');
 
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const fo = document.createElementNS(svgNS, 'foreignObject');
-    fo.setAttribute('width', '100%');
-    fo.setAttribute('height', '100%');
-    fo.appendChild(clone);
+    /* Montar clon oculto en el DOM para que html2canvas pueda medirlo */
+    clone.style.position = 'fixed';
+    clone.style.left = '-9999px';
+    clone.style.top = '0';
+    clone.style.width = zone.offsetWidth + 'px';
+    clone.style.zIndex = '-1';
+    document.body.appendChild(clone);
 
-    const svgEl = document.createElementNS(svgNS, 'svg');
-    svgEl.setAttribute('xmlns', svgNS);
-    svgEl.setAttribute('width', w);
-    svgEl.setAttribute('height', h);
-    svgEl.appendChild(fo);
-
-    const svgStr = new XMLSerializer().serializeToString(svgEl);
-    const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svgBlob);
-
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-      img.src = url;
+    const canvas = await html2canvas(clone, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      useCORS: true,
+      logging: false,
     });
 
-    const canvas = document.createElement('canvas');
-    canvas.width = w * scale;
-    canvas.height = h * scale;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(scale, scale);
-    ctx.drawImage(img, 0, 0, w, h);
-    URL.revokeObjectURL(url);
+    document.body.removeChild(clone);
     return canvas;
   } finally {
     if (shareRow) shareRow.style.display = '';
@@ -2571,8 +2541,8 @@ async function capturarCards() {
 }
 
 async function exportarPDF() {
-  if (typeof window.jspdf === 'undefined') {
-    alert('La librería de PDF aún no se ha cargado. Espera unos segundos y vuelve a intentarlo.');
+  if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
+    alert('Las librerías aún no se han cargado. Espera unos segundos y vuelve a intentarlo.');
     return;
   }
   const btn = document.querySelector('.share-pdf');
