@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
@@ -2489,18 +2488,82 @@ function _resumenTexto() {
 • Coste total vivienda: ${coste}`;
 }
 async function capturarCards() {
-  if (typeof html2canvas === 'undefined') throw new Error('html2canvas no cargado');
   const zone = document.getElementById('captureZone');
   const shareRow = document.querySelector('.share-row');
   if (shareRow) shareRow.style.display = 'none';
+
   try {
-    const canvas = await html2canvas(zone, {
-      scale: 2,
-      backgroundColor: '#ffffff',
-      useCORS: true,
-      logging: false,
-      allowTaint: true,
+    const rect = zone.getBoundingClientRect();
+    const scale = 2;
+    const w = rect.width;
+    const h = rect.height;
+
+    /* Clonar el nodo y resolver computed styles para que el SVG foreignObject lo renderice */
+    const clone = zone.cloneNode(true);
+    clone.style.width = w + 'px';
+    clone.style.height = h + 'px';
+    clone.style.position = 'static';
+    clone.style.overflow = 'visible';
+
+    /* Inlinar todos los computed styles en el clon */
+    function inlineStyles(src, dst) {
+      const cs = getComputedStyle(src);
+      for (let i = 0; i < cs.length; i++) {
+        const prop = cs[i];
+        dst.style.setProperty(prop, cs.getPropertyValue(prop));
+      }
+      const srcKids = src.children;
+      const dstKids = dst.children;
+      for (let i = 0; i < srcKids.length; i++) {
+        inlineStyles(srcKids[i], dstKids[i]);
+      }
+    }
+    inlineStyles(zone, clone);
+
+    /* Convertir imágenes externas a data URIs */
+    const imgs = clone.querySelectorAll('img');
+    for (const img of imgs) {
+      try {
+        const resp = await fetch(img.src, { mode: 'cors' });
+        const blob = await resp.blob();
+        const dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); });
+        img.src = dataUrl;
+      } catch(e) { img.style.display = 'none'; }
+    }
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const fo = document.createElementNS(svgNS, 'foreignObject');
+    fo.setAttribute('width', '100%');
+    fo.setAttribute('height', '100%');
+    fo.appendChild(clone);
+
+    const svgEl = document.createElementNS(svgNS, 'svg');
+    svgEl.setAttribute('xmlns', svgNS);
+    svgEl.setAttribute('width', w);
+    svgEl.setAttribute('height', h);
+    svgEl.appendChild(fo);
+
+    const svgStr = new XMLSerializer().serializeToString(svgEl);
+    const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = url;
     });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w * scale;
+    canvas.height = h * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, 0, 0, w, h);
+    URL.revokeObjectURL(url);
     return canvas;
   } finally {
     if (shareRow) shareRow.style.display = '';
@@ -2508,8 +2571,8 @@ async function capturarCards() {
 }
 
 async function exportarPDF() {
-  if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
-    alert('Las librerías de exportación aún no se han cargado. Espera unos segundos y vuelve a intentarlo.');
+  if (typeof window.jspdf === 'undefined') {
+    alert('La librería de PDF aún no se ha cargado. Espera unos segundos y vuelve a intentarlo.');
     return;
   }
   const btn = document.querySelector('.share-pdf');
@@ -2562,11 +2625,6 @@ function enviarEmail() {
 }
 
 async function enviarWhatsapp() {
-  if (typeof html2canvas === 'undefined') {
-    const text = encodeURIComponent(_resumenTexto());
-    window.open(`https://wa.me/?text=${text}`, '_blank');
-    return;
-  }
   const btn = document.querySelector('.share-wa');
   const orig = btn.innerHTML;
   btn.innerHTML = '<span>Capturando...</span>';
