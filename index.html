@@ -470,6 +470,7 @@
     transition: all 0.15s ease;
   }
   .toggle-row:hover { border-color: var(--line-2); }
+  .toggle-row.active .capital-chev { transform: rotate(180deg); }
   .toggle-row.active {
     background: var(--accent-soft);
     border-color: var(--accent);
@@ -903,12 +904,13 @@
     line-height: 1;
   }
 
-  /* Amort segmented buttons — green theme */
-  #btnReducirCuota.active,
-  #btnReducirPlazo.active {
-    background: #3aad48 !important;
-    color: #1a1a1a !important;
-  }
+  /* Property type segmented buttons */
+  #btnSegundaMano.active { background: #E8913A !important; color: #fff !important; }
+  #btnObraNueva.active { background: #0EA5C0 !important; color: #fff !important; }
+
+  /* Amort segmented buttons */
+  #btnReducirCuota.active { background: #3B82F6 !important; color: #fff !important; }
+  #btnReducirPlazo.active { background: #E8913A !important; color: #fff !important; }
 
   /* ============ SECTION DIVIDERS ============ */
   .section-divider {
@@ -1384,12 +1386,9 @@
             <div class="panel-section">
               <div class="section-title">Ahorros aportados</div>
 
-              <div class="toggle-row" id="persona2Toggle" onclick="togglePersona2()">
-                <div>
-                  <div class="label">Compra conjunta</div>
-                  <div class="desc">Activar si la compra es entre dos personas</div>
-                </div>
-                <div class="switch"></div>
+              <div class="seg" id="persona2Toggle">
+                <button id="btnCompraIndiv" class="active" onclick="setCompraMode(false)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Compra indiv.</button>
+                <button id="btnCompraConj" onclick="setCompraMode(true)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg> Compra conjunta</button>
               </div>
 
               <div class="field-grid" style="margin-top: 14px">
@@ -1409,7 +1408,7 @@
                 </div>
               </div>
 
-              <div class="computed" style="margin-top: 14px; border-color: rgb(129, 224, 49); background-color: rgb(85, 246, 56); color: rgb(61, 75, 59)">
+              <div class="computed" style="margin-top: 14px; border-color: rgb(160, 210, 140); background-color: rgb(200, 235, 180); color: rgb(61, 75, 59)">
                 <span>Total ahorros disponibles</span>
                 <span class="v" id="totalAhorros">0 €</span>
               </div>
@@ -1417,12 +1416,12 @@
 
             <!-- Capital directo -->
             <div class="panel-section">
-              <div class="toggle-row" id="capitalDirectoToggle" onclick="toggleCapitalDirecto()">
+              <div class="toggle-row" id="capitalDirectoToggle" onclick="toggleCapitalDirecto()" style="cursor:pointer">
                 <div>
                   <div class="label">Introducir capital del préstamo directamente</div>
                   <div class="desc">Útil para comparar con simuladores de bancos</div>
                 </div>
-                <div class="switch"></div>
+                <svg class="capital-chev" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; transition: transform 0.3s ease"><path d="M6 9l6 6 6-6"></path></svg>
               </div>
 
               <div class="reveal" id="capitalDirectoReveal">
@@ -1610,7 +1609,7 @@
               <div style="margin-top: 14px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 6px">
                 <div style="display: flex; justify-content: space-between">
                   <span style="color: var(--ink-2)">Total gastos gestión</span>
-                  <span class="num" style="font-weight: 700; font-size: 34px" id="totalGastos">0 €</span>
+                  <span class="num" style="font-weight: 700; font-size: 28px; color: #d32f2f" id="totalGastos">0 €</span>
                 </div>
                 <div style="display: flex; gap: 14px; color: var(--ink-3)">
                   <span>Notaría <span class="num" id="notariaImporte">0 €</span></span>
@@ -1740,7 +1739,7 @@
                 <span class="input-wrap"><input type="number" id="gastoAMB" placeholder="0" min="0" step="10" oninput="calcularGastosFijos()"><span class="e">€</span></span>
               </label>
               <label class="exp-card">
-                <span class="ico ico-comida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v8a2 2 0 002 2v8"></path><path d="M9 3v8M7 3v4"></path><path d="M17 3c-2 0-3 2-3 5s1 5 3 5v8"></path></svg></span>
+                <span class="ico ico-comida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path></svg></span>
                 <span class="body"><span class="name">Alimentación</span><span class="freq">Mensual</span></span>
                 <span class="input-wrap"><input type="number" id="gastoComida" placeholder="0" min="0" step="25" oninput="calcularGastosFijos()"><span class="e">€</span></span>
               </label>
@@ -2056,11 +2055,13 @@ const fmtRaw = (v) => v.toLocaleString('es-ES', { minimumFractionDigits: 0, maxi
 /* ==================================================================
    TOGGLES
    ================================================================== */
-function togglePersona2() {
-  persona2Activo = !persona2Activo;
-  $('persona2Toggle').classList.toggle('active', persona2Activo);
-  $('persona2Field').style.display = persona2Activo ? '' : 'none';
-  $('bonif2Toggle').style.display = persona2Activo ? '' : 'none';
+function togglePersona2() { setCompraMode(!persona2Activo); }
+function setCompraMode(conjunta) {
+  persona2Activo = conjunta;
+  $('btnCompraIndiv').classList.toggle('active', !conjunta);
+  $('btnCompraConj').classList.toggle('active', conjunta);
+  $('persona2Field').style.display = conjunta ? '' : 'none';
+  $('bonif2Toggle').style.display = conjunta ? '' : 'none';
   actualizarTotalAhorros();
   actualizarBonificacion();
 }
