@@ -1136,7 +1136,7 @@
     bottom: 0; left: 0; right: 0;
     background: var(--ink);
     color: var(--bg);
-    padding: 10px 16px 12px;
+    padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px));
     z-index: 50;
     border-top: 1px solid rgba(238,236,234,0.1);
   }
@@ -1171,6 +1171,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+  }
+  .mobile-bar-nav::after {
+    content: '';
+    flex-shrink: 0;
+    width: 12px;
   }
   .mobile-bar-nav::-webkit-scrollbar { display: none; }
   .mobile-bar-nav button {
@@ -1255,7 +1260,7 @@
   body.force-mobile .app { max-width: 420px; padding: 20px 16px 130px; }
   body.force-mobile .main-grid { grid-template-columns: 1fr; }
   body.force-mobile .results-col { position: static; }
-  body.force-mobile .mobile-bar { display: block; position: sticky; bottom: 0; }
+  body.force-mobile .mobile-bar { display: block; }
   body.force-mobile .topbar-actions .pill-btn:not(.primary) { display: none; }
   body.force-mobile .hero h1 { font-size: 36px; }
   body.force-mobile .compare-table th:nth-child(4),
@@ -1605,7 +1610,7 @@
               <div style="margin-top: 14px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 6px">
                 <div style="display: flex; justify-content: space-between">
                   <span style="color: var(--ink-2)">Total gastos gestión</span>
-                  <span class="num" style="font-weight: 700; font-size: 36px" id="totalGastos">0 €</span>
+                  <span class="num" style="font-weight: 700; font-size: 34px" id="totalGastos">0 €</span>
                 </div>
                 <div style="display: flex; gap: 14px; color: var(--ink-3)">
                   <span>Notaría <span class="num" id="notariaImporte">0 €</span></span>
