@@ -1136,7 +1136,7 @@
     bottom: 0; left: 0; right: 0;
     background: var(--ink);
     color: var(--bg);
-    padding: 14px 20px;
+    padding: 10px 16px 12px;
     z-index: 50;
     border-top: 1px solid rgba(238,236,234,0.1);
   }
@@ -1153,7 +1153,7 @@
   }
   .mobile-bar-amount .k { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.65; }
   .mobile-bar-amount .v { font-family: 'Instrument Serif', serif; font-size: 26px; margin-top: 2px; }
-  .mobile-bar button {
+  .mobile-bar-main {
     background: var(--bg);
     color: var(--ink);
     border: none;
@@ -1164,10 +1164,34 @@
     font-size: 13px;
     cursor: pointer;
   }
+  .mobile-bar-nav {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mobile-bar-nav::-webkit-scrollbar { display: none; }
+  .mobile-bar-nav button {
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.12);
+    color: var(--bg);
+    border: none;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .mobile-bar-nav button:active { background: rgba(255,255,255,0.25); }
 
   @media (max-width: 1024px) {
     .mobile-bar { display: block; }
-    .app { padding-bottom: 100px; }
+    .app { padding-bottom: 130px; }
   }
 
   /* ============ INFO BANNER (variable warnings etc) ============ */
@@ -1228,7 +1252,7 @@
   }
 
   /* Force-mobile preview mode (Tweaks) */
-  body.force-mobile .app { max-width: 420px; padding: 20px 16px 100px; }
+  body.force-mobile .app { max-width: 420px; padding: 20px 16px 130px; }
   body.force-mobile .main-grid { grid-template-columns: 1fr; }
   body.force-mobile .results-col { position: static; }
   body.force-mobile .mobile-bar { display: block; position: sticky; bottom: 0; }
@@ -1521,14 +1545,14 @@
                   <label class="field-label" for="taxRateBase">ITP base</label>
                   <div class="field-input"><input type="number" id="taxRateBase" value="10" min="0" max="15" step="0.5"><span class="suffix">%</span></div>
                 </div>
-                <div class="toggle-row active" id="bonif1Toggle" onclick="toggleBonif(1)">
+                <div class="toggle-row" id="bonif1Toggle" onclick="toggleBonif(1)">
                   <div>
                     <div class="label">Persona 1 — Bonificación ITP</div>
                     <div class="desc">Joven / VPO / familia numerosa (5%)</div>
                   </div>
                   <div class="switch"></div>
                 </div>
-                <div class="toggle-row active" id="bonif2Toggle" style="display:none; margin-top:8px" onclick="toggleBonif(2)">
+                <div class="toggle-row" id="bonif2Toggle" style="display:none; margin-top:8px" onclick="toggleBonif(2)">
                   <div>
                     <div class="label">Persona 2 — Bonificación ITP</div>
                     <div class="desc">Joven / VPO / familia numerosa (5%)</div>
@@ -1952,7 +1976,12 @@
         <span class="k">Cuota mensual</span>
         <span class="v"><span id="mobileBarAmount">0</span> €</span>
       </div>
-      <button onclick="calcular(); document.querySelector('.results-col').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">Calcular</button>
+      <button class="mobile-bar-main" onclick="calcular(); document.querySelector('.quote-card').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">Calcular</button>
+    </div>
+    <div class="mobile-bar-nav">
+      <button onclick="document.querySelector('.form-stack').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">&#8593; Modificar importes</button>
+      <button onclick="document.querySelector('.quote-card').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">&#9632; Ver cuota</button>
+      <button onclick="document.querySelector('.exp-grid').closest('.panel').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">&#8364; Gastos fijos</button>
     </div>
   </div>
 
@@ -1965,8 +1994,8 @@ let capitalDirectoActivo = false;
 let tipoHipoteca = 'fijo';
 let periodoPromoActivo = false;
 let tipoVivienda = 'segunda';
-let bonifPersona1 = true;
-let bonifPersona2 = true;
+let bonifPersona1 = false;
+let bonifPersona2 = false;
 let tipoAmortizacion = 'cuota';
 let ultimoCalculo = null;
 
