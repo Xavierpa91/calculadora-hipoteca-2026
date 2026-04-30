@@ -1286,7 +1286,7 @@
         </div>
         <div class="hero-stat">
           <span class="v">2,739%</span>
-          <span class="k">Euríbor 12m · Abr 2026</span>
+          <span class="k" id="euriborHeroLabel">Euríbor 12m · Abr 2026</span>
         </div>
         <div class="hero-stat">
           <span class="v">7</span>
@@ -1865,12 +1865,12 @@
           <button class="market-toggle" onclick="toggleMarket()" aria-expanded="true">
             <span class="market-toggle-label">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M7 14l3-3 4 4 6-7"></path></svg>
-              Panel de mercado · Abril 2026
+              <span id="marketToggleLabel">Panel de mercado · Abril 2026</span>
             </span>
             <svg class="market-toggle-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
           </button>
           <div class="panel-body market-panel">
-            <h3>Mercado · Abril 2026</h3>
+            <h3 id="marketHeading">Mercado · Abril 2026</h3>
             <p class="sub">Tipos oficiales y mejores ofertas</p>
 
             <div class="ecb-grid">
@@ -2764,10 +2764,27 @@ async function loadBankData() {
       const offers = await offersRes.json();
       OFERTAS = { fijo: offers.fijo || [], variable: offers.variable || [], mixto: offers.mixto || [] };
       renderOfertas('fijo');
+      if (offers.fetchDate) updateMonthLabels(offers.fetchDate);
     }
   } catch (e) {
     console.warn('No se pudieron cargar datos dinámicos, usando valores por defecto:', e);
   }
+}
+
+function updateMonthLabels(isoDate) {
+  const d = new Date(isoDate);
+  if (isNaN(d)) return;
+  const mesesCorto = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const mesesLargo = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const y = d.getFullYear();
+  const mc = mesesCorto[d.getMonth()];
+  const ml = mesesLargo[d.getMonth()];
+  const el1 = $('euriborHeroLabel');
+  if (el1) el1.textContent = `Euríbor 12m · ${mc} ${y}`;
+  const el2 = $('marketToggleLabel');
+  if (el2) el2.textContent = `Panel de mercado · ${ml} ${y}`;
+  const el3 = $('marketHeading');
+  if (el3) el3.textContent = `Mercado · ${ml} ${y}`;
 }
 
 function updateEuriborDisplay(euribor) {
@@ -2780,6 +2797,7 @@ function updateEuriborDisplay(euribor) {
       if (vEl) vEl.textContent = rate12m.toLocaleString('es-ES', { minimumFractionDigits: 3 }) + '%';
     }
   }
+  if (euribor.lastUpdated) updateMonthLabels(euribor.lastUpdated);
   // Actualizar tiles BCE
   const ecb = euribor.ecb_rates;
   if (ecb) {
