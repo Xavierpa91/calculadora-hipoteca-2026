@@ -60,6 +60,7 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     font-feature-settings: 'cv11', 'ss01';
+    overflow-x: hidden;
   }
 
   .num {
@@ -77,6 +78,7 @@
   /* ============ APP SHELL ============ */
   .app {
     max-width: 1440px;
+    width: 100%;
     margin: 0 auto;
     padding: 32px 40px 64px;
   }
@@ -771,10 +773,12 @@
     margin-top: 4px;
   }
   .compare-panel .sub { font-size: 13px; color: var(--ink-3); }
+  .compare-panel { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .compare-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    table-layout: fixed;
   }
   .compare-table th,
   .compare-table td {
@@ -1948,7 +1952,7 @@
         <span class="k">Cuota mensual</span>
         <span class="v"><span id="mobileBarAmount">0</span> €</span>
       </div>
-      <button onclick="calcular(); document.querySelector('.results-col').scrollIntoView({behavior:'smooth'})">Calcular</button>
+      <button onclick="calcular(); document.querySelector('.results-col').scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'})">Calcular</button>
     </div>
   </div>
 
