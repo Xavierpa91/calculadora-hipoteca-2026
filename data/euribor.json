@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-07-16T14:09:10",
+  "lastUpdated": "2026-07-17T13:53:03",
   "rates": {
-    "1_week": 2.153,
-    "1_month": 2.22,
-    "3_months": 2.452,
-    "6_months": 2.654,
-    "12_months": 2.825
+    "1_week": 2.148,
+    "1_month": 2.212,
+    "3_months": 2.485,
+    "6_months": 2.688,
+    "12_months": 2.876
   },
   "ecb_rates": {}
 }
